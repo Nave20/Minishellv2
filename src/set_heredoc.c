@@ -10,7 +10,7 @@ static void	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 	}
 	while (ft_strncmp(input, delim, ft_strlen(delim)) != 0)
 	{
-		ft_putstr_fd(input, fd);
+		ft_putendl_fd(input, fd);
 		free(input);
 		input = readline("heredoc> ");
 	}
