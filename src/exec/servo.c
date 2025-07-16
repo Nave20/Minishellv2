@@ -116,14 +116,14 @@ void	exec_one(t_data *data, t_all *all)
 			if (now_pid == -1)
 			{
 				perror("fork");
+				while (i > 0)
+					waitpid(pid[--i], NULL, 0);
 				if (pipe_fd[0] != -1)
 					close(pipe_fd[0]);
 				if (pipe_fd[1] != -1)
 					close(pipe_fd[1]);
 				if (prev_fd != -1)
 					close(prev_fd);
-				while (i > 0)
-					waitpid(pid[--i], NULL, 0);
 				break ;
 			}
 			if (now_pid == 0)
@@ -151,15 +151,15 @@ void	exec_one(t_data *data, t_all *all)
 						exit(EXIT_FAILURE);
 					exec_two(cmd->cmd_tab,data->env_tab);
 				}
-				exit(EXIT_SUCCESS);
-			}
-			else
-			{
-				if (cmd->cmd_bi)
+				else if (cmd->cmd_bi)
 				{
 					printf("Builtin à exécuter : %s\n", cmd->cmd_bi);
 					exec_builtin(all, cmd, &all->env);
 				}
+				exit(EXIT_SUCCESS);
+			}
+			else
+			{
 				if (cmd->hrdc_path)
 				{
 					unlink(cmd->hrdc_path);
@@ -182,12 +182,6 @@ void	exec_one(t_data *data, t_all *all)
 				cmd = cmd->next;
 			}
 		}
-		// else
-		// {
-		// printf(RED "test" RESET);
-		// hub(all);
-		// break ;
-		// }
 	}
 	while (j < i)
 	{
