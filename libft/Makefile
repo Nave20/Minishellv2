@@ -36,7 +36,7 @@ SOURCES = \
 	ft_putstr_fd.c	\
 	ft_putendl_fd.c	\
 	ft_putnbr_fd.c	\
-	ft_putnbr_base.c\
+	ft_putnbr_base.c	\
 	ft_printf.c
 
 BONUS =	\
@@ -62,7 +62,7 @@ CC	=	cc
 
 AR	=	ar -rc
 
-FLAGS	=	-Wall -Wextra -Werror -g3
+FLAGS	=	-Wall -Wextra -Werror -g3 -fPIE
 
 all	:	${NAME}
 

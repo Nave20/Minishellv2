@@ -42,7 +42,7 @@ static int	parsing_hub(t_data *data)
 {
 	if (tokenize_input(data, data->input) == -1)
 		return (-1);
-	print_token(data);
+	// print_token(data);
 	free(data->input);
 	data->input = NULL;
 	data->cmd_count = 0;
@@ -62,23 +62,36 @@ static int	main_hub(t_data *data)
 	t_all	*all;
 
 	all = malloc(sizeof(t_all));
-	data->input = readline("minishell> ");
-	if (data->input)
+	if (isatty(STDIN_FILENO) == 1)
 	{
-		add_history(data->input);
-		nbword = word_count(data->input);
-		printf("nbword = %d\n", nbword);
-		data->token = ft_calloc(nbword + 1, sizeof(t_token));
-		if (!data->token)
-			return (err_return_token(data,
-					"minishell : memory allocation failed\n", 1));
-		if (parsing_hub(data) == -1)
-			return (-1);
-		exec_one(data, all);
-		free_data(data);
+		data->input = readline("minishell> ");
+		if (data->input)
+			add_history(data->input);
+		else
+		{
+			free_env(data->env);
+			free(all);
+			return (1);
+		}
 	}
 	else
+	{
+		free_env(data->env);
+		free(all);
 		return (1);
+	}
+	nbword = word_count(data->input);
+	data->token = ft_calloc(nbword + 1, sizeof(t_token));
+	if (!data->token)
+		return (err_return_token(data, "minishell : memory allocation failed\n",
+				1));
+	if (parsing_hub(data) == -1)
+		return (-1);
+	print_token(data);
+	print_lst(data);
+	exec_one(data, all);
+	free_data(data);
+	free(all);
 	return (0);
 }
 

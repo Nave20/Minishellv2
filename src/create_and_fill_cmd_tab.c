@@ -65,5 +65,3 @@ int	create_cmd_tab(t_data *data)
 	}
 	return (0);
 }
-
-// sdf

@@ -87,7 +87,7 @@ int	define_token(t_data *data, int k)
 			return (-1);
 		if (last_split(data) == -1)
 			return (-1);
-		print_token(data);
+		// print_token(data);
 		if (remove_quotes(data) == -1)
 			return (-1);
 	}
