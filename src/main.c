@@ -62,7 +62,13 @@ static int	main_hub(t_data *data)
 	t_all	*all;
 
 	all = malloc(sizeof(t_all));
-	if (isatty(STDIN_FILENO) == 1)
+	if (isatty(STDIN_FILENO) == 0 || isatty(STDOUT_FILENO) == 0)
+	{
+		free_env(data->env);
+		free(all);
+		return (1);
+	}
+	else
 	{
 		data->input = readline("minishell> ");
 		if (data->input)
@@ -73,12 +79,6 @@ static int	main_hub(t_data *data)
 			free(all);
 			return (1);
 		}
-	}
-	else
-	{
-		free_env(data->env);
-		free(all);
-		return (1);
 	}
 	nbword = word_count(data->input);
 	data->token = ft_calloc(nbword + 1, sizeof(t_token));
