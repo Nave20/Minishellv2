@@ -62,7 +62,7 @@ static int	main_hub(t_data *data)
 	t_all	*all;
 
 	all = malloc(sizeof(t_all));
-	data->input = readline("minishell> ");
+	data->input = readline(BOLD CYAN"minishell> "RESET);
 	if (data->input)
 	{
 		add_history(data->input);
