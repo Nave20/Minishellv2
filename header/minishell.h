@@ -113,6 +113,8 @@ typedef struct s_all
 	t_cmd				*cmd;
 	t_data				*data;
 	t_env				*env;
+	pid_t				pid[MAX_COM];
+	pid_t				now_pid;
 	int					pipe_fd[2];
 	int					prev_fd;
 	int					exit_code;
@@ -218,8 +220,14 @@ char					*path_finder2(char **paths, char *cmd);
 char					**get_cmd(char *str);
 char					**get_path(char **env, int i, int a);
 void					cleaner(char **str);
-int						exec_builtin(t_all *all, t_cmd *cmd, t_env **env);
+void					exec_builtin(t_all *all, t_cmd *cmd, t_env **env);
 void					child_one(t_all *all);
+void					infile_heredoc(t_all *all);
+void					outfile_or_err(t_all *all);
+int						parent_one(t_all *all);
+void					pid_waiter(t_all *all, int i);
+
+void					fork_error(t_all *all, int	i);
 void					path_error(void);
 void					error(void);
 void					error_two(char *path, char **cmd);
