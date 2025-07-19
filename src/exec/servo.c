@@ -151,7 +151,7 @@ void	exec_one(t_data *data, t_all *all)
 						exit(EXIT_FAILURE);
 					exec_two(cmd->cmd_tab,data->env_tab);
 				}
-				else if (cmd->cmd_bi)
+				else if (cmd->cmd_bi && all->cmd->next)
 				{
 					printf("Builtin à exécuter : %s\n", cmd->cmd_bi);
 					exec_builtin(all, cmd, &all->env);
@@ -160,6 +160,11 @@ void	exec_one(t_data *data, t_all *all)
 			}
 			else
 			{
+				if (cmd->cmd_bi && !all->cmd->next)
+				{
+					printf("Builtin à exécuter : %s\n", cmd->cmd_bi);
+					exec_builtin(all, cmd, &all->env);
+				}
 				if (cmd->hrdc_path)
 				{
 					unlink(cmd->hrdc_path);
