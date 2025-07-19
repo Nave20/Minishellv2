@@ -52,7 +52,6 @@ BUILTINS_FILES  = 	echo.c				\
 					export.c			\
 					unset.c				\
 					exit.c				\
-					hub.c				\
 
 SOURCES         = $(addprefix $(SRC_DIR), $(SRC_FILES)) \
                   $(addprefix $(EXEC_DIR), $(EXEC_FILES)) \

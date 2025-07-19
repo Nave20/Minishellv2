@@ -211,7 +211,6 @@ void					ft_env(t_env *env);
 void					ft_export(char *str, t_all *all);
 t_env					*ft_unset(char *str, t_all all);
 void					ft_exit(t_all *all);
-t_all					hub(t_all *all);
 
 //--------------------------------EXEC---------------------------------
 void					exec_one(t_data *data, t_all *all);
