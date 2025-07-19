@@ -54,8 +54,6 @@ int	exec_builtin(t_all *all, t_cmd *cmd, t_env **env)
 
 void	exec_one(t_data *data, t_all *all)
 {
-	int		pipe_fd[2];
-	int		prev_fd;
 	t_cmd	*cmd;
 	pid_t	pid[MAX_COM];
 	int		i;
@@ -69,14 +67,15 @@ void	exec_one(t_data *data, t_all *all)
 	all->env = data->env;
 	all->env_tab = NULL;
 	all->exit_code = -1;
-	prev_fd = -1;
+	all->prev_fd = -1;
 	cmd = all->cmd;
 	i = 0;
 	j = 0;
-	pipe_fd[0] = -1;
-	pipe_fd[1] = -1;
+	all->pipe_fd[0] = -1;
+	all->pipe_fd[1] = -1;
 	while (cmd)
 	{
+		all->cmd = cmd;
 		if (cmd->hrdc_path)
 		{
 			cmd->infile = open(cmd->hrdc_path, O_RDONLY);
@@ -105,7 +104,7 @@ void	exec_one(t_data *data, t_all *all)
 		}
 		else
 			cmd->outfile = -1;
-		if (cmd->next && pipe(pipe_fd) == -1)
+		if (cmd->next && pipe(all->pipe_fd) == -1)
 		{
 			perror("pipe");
 			exit(EXIT_FAILURE);
@@ -118,46 +117,16 @@ void	exec_one(t_data *data, t_all *all)
 				perror("fork");
 				while (i > 0)
 					waitpid(pid[--i], NULL, 0);
-				if (pipe_fd[0] != -1)
-					close(pipe_fd[0]);
-				if (pipe_fd[1] != -1)
-					close(pipe_fd[1]);
-				if (prev_fd != -1)
-					close(prev_fd);
+				if (all->pipe_fd[0] != -1)
+					close(all->pipe_fd[0]);
+				if (all->pipe_fd[1] != -1)
+					close(all->pipe_fd[1]);
+				if (all->prev_fd != -1)
+					close(all->prev_fd);
 				break ;
 			}
 			if (now_pid == 0)
-			{
-				signal(SIGINT, SIG_DFL);
-				signal(SIGQUIT, SIG_DFL);
-				if (cmd->infile != -1)
-					dup2(cmd->infile, STDIN_FILENO);
-				else if (prev_fd != -1)
-					dup2(prev_fd, STDIN_FILENO);
-				if (cmd->outfile != -1)
-					dup2(cmd->outfile, STDOUT_FILENO);
-				else if (cmd->next)
-					dup2(pipe_fd[1], STDOUT_FILENO);
-				if (pipe_fd[0] != -1 && pipe_fd[0] != STDIN_FILENO)
-					close(pipe_fd[0]);
-				if (pipe_fd[1] != -1 && pipe_fd[1] != STDOUT_FILENO)
-					close(pipe_fd[1]);
-				if (prev_fd != -1 && prev_fd != STDIN_FILENO)
-					close(prev_fd);
-				if (cmd->cmd)
-				{
-					printf("Commande externe à exécuter : %s\n", cmd->cmd);
-					if (lst_to_tab(data, all->env) == -1)
-						exit(EXIT_FAILURE);
-					exec_two(cmd->cmd_tab,data->env_tab);
-				}
-				else if (cmd->cmd_bi && all->cmd->next)
-				{
-					printf("Builtin à exécuter : %s\n", cmd->cmd_bi);
-					exec_builtin(all, cmd, &all->env);
-				}
-				exit(EXIT_SUCCESS);
-			}
+				child_one(all);
 			else
 			{
 				if (cmd->cmd_bi && !all->cmd->next)
@@ -172,18 +141,18 @@ void	exec_one(t_data *data, t_all *all)
 					cmd->hrdc_path = NULL;
 				}
 				pid[i++] = now_pid;
-				if (prev_fd != -1)
-					close(prev_fd);
+				if (all->prev_fd != -1)
+					close(all->prev_fd);
 				if (cmd->infile != -1)
 					close(cmd->infile);
 				if (cmd->outfile != -1)
 					close(cmd->outfile);
 				if (cmd->next)
-					prev_fd = pipe_fd[0];
+					all->prev_fd = all->pipe_fd[0];
 				else
-					prev_fd = -1;
-				if (pipe_fd[1] != -1)
-					close(pipe_fd[1]);
+					all->prev_fd = -1;
+				if (all->pipe_fd[1] != -1)
+					close(all->pipe_fd[1]);
 				cmd = cmd->next;
 			}
 		}
@@ -203,6 +172,6 @@ void	exec_one(t_data *data, t_all *all)
 		}
 		j++;
 	}
-	if (prev_fd != -1)
-		close(prev_fd);
+	if (all->prev_fd != -1)
+		close(all->prev_fd);
 }

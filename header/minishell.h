@@ -113,6 +113,8 @@ typedef struct s_all
 	t_cmd				*cmd;
 	t_data				*data;
 	t_env				*env;
+	int					pipe_fd[2];
+	int					prev_fd;
 	int					exit_code;
 	char				**env_tab;
 }						t_all;
@@ -216,6 +218,8 @@ char					*path_finder2(char **paths, char *cmd);
 char					**get_cmd(char *str);
 char					**get_path(char **env, int i, int a);
 void					cleaner(char **str);
+int						exec_builtin(t_all *all, t_cmd *cmd, t_env **env);
+void					child_one(t_all *all);
 void					path_error(void);
 void					error(void);
 void					error_two(char *path, char **cmd);

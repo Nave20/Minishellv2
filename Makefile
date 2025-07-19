@@ -13,6 +13,7 @@ BUILTINS_OBJDIR = $(OBJ_DIR)builtins/
 EXEC_FILES      =	servo.c				\
 					execve.c			\
 					exec_error.c		\
+					child.c				\
 					cmd.c				\
 
 SRC_FILES       =	main.c \
