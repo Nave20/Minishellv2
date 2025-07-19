@@ -46,7 +46,7 @@ bool	env_update(t_env *env, char *name, char *new)
 	return (1);
 }
 
-bool	ft_cd(char **args, t_env *env)
+void	ft_cd(char **args, t_env *env)
 {
 	char	*target;
 	char	*old_pwd;
@@ -56,7 +56,7 @@ bool	ft_cd(char **args, t_env *env)
 	if (!old_pwd)
 	{
 		ft_putendl_fd(RED "cd : OLDPWD not set" RESET, 2);
-		return (1);
+		return ;
 	}
 	if (!args[1])
 	{
@@ -65,7 +65,7 @@ bool	ft_cd(char **args, t_env *env)
 		{
 			free(old_pwd);
 			ft_putendl_fd(RED "cd : HOME not set" RESET, 2);
-			return (1);
+			return ;
 		}
 	}
 	else if (args[1][0] == '-' && args[1][1] == 0)
@@ -75,7 +75,7 @@ bool	ft_cd(char **args, t_env *env)
 		{
 			free(old_pwd);
 			ft_putendl_fd(RED "cd : OLDPWD not set" RESET, 2);
-			return (1);
+			return ;
 		}
 		printf(BLUE "%s\n" RESET, target);
 	}
@@ -87,24 +87,23 @@ bool	ft_cd(char **args, t_env *env)
 	{
 		free(old_pwd);
 		perror("cd");
-		return (1);
+		return ;
 	}
 	if (env_update(env, "OLDPWD", old_pwd) == 1)
 	{
 		free(old_pwd);
 		perror("malloc");
-		return (1);
+		return ;
 	}
 	free(old_pwd);
 	if (!getcwd(new_pwd, sizeof(new_pwd)))
 	{
 		perror("cd");
-		return (1);
+		return ;
 	}
 	if (env_update(env, "PWD", new_pwd) == 1)
 	{
 		perror("malloc");
-		return (1);
+		return ;
 	}
-	return (0);
 }
