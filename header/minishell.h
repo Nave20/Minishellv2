@@ -204,7 +204,7 @@ t_env					*free_env(t_env *head);
 t_env					*free_node(t_env *node);
 
 //------------------------------BUILTINS-------------------------------
-bool					ft_echo(char **content);
+void					ft_echo(char **content);
 bool					ft_cd(char **args, t_env *env);
 bool					ft_pwd(void);
 void					ft_env(t_env *env);

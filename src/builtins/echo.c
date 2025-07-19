@@ -29,41 +29,24 @@ bool	valid_fag(const char *flag)
 	return (0);
 }
 
-bool	ft_echo(char **content)
+void	ft_echo(char **content)
 {
-	bool	a;
-
-	a = 0;
 	if (!content)
-		return (ft_putendl_fd("", 1));
+		ft_putendl_fd("", 1);
 	if (content[0])
 	{
 		if (content[1])
 		{
 			if (valid_fag(content[0]) == 0)
-			{
-				if (ft_putstr_fd(content[1], 1) == -1)
-					return (1);
-				else
-					return (0);
-			}
+				ft_putstr_fd(content[1], 1);
 			else
 			{
-				if (ft_putstr_fd(content[0], 1) == -1)
-					a = 1;
-				if (write(1, " ", 1) == -1)
-					a = 1;
-				if (ft_putendl_fd(content[1], 1) == 1 || a == 1)
-					return (1);
+				ft_putstr_fd(content[0], 1);
+				write(1, " ", 1);
+				ft_putendl_fd(content[1], 1);
 			}
 		}
 		else
-		{
-			if (ft_putendl_fd(content[0], 1) == 1)
-				return (1);
-			else
-				return (0);
-		}
+				ft_putendl_fd(content[0], 1);
 	}
-	return (0);
 }
