@@ -74,7 +74,7 @@ void	cd_two(char *target, char *old_pwd, t_env *env)
 
 char	*get_target(char **args, char *old_pwd, t_env *env)
 {
-	char *target;
+	char	*target;
 
 	if (!args[1])
 	{

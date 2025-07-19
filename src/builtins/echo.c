@@ -47,6 +47,6 @@ void	ft_echo(char **content)
 			}
 		}
 		else
-				ft_putendl_fd(content[0], 1);
+			ft_putendl_fd(content[0], 1);
 	}
 }

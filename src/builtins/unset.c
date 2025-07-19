@@ -17,7 +17,7 @@ void	logic(t_env *env, char *str)
 {
 	t_env	*prev;
 	t_env	*next;
-	
+
 	prev = NULL;
 	next = NULL;
 	while (env->next)
@@ -50,7 +50,7 @@ t_env	*ft_unset(char *str, t_all all)
 		if ((str[i] < 'A' || str[i] > 'Z') && str[i] != '_')
 		{
 			printf(RED"unset:"RESET" '%s' "YELLOW"is not a valid "
-						   "identifier\n"RESET, str);
+				"identifier\n"RESET, str);
 			return (all.env);
 		}
 		i++;
