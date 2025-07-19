@@ -206,6 +206,7 @@ t_env					*free_node(t_env *node);
 //------------------------------BUILTINS-------------------------------
 void					ft_echo(char **content);
 void					ft_cd(char **args, t_env *env);
+void					cd_no_home(char *old_pwd);
 bool					ft_pwd(void);
 void					ft_env(t_env *env);
 void					ft_export(char *str, t_all *all);

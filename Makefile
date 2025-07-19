@@ -47,6 +47,7 @@ SRC_FILES       =	main.c \
 
 BUILTINS_FILES  = 	echo.c				\
 					cd.c				\
+					cd_bis.c			\
 					pwd.c				\
 					env.c				\
 					export.c			\
