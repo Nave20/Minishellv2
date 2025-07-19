@@ -25,7 +25,7 @@ void	child_two(t_all *all)
 		printf("Commande externe à exécuter : %s\n", cmd->cmd);
 		if (lst_to_tab(data, all->env) == -1)
 			exit(EXIT_FAILURE);
-		exec_two(cmd->cmd_tab,data->env_tab);
+		exec_two(cmd->cmd_tab, data->env_tab);
 	}
 	else if (cmd->cmd_bi && all->cmd->next)
 	{

@@ -13,7 +13,7 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-void	fork_error(t_all *all, int	i)
+void	fork_error(t_all *all, int i)
 {
 	perror("fork");
 	while (i > 0)

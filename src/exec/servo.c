@@ -22,7 +22,7 @@ void	sigint_handler(int signum)
 void	exec_builtin(t_all *all, t_cmd *cmd, t_env **env)
 {
 	if (!ft_strncmp(cmd->cmd_bi, "echo", ft_strlen("echo")))
-		ft_echo(cmd->cmd_tab + 1); // adapte selon ta signature
+		ft_echo(cmd->cmd_tab + 1);
 	else if (!ft_strncmp(cmd->cmd_bi, "cd", ft_strlen("cd")))
 		ft_cd(cmd->cmd_tab, *env);
 	else if (!ft_strncmp(cmd->cmd_bi, "pwd", ft_strlen("pwd")))
@@ -51,13 +51,13 @@ void	exec_init(t_all *all, t_data *data)
 	all->pipe_fd[1] = -1;
 }
 
-int handle_fork(t_all *all, t_cmd **cmd, int *i)
+int	handle_fork(t_all *all, t_cmd **cmd, int *i)
 {
 	all->now_pid = fork();
 	if (all->now_pid == -1)
 	{
 		fork_error(all, *i);
-		return -1;
+		return (-1);
 	}
 	if (all->now_pid == 0)
 		child_one(all);
@@ -66,7 +66,7 @@ int handle_fork(t_all *all, t_cmd **cmd, int *i)
 		*i += parent_one(all);
 		*cmd = (*cmd)->next;
 	}
-	return 0;
+	return (0);
 }
 
 void	exec_one(t_data *data, t_all *all)
@@ -83,7 +83,7 @@ void	exec_one(t_data *data, t_all *all)
 		infile_heredoc(all);
 		outfile_or_err(all);
 		if (handle_fork(all, &cmd, &i) == -1)
-			break;
+			break ;
 	}
 	pid_waiter(all, i);
 	if (all->prev_fd != -1)

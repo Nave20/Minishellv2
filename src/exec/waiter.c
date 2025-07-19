@@ -16,8 +16,8 @@
 void	pid_waiter(t_all *all, int i)
 {
 	int	j;
-	int		status;
-	int		sig;
+	int	status;
+	int	sig;
 
 	j = 0;
 	while (j < i)
