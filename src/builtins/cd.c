@@ -55,7 +55,7 @@ bool	ft_cd(char **args, t_env *env)
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 	{
-		perror("cd");
+		ft_putendl_fd(RED "cd : OLDPWD not set" RESET, 2);
 		return (1);
 	}
 	if (!args[1])
