@@ -120,7 +120,6 @@ typedef struct s_all
 	int					exit_code;
 	char				**env_tab;
 }						t_all;
-//--------------------------------MAIN---------------------------------
 
 //-------------------------------PARSING-------------------------------
 int						word_count(char *input);
@@ -131,8 +130,7 @@ int						tokenize_input(t_data *data, char *input);
 int						handle_normal(t_data *data, int *nbword, int *i);
 int						handle_special_c(t_data *data, int *nbword, int *i);
 int						handle_chevron(t_data *data, int *nbword, int *i);
-int						handle_redirect(t_data *data, int *nbword, int *i,
-							int c);
+int						handle_redirect(t_data *data, int *nbword, int *i, int c);
 int						handle_quotes(t_data *data, int *nbword, int *i);
 char					*put_token(t_data *data, int start, int end);
 bool					is_operator(char *str);
@@ -155,10 +153,8 @@ void					free_double_tab(char **str);
 int						set_env_var(t_data *data);
 char					*srch_env_var(t_data *data, char *var);
 int						rep_env_var(t_data *data, int i, int start, int end);
-int						update_null_var(t_data *data, char **str, int start,
-							int end);
-int						update_var(char **str, int start, int end,
-							char *env_var);
+int						update_null_var(t_data *data, char **str, int start, int end);
+int						update_var(char **str, int start, int end, char *env_var);
 int						remove_quotes(t_data *data);
 int						create_cmd_lst(t_data *data);
 t_cmd					*ft_cmdnew(t_data *data);
@@ -173,29 +169,19 @@ bool					is_last_inf_hrdc(t_data *data, int start, int end);
 int						err_return(t_data *data, char *str, int err);
 int						err_return_token(t_data *data, char *str, int err);
 int						last_split(t_data *data);
-int						handle_normal_new(t_data *data, char *old, char **new,
-							int *i);
-int						handle_special_c_new(t_data *data, char *old,
-							char **new, int *i);
-int						handle_redirect_new(char *old, char **new, int *i,
-							int c);
-int						handle_simple_quote_new(t_data *data, char *old,
-							char **new, int *i);
-int						handle_double_quote_new(t_data *data, char *old,
-							char **new, int *i);
+int						handle_normal_new(t_data *data, char *old, char **new, int *i);
+int						handle_special_c_new(t_data *data, char *old, char **new, int *i);
+int						handle_redirect_new(char *old, char **new, int *i, int c);
+int						handle_simple_quote_new(t_data *data, char *old, char **new, int *i);
+int						handle_double_quote_new(t_data *data, char *old, char **new, int *i);
 int						ft_tablen(char **tab);
-int						put_token_new(char *old, char **new, int start,
-							int end);
+int						put_token_new(char *old, char **new, int start, int end);
 void					skip_quotes(char *data, int *i);
 int						create_cmd_tab(t_data *data);
-int						handle_qustn_mark(t_data *data, int i, int start,
-							int end);
+int						handle_qustn_mark(t_data *data, int i, int start, int end);
 void					print_lst(t_data *data);
 void					print_token(t_data *data);
 int						lst_to_tab(t_data *data, t_env *env);
-
-//------------------------------TERMINAL-------------------------------
-void					terminal(t_all all);
 
 //------------------------------PARS_ENV-------------------------------
 t_env					*pars_env(char **env);
@@ -227,7 +213,7 @@ void					outfile_or_err(t_all *all);
 int						parent_one(t_all *all);
 void					pid_waiter(t_all *all, int i);
 
-void					fork_error(t_all *all, int	i);
+void					fork_error(t_all *all, int i);
 void					path_error(void);
 void					error(void);
 void					error_two(char *path, char **cmd);
