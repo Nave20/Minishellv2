@@ -41,7 +41,6 @@ void	exec_builtin(t_all *all, t_cmd *cmd, t_env **env)
 
 void	exec_init(t_all *all, t_data *data)
 {
-	all->data = data;
 	all->cmd = data->cmd;
 	all->env = data->env;
 	all->env_tab = NULL;

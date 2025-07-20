@@ -71,9 +71,10 @@ static int	main_hub(t_data *data)
 		data->token = ft_calloc(nbword + 1, sizeof(t_token));
 		if (!data->token)
 			return (err_return_token(data,
-					"minishell : memory allocation failed\n", 1));
+					RED"minishell : memory allocation failed\n"RESET, 1));
 		if (parsing_hub(data) == -1)
 			return (-1);
+		all->data = data;
 		exec_one(data, all);
 		free_data(data);
 	}

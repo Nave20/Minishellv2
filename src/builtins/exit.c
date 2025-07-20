@@ -15,7 +15,10 @@
 
 void	ft_exit(t_all *all)
 {
-	if (all->env)
-		free_env(all->env);
+	// printf(RED"test");
+	rl_clear_history();
+	free_env(all->env);
+	free_cmd(all->data);
+	free_data(all->data);
 	exit(EXIT_SUCCESS);
 }
