@@ -38,18 +38,21 @@ int	parent_two(t_all *all)
 
 void	fd_saver(t_all *all, t_cmd *cmd)
 {
-	int stdin_save = dup(STDIN_FILENO);
-	int stdout_save = dup(STDOUT_FILENO);
+	int	stdin_save;
+	int	stdout_save;
 
-	if (cmd->outfile != -1) {
+	stdin_save = dup(STDIN_FILENO);
+	stdout_save = dup(STDOUT_FILENO);
+	if (cmd->outfile != -1)
+	{
 		dup2(cmd->outfile, STDOUT_FILENO);
 		close(cmd->outfile);
 	}
-	if (cmd->infile != -1) {
+	if (cmd->infile != -1)
+	{
 		dup2(cmd->infile, STDIN_FILENO);
 		close(cmd->infile);
 	}
-	printf("Builtin à exécuter : %s\n", cmd->cmd_bi);
 	exec_builtin(all, cmd, &all->env);
 	dup2(stdin_save, STDIN_FILENO);
 	dup2(stdout_save, STDOUT_FILENO);
