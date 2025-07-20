@@ -31,7 +31,7 @@ bool	valid_fag(const char *flag)
 
 void	ft_echo(char **content)
 {
-	if (!content)
+	if (!content[0])
 		ft_putendl_fd("", 1);
 	if (content[0])
 	{

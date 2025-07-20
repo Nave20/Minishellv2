@@ -81,6 +81,8 @@ void	exec_one(t_data *data, t_all *all)
 		all->cmd = cmd;
 		infile_heredoc(all);
 		outfile_or_err(all);
+		// if (!all->cmd->next && all->cmd->cmd_bi)
+		// 	exec_builtin(all, all->cmd, &all->env);
 		if (handle_fork(all, &cmd, &i) == -1)
 			break ;
 	}

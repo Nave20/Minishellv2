@@ -36,16 +36,38 @@ int	parent_two(t_all *all)
 	return (i);
 }
 
+void	fd_saver(t_all *all, t_cmd *cmd)
+{
+	int stdin_save = dup(STDIN_FILENO);
+	int stdout_save = dup(STDOUT_FILENO);
+
+	if (cmd->outfile != -1) {
+		dup2(cmd->outfile, STDOUT_FILENO);
+		close(cmd->outfile);
+	}
+	if (cmd->infile != -1) {
+		dup2(cmd->infile, STDIN_FILENO);
+		close(cmd->infile);
+	}
+	printf("Builtin à exécuter : %s\n", cmd->cmd_bi);
+	exec_builtin(all, cmd, &all->env);
+	dup2(stdin_save, STDIN_FILENO);
+	dup2(stdout_save, STDOUT_FILENO);
+	close(stdin_save);
+	close(stdout_save);
+	if (cmd->outfile)
+		dup2(cmd->outfile, STDOUT_FILENO);
+	if (cmd->infile)
+		dup2(cmd->infile, STDIN_FILENO);
+}
+
 int	parent_one(t_all *all)
 {
 	t_cmd	*cmd;
 
 	cmd = all->cmd;
 	if (cmd->cmd_bi && !all->cmd->next)
-	{
-		printf("Builtin à exécuter : %s\n", cmd->cmd_bi);
-		exec_builtin(all, cmd, &all->env);
-	}
+		fd_saver(all, cmd);
 	if (cmd->hrdc_path)
 	{
 		unlink(cmd->hrdc_path);
