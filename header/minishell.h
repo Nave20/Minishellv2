@@ -124,7 +124,7 @@ typedef struct s_all
 
 //-------------------------------PARSING-------------------------------
 int		word_count(char *input);
-t_env	*pars_env(char **env);
+t_env	*pars_env(char **env, int *err);
 t_env	*free_env(t_env *head);
 int		ft_envsize(t_env *lst);
 int		tokenize_input(t_data *data, char *input);
@@ -185,7 +185,6 @@ void	print_token(t_data *data);
 int		lst_to_tab(t_data *data, t_env *env);
 
 //------------------------------PARS_ENV-------------------------------
-t_env	*pars_env(char **env);
 t_env	*alloc(char *str);
 t_env	*free_env(t_env *head);
 t_env	*free_node(t_env *node);

@@ -59,7 +59,7 @@ char	*srch_env_var(t_data *data, char *var)
 	{
 		if (ft_strncmp(var, ptr->name, ft_strlen(var) + 1) == 0)
 		{
-			printf("name = %s\n", ptr->name);
+			// printf("name = %s\n", ptr->name);
 			return (ptr->line);
 		}
 		else

@@ -108,6 +108,6 @@ int	create_cmd_lst(t_data *data)
 		return (-1);
 	if (create_cmd_tab(data) == -1)
 		return (-1);
-	print_lst(data);
+	//print_lst(data);
 	return (0);
 }
