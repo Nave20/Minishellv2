@@ -118,6 +118,8 @@ typedef struct s_all
 	pid_t				now_pid;
 	int					pipe_fd[2];
 	int					prev_fd;
+	int					stdin_save;
+	int					stdout_save;
 	int					exit_code;
 	char				**env_tab;
 }						t_all;

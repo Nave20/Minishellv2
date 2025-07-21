@@ -42,7 +42,6 @@ static int	parsing_hub(t_data *data)
 {
 	if (tokenize_input(data, data->input) == -1)
 		return (-1);
-	//print_token(data);
 	free(data->input);
 	data->input = NULL;
 	data->cmd_count = 0;

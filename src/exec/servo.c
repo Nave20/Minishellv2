@@ -44,7 +44,8 @@ void	exec_init(t_all *all, t_data *data)
 	all->cmd = data->cmd;
 	all->env = data->env;
 	all->env_tab = NULL;
-	all->exit_code = -1;
+	if (!all->exit_code)
+		all->exit_code = 0;
 	all->prev_fd = -1;
 	all->pipe_fd[0] = -1;
 	all->pipe_fd[1] = -1;
