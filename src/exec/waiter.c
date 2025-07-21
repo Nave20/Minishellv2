@@ -13,31 +13,38 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-void	pid_waiter(t_all *all, int i)
+void	waiter_two(t_all *all, int status, pid_t wpid)
 {
-	int				j;
-	int				status;
-	int				sig;
-	pid_t			lst_pid;
+	int	sig;
 
-	j = 0;
-	status = 0;
-	lst_pid = all->pid[i - 1];
-	while (j++ < i)
+	if (WIFEXITED(status))
+		all->exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
 	{
-		if (lst_pid == waitpid(all->pid[j], &status, 0))
-		{
-			if (WIFEXITED(status))
-				all->exit_code = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-			{
-				sig = WTERMSIG(status);
-				if (sig == SIGINT)
-					write(1, "\n", 1);
-				all->exit_code = 128 + sig;
-				printf("Process %d terminated by signal %d\n",
-					all->pid[j], sig);
-			}
-		}
+		sig = WTERMSIG(status);
+		if (sig == SIGINT)
+			write(1, "\n", 1);
+		all->exit_code = 128 + sig;
+		if (sig != SIGPIPE)
+			printf("Process %d terminated by signal %d\n", wpid, sig);
+	}
+}
+
+void	pid_waiter(t_all *all, int i, int waited)
+{
+	int		status;
+	pid_t	lst_pid;
+	pid_t	wpid;
+
+	waited = 0;
+	lst_pid = all->pid[i - 1];
+	while (waited < i)
+	{
+		wpid = waitpid(-1, &status, 0);
+		if (wpid == -1)
+			break;
+		if (wpid == lst_pid)
+			waiter_two(all, status, wpid);
+		waited++;
 	}
 }

@@ -88,7 +88,7 @@ void	exec_one(t_data *data, t_all *all)
 		if (handle_fork(all, &cmd, &i) == -1)
 			break ;
 	}
-	pid_waiter(all, i);
+	pid_waiter(all, i, 0);
 	data->exit_code = all->exit_code;
 	if (all->prev_fd != -1)
 		close(all->prev_fd);
