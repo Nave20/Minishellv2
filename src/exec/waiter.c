@@ -23,7 +23,7 @@ void	pid_waiter(t_all *all, int i)
 	j = 0;
 	status = 0;
 	lst_pid = all->pid[i - 1];
-	while (j < i)
+	while (j++ < i)
 	{
 		if (lst_pid == waitpid(all->pid[j], &status, 0))
 		{
@@ -35,9 +35,9 @@ void	pid_waiter(t_all *all, int i)
 				if (sig == SIGINT)
 					write(1, "\n", 1);
 				all->exit_code = 128 + sig;
-				printf("Process %d terminated by signal %d\n", all->pid[j], sig);
+				printf("Process %d terminated by signal %d\n",
+					all->pid[j], sig);
 			}
 		}
-		j++;
 	}
 }
