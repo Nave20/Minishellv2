@@ -15,14 +15,17 @@
 
 void	pid_waiter(t_all *all, int i)
 {
-	int	j;
-	int	status;
-	int	sig;
+	int				j;
+	int				status;
+	int				sig;
+	struct rusage	ru;
 
+	ft_memset(&ru, 0, sizeof(ru));
 	j = 0;
+	status = 0;
 	while (j < i)
 	{
-		waitpid(all->pid[j], &status, 0);
+		wait4(all->pid[j], &status, 0, &ru);
 		if (WIFEXITED(status))
 			all->exit_code = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))

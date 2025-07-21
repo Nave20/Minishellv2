@@ -15,9 +15,9 @@
 
 void	ft_exit(t_all *all)
 {
-	printf(RED"test");
 	rl_clear_history();
 	free_env(all->env);
 	free_data(all->data);
+	free(all);
 	exit(EXIT_SUCCESS);
 }
