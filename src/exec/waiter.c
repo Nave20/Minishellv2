@@ -18,23 +18,25 @@ void	pid_waiter(t_all *all, int i)
 	int				j;
 	int				status;
 	int				sig;
-	struct rusage	ru;
+	pid_t			lst_pid;
 
-	ft_memset(&ru, 0, sizeof(ru));
 	j = 0;
 	status = 0;
+	lst_pid = all->pid[i - 1];
 	while (j < i)
 	{
-		wait4(all->pid[j], &status, 0, &ru);
-		if (WIFEXITED(status))
-			all->exit_code = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
+		if (lst_pid == waitpid(all->pid[j], &status, 0))
 		{
-			sig = WTERMSIG(status);
-			if (sig == SIGINT)
-				write(1, "\n", 1);
-			all->exit_code = 128 + sig;
-			printf("Process %d terminated by signal %d\n", all->pid[j], sig);
+			if (WIFEXITED(status))
+				all->exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+			{
+				sig = WTERMSIG(status);
+				if (sig == SIGINT)
+					write(1, "\n", 1);
+				all->exit_code = 128 + sig;
+				printf("Process %d terminated by signal %d\n", all->pid[j], sig);
+			}
 		}
 		j++;
 	}

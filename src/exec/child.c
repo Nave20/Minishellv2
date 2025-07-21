@@ -28,7 +28,11 @@ void	child_two(t_all *all)
 	}
 	else if (cmd->cmd_bi && all->cmd->next)
 		exec_builtin(all, cmd, &all->env);
-	exit(EXIT_SUCCESS);
+	if (errno == ENOENT)
+		exit(127);
+	if (errno == EACCES)
+		exit(126);
+	exit(1);
 }
 
 void	child_one(t_all *all)

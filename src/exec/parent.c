@@ -15,12 +15,12 @@
 
 int	parent_two(t_all *all)
 {
-	t_cmd	*cmd;
-	int		i;
+	t_cmd		*cmd;
+	static int	i = 0;
 
-	i = 0;
 	cmd = all->cmd;
-	all->pid[i++] = all->now_pid;
+	all->pid[i] = all->now_pid;
+	i++;
 	if (all->prev_fd != -1)
 		close(all->prev_fd);
 	if (cmd->infile != -1)

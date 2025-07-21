@@ -44,8 +44,6 @@ void	exec_init(t_all *all, t_data *data)
 	all->cmd = data->cmd;
 	all->env = data->env;
 	all->env_tab = NULL;
-	if (!all->exit_code)
-		all->exit_code = 0;
 	all->prev_fd = -1;
 	all->pipe_fd[0] = -1;
 	all->pipe_fd[1] = -1;
@@ -63,7 +61,7 @@ int	handle_fork(t_all *all, t_cmd **cmd, int *i)
 		child_one(all);
 	else
 	{
-		*i += parent_one(all);
+		*i = parent_one(all);
 		*cmd = (*cmd)->next;
 	}
 	return (0);
@@ -84,13 +82,16 @@ void	exec_one(t_data *data, t_all *all)
 		outfile_or_err(all);
 		if (!all->cmd->next && all->cmd->cmd_bi)
 		{
-			parent_one(all);
+			i = parent_one(all);
 			break ;
 		}
 		if (handle_fork(all, &cmd, &i) == -1)
+		{
 			break ;
+		}
 	}
 	pid_waiter(all, i);
+	data->exit_code = all->exit_code;
 	if (all->prev_fd != -1)
 		close(all->prev_fd);
 }

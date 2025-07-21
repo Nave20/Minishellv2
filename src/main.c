@@ -66,6 +66,7 @@ static int	main_hub(t_data *data)
 		return (1);
 	}
 	all = malloc(sizeof(t_all));
+	all->exit_code = 0;
 	data->input = readline(BOLD CYAN"minishell> "RESET);
 	if (data->input)
 	{

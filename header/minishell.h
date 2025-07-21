@@ -76,6 +76,7 @@ struct					s_data
 	int					cmd_count;
 	int					err_code;
 	int					nbhrdc;
+	int					exit_code;
 	t_token				*token;
 	t_cmd				*cmd;
 };
