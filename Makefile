@@ -43,6 +43,7 @@ SRC_FILES       =	main.c \
                     					create_and_fill_cmd_tab.c \
                     					pars_env.c \
                     					lst_to_tab.c \
+										empty_env.c \
                     					print_utils.c
 
 BUILTINS_FILES  = 	echo.c				\

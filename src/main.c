@@ -42,7 +42,7 @@ static int	parsing_hub(t_data *data)
 {
 	if (tokenize_input(data, data->input) == -1)
 		return (-1);
-	//print_token(data);
+	// print_token(data);
 	free(data->input);
 	data->input = NULL;
 	data->cmd_count = 0;
@@ -64,10 +64,10 @@ static int	main_hub(t_data *data)
 	if (isatty(STDIN_FILENO) == 0 || isatty(STDOUT_FILENO) == 0)
 	{
 		free_env(data->env);
-		return (1);
+		return (-1);
 	}
 	all = malloc(sizeof(t_all));
-	data->input = readline(BOLD CYAN"minishell> "RESET);
+	data->input = readline(BOLD CYAN "minishell> " RESET);
 	if (data->input)
 	{
 		add_history(data->input);
@@ -76,7 +76,7 @@ static int	main_hub(t_data *data)
 		data->token = ft_calloc(nbword + 1, sizeof(t_token));
 		if (!data->token)
 			return (err_return_token(data,
-					RED"minishell : memory allocation failed\n"RESET, 1));
+					RED "minishell : memory allocation failed\n" RESET, 1));
 		if (parsing_hub(data) == -1)
 			return (-1);
 		all->data = data;
@@ -97,9 +97,13 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	err = 0;
-	data.env = pars_env(envp, &err);
-	// else
-	// 	create_env(&data);
+	if (envp[0])
+		data.env = pars_env(envp, &err);
+	else
+	{
+		if (handle_empty_env(&data) == -1)
+			return (1);
+	}
 	if (err == 1)
 	{
 		ft_putstr_fd("minishell : memory allocation failed\n", 1);
