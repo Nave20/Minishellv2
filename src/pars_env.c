@@ -34,36 +34,48 @@ t_env	*alloc(char *str)
 	int		i;
 
 	i = 0;
-	node = malloc(sizeof(t_env));
+	node = ft_calloc(sizeof(t_env), 1); // proteger malloc
 	if (!node)
-		return (free_node(node));
+		return (NULL);
 	while (str[i] != '=' && str[i])
 		i++;
-	node->name = malloc((i + 1) * sizeof(char));
-	if (!node->name && node->name[0] != 0)
+	node->name = malloc((i + 1) * sizeof(char)); // proteger malloc
+	// node->name = NULL;
+	if (!node->name)
 		return (free_node(node));
 	ft_strlcpy(node->name, str, i + 1);
 	node->line = malloc(ft_strlen(&str[i + 1]) + 1 * sizeof(char));
-	if (!node->line && node->line[0] != 0)
+	// proteger malloc
+	if (!node->line)
 		return (free_node(node));
 	ft_strlcpy(node->line, &str[i + 1], 1 + ft_strlen(&str[i + 1]));
 	node->next = NULL;
 	return (node);
 }
 
-t_env	*pars_env(char **env)
+t_env	*pars_env(char **env, int *err)
 {
-	int i;
-	t_env *node;
-	t_env *next;
-	t_env *head;
+	int		i;
+	t_env	*node;
+	t_env	*next;
+	t_env	*head;
 
 	i = 0;
 	head = alloc(env[i]);
+	if (!head)
+	{
+		*err = 1;
+		return (NULL);
+	}
 	node = head;
 	while (env[++i])
 	{
 		next = alloc(env[i]);
+		if (!next)
+		{
+			*err = 1;
+			return (free_env(head));
+		}
 		node->next = next;
 		node = next;
 	}

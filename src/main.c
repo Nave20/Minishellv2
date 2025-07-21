@@ -61,11 +61,9 @@ static int	main_hub(t_data *data)
 	int		nbword;
 	t_all	*all;
 
-	all = malloc(sizeof(t_all));
 	if (isatty(STDIN_FILENO) == 0 || isatty(STDOUT_FILENO) == 0)
 	{
 		free_env(data->env);
-		free(all);
 		return (1);
 	}
 	else
@@ -76,7 +74,6 @@ static int	main_hub(t_data *data)
 		else
 		{
 			free_env(data->env);
-			free(all);
 			return (1);
 		}
 	}
@@ -89,19 +86,36 @@ static int	main_hub(t_data *data)
 		return (-1);
 	print_token(data);
 	print_lst(data);
+	all = malloc(sizeof(t_all));
+	if (!all)
+		return (err_return(data, "minishell : memory allocation failed\n", 1));
 	exec_one(data, all);
 	free_data(data);
 	free(all);
 	return (0);
 }
 
+// int	create_env(t_data *data)
+// {
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
+	int		err;
 
 	(void)argc;
 	(void)argv;
-	data.env = pars_env(envp);
+	err = 0;
+	if (envp[0])
+		data.env = pars_env(envp, &err);
+	else
+		create_env(&data);
+	if (err == 1)
+	{
+		ft_putstr_fd("minishell : memory allocation failed\n", 1);
+		return (1);
+	}
 	while (1)
 	{
 		if (main_hub(&data) == 1)

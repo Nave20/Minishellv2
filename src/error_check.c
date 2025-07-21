@@ -2,6 +2,7 @@
 
 int	err_return_token(t_data *data, char *str, int err)
 {
+	free(data->env);
 	ft_putstr_fd(str, 2);
 	free(data->input);
 	free_token(data);

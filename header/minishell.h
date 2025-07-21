@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:31:36 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/07/10 13:03:12 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/07/17 16:21:09 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,6 @@ typedef struct s_all
 
 //-------------------------------PARSING-------------------------------
 int						word_count(char *input);
-t_env					*pars_env(char **env);
-t_env					*free_env(t_env *head);
 int						ft_envsize(t_env *lst);
 int						tokenize_input(t_data *data, char *input);
 int						handle_normal(t_data *data, int *nbword, int *i);
@@ -194,7 +192,7 @@ int						lst_to_tab(t_data *data, t_env *env);
 void					terminal(t_all all);
 
 //------------------------------PARS_ENV-------------------------------
-t_env					*pars_env(char **env);
+t_env					*pars_env(char **env, int *err);
 t_env					*alloc(char *str);
 t_env					*free_env(t_env *head);
 t_env					*free_node(t_env *node);
