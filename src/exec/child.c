@@ -35,21 +35,74 @@ void	child_two(t_all *all)
 	exit(1);
 }
 
-void	child_one(t_all *all)
+void	clean_exit(t_all *all)
+{
+	perror("dup2 failed");
+	rl_clear_history();
+	free_env(all->env);
+	free_data(all->data);
+	free(all);
+	exit(EXIT_FAILURE);
+}
+
+void	pipeline_two(t_all *all)
 {
 	t_cmd	*cmd;
 
 	cmd = all->cmd;
+	if (cmd->outfile != -1)
+	{
+		if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
+		{
+			if (cmd->infile != -1)
+				close(cmd->infile);
+			else if (all->prev_fd != -1)
+				close(all->prev_fd);
+			clean_exit(all);
+		}
+	}
+	else if (cmd->next)
+	{
+		if (dup2(all->pipe_fd[1], STDOUT_FILENO) == -1)
+		{
+			if (cmd->infile != -1)
+				close(cmd->infile);
+			else if (all->prev_fd != -1)
+				close(all->prev_fd);
+			clean_exit(all);
+		}
+	}
+}
+
+void	pipeline_one(t_all *all)
+{
+	t_cmd	*cmd;
+
+	cmd = all->cmd;
+	if (cmd->infile != -1)
+	{
+		if (dup2(cmd->infile, STDIN_FILENO) == -1)
+		{
+			close(cmd->infile);
+			clean_exit(all);
+		}
+	}
+	else if (all->prev_fd != -1)
+	{
+		if (dup2(all->prev_fd, STDIN_FILENO) == -1)
+		{
+			close(all->prev_fd);
+			clean_exit(all);
+		}
+	}
+}
+
+void	child_one(t_all *all)
+{
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if (cmd->infile != -1)
-		dup2(cmd->infile, STDIN_FILENO);
-	else if (all->prev_fd != -1)
-		dup2(all->prev_fd, STDIN_FILENO);
-	if (cmd->outfile != -1)
-		dup2(cmd->outfile, STDOUT_FILENO);
-	else if (cmd->next)
-		dup2(all->pipe_fd[1], STDOUT_FILENO);
+	pipeline_one(all);
+	pipeline_two(all);
 	if (all->pipe_fd[0] != -1 && all->pipe_fd[0] != STDIN_FILENO)
 		close(all->pipe_fd[0]);
 	if (all->pipe_fd[1] != -1 && all->pipe_fd[1] != STDOUT_FILENO)
