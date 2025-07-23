@@ -48,7 +48,7 @@ static int	parsing_hub(t_data *data)
 	data->cmd_count = 0;
 	if (operator_check(data) == -1)
 		return (-1);
-	print_token(data);
+	// print_token(data);
 	if (define_token(data, 0) == -1)
 		return (-1);
 	cmd_count(data);

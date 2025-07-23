@@ -76,7 +76,7 @@ char	*get_target(char **args, char *old_pwd, t_env *env)
 {
 	char	*target;
 
-	if (!args[1])
+	if (!args[1] || ft_strncmp(args[1], "~", 2) == 0)
 	{
 		target = env_value(env, "HOME");
 		if (!target)
