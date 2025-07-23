@@ -95,8 +95,11 @@ void	free_token(t_data *data)
 		}
 		free(data->token);
 	}
-	if (data->token)
-		free(data->token);
+	// if (data->token)
+	// {
+	// 	free(data->token);
+	// 	data->token = NULL;
+	// }
 }
 
 void	free_data(t_data *data)
