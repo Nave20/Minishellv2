@@ -36,6 +36,7 @@
 # include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/param.h>
 # include <sys/resource.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -127,6 +128,7 @@ typedef struct s_all
 }						t_all;
 
 //-------------------------------PARSING-------------------------------
+int						handle_empty_env(t_data *data);
 int						word_count(char *input);
 t_env					*pars_env(char **env, int *err);
 t_env					*free_env(t_env *head);
