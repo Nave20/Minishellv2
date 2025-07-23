@@ -45,5 +45,10 @@ void	error_exit_one(char **cmd, char *path)
 	cleaner(cmd);
 	free(path);
 	perror(RED"execve"RESET);
-	exit(127);
+	perror(path);
+	if (errno == ENOENT)
+		exit(127);
+	if (errno == EACCES)
+		exit(126);
+	exit(1);
 }

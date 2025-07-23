@@ -15,12 +15,12 @@
 
 int	parent_two(t_all *all)
 {
-	t_cmd	*cmd;
-	int		i;
+	t_cmd		*cmd;
+	static int	i = 0;
 
-	i = 0;
 	cmd = all->cmd;
-	all->pid[i++] = all->now_pid;
+	all->pid[i] = all->now_pid;
+	i++;
 	if (all->prev_fd != -1)
 		close(all->prev_fd);
 	if (cmd->infile != -1)
@@ -38,11 +38,10 @@ int	parent_two(t_all *all)
 
 void	fd_saver(t_all *all, t_cmd *cmd)
 {
-	int	stdin_save;
-	int	stdout_save;
-
-	stdin_save = dup(STDIN_FILENO);
-	stdout_save = dup(STDOUT_FILENO);
+	all->stdin_save = dup(STDIN_FILENO);
+	all->stdout_save = dup(STDOUT_FILENO);
+	dup2(all->stdin_save, STDIN_FILENO);
+	dup2(all->stdout_save, STDOUT_FILENO);
 	if (cmd->outfile != -1)
 	{
 		dup2(cmd->outfile, STDOUT_FILENO);
@@ -54,14 +53,10 @@ void	fd_saver(t_all *all, t_cmd *cmd)
 		close(cmd->infile);
 	}
 	exec_builtin(all, cmd, &all->env);
-	dup2(stdin_save, STDIN_FILENO);
-	dup2(stdout_save, STDOUT_FILENO);
-	close(stdin_save);
-	close(stdout_save);
-	if (cmd->outfile)
-		dup2(cmd->outfile, STDOUT_FILENO);
-	if (cmd->infile)
-		dup2(cmd->infile, STDIN_FILENO);
+	dup2(all->stdin_save, STDIN_FILENO);
+	dup2(all->stdout_save, STDOUT_FILENO);
+	close(all->stdin_save);
+	close(all->stdout_save);
 }
 
 int	parent_one(t_all *all)

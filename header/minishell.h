@@ -77,6 +77,7 @@ struct					s_data
 	int					cmd_count;
 	int					err_code;
 	int					nbhrdc;
+	int					exit_code;
 	t_token				*token;
 	t_cmd				*cmd;
 };
@@ -119,6 +120,8 @@ typedef struct s_all
 	pid_t				now_pid;
 	int					pipe_fd[2];
 	int					prev_fd;
+	int					stdin_save;
+	int					stdout_save;
 	int					exit_code;
 	char				**env_tab;
 }						t_all;
@@ -212,6 +215,7 @@ t_env					*ft_unset(char *str, t_all all);
 void					ft_exit(t_all *all);
 
 //--------------------------------EXEC---------------------------------
+<<<<<<< HEAD
 void					exec_one(t_data *data, t_all *all);
 void					exec_two(char **cmd, char **env);
 char					*path_finder2(char **paths, char *cmd);
@@ -224,6 +228,20 @@ void					infile_heredoc(t_all *all);
 void					outfile_or_err(t_all *all);
 int						parent_one(t_all *all);
 void					pid_waiter(t_all *all, int i);
+=======
+void	exec_one(t_data *data, t_all *all);
+void	exec_two(char **cmd, char **env);
+char	*path_finder2(char **paths, char *cmd);
+char	**get_cmd(char *str);
+char	**get_path(char **env, int i, int a);
+void	cleaner(char **str);
+void	exec_builtin(t_all *all, t_cmd *cmd, t_env **env);
+void	child_one(t_all *all);
+void	infile_heredoc(t_all *all);
+void	outfile_or_err(t_all *all);
+int		parent_one(t_all *all);
+void	pid_waiter(t_all *all, int i, int waited);
+>>>>>>> origin/master
 
 void					fork_error(t_all *all, int i);
 void					path_error(void);

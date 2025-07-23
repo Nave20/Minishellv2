@@ -52,6 +52,23 @@ void	exec_three(char **cmd, char **env)
 		error_exit_one(cmd, r_path);
 }
 
+void	in_same_dir(char **cmd, char **env)
+{
+	if (access(cmd[0], X_OK) == 0)
+	{
+		if (execve(cmd[0], cmd, env) == -1)
+		{
+			cleaner(cmd);
+			perror(RED"execve"RESET);
+			if (errno == ENOENT)
+				exit(127);
+			if (errno == EACCES)
+				exit(126);
+			exit(1);
+		}
+	}
+}
+
 void	exec_two(char **cmd, char **env)
 {
 	char	**paths;
@@ -64,6 +81,7 @@ void	exec_two(char **cmd, char **env)
 	}
 	if (cmd[0][0] == 0 || cmd[0][0] == ' ')
 		exit(127);
+	in_same_dir(cmd, env);
 	paths = get_path(env, -1, -1);
 	if (!paths)
 		return ;
