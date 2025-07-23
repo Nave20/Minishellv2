@@ -88,6 +88,7 @@ static int	main_hub(t_data *data)
 			return (-1);
 		all = malloc(sizeof(t_all));
 		all->data = data;
+		all->exit_code = data->err_code;
 		// print_lst(data);
 		exec_one(data, all);
 		free_data(data);

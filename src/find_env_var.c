@@ -14,8 +14,12 @@ static int	get_env_var(t_data *data, int i)
 		{
 			end = start + 1;
 			if (data->token[i].tab[end] == '?')
+			{
 				if (handle_qustn_mark(data, i, start, end + 1) == -1)
 					return (-1);
+				else
+					return (0);
+			}
 			while (ft_isalnum(data->token[i].tab[end])
 				|| data->token[i].tab[end] == '_')
 				end++;

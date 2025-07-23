@@ -26,7 +26,7 @@ int	handle_qustn_mark(t_data *data, int i, int start, int end)
 	if (!var)
 		return (err_return_token(data, "minishell : memory allocation failed\n",
 				1));
-	if (update_var(&data->token[i].tab, start - 1, end, var) == -1)
+	if (update_var(&data->token[i].tab, start, end, var) == -1)
 		return (err_return_token(data, "minishell : memory allocation failed\n",
 				1));
 	return (0);
