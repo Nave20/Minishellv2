@@ -33,8 +33,6 @@ void	exec_three(char **cmd, char **env)
 {
 	if (!*env)
 		return (path_error());
-	printf(RED"%s\n"RESET, cmd[0]);
-	printf(RED"%d\n"RESET, access(cmd[0], X_OK));
 	if (access(cmd[0], X_OK) != 0)
 	{
 		cleaner(cmd);
