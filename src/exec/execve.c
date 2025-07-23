@@ -73,7 +73,7 @@ void	exec_two(char **cmd, char **env)
 	char	**paths;
 	char	*r_path;
 
-	if (cmd[0][0] == '/')
+	if (cmd[0][0] == '/' || cmd[0][0] == '.')
 	{
 		exec_three(cmd, env);
 		return ;
@@ -85,6 +85,7 @@ void	exec_two(char **cmd, char **env)
 	if (!paths)
 		return ;
 	r_path = path_finder2(paths, cmd[0]);
+	dprintf(2, RED"%s\n"RESET, r_path);
 	if (!r_path)
 		error_three(paths, cmd);
 	cleaner(paths);
