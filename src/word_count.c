@@ -46,11 +46,11 @@ static void	count_chev(char *input, int *nbword, int *i)
 
 static void	count_simple(char *input, int *nbword, int *i)
 {
-	if (input[*i] != ' ' && input[*i] != '"' && input[*i] != '\''
+	if (!(ft_isspace(input[*i])) && input[*i] != '"' && input[*i] != '\''
 		&& input[*i] != '|' && input[*i] != '<' && input[*i] != '>')
 	{
 		(*nbword)++;
-		while (input[*i] != ' ' && input[*i] != '"' && input[*i] != '\''
+		while (!(ft_isspace(input[*i])) && input[*i] != '"' && input[*i] != '\''
 			&& input[*i] != '\0' && input[*i] != '|' && input[*i] != '<'
 			&& input[*i] != '>')
 			(*i)++;
@@ -75,7 +75,7 @@ int	word_count(char *input)
 			i++;
 		}
 		count_chev(input, &nbword, &i);
-		while (input[i] == ' ')
+		while (ft_isspace(input[i]))
 			i++;
 		count_quotes(input, &nbword, &i);
 	}
