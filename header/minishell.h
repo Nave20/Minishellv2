@@ -1,12 +1,13 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:31:36 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/07/21 17:58:42 by lpaysant         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:03:12 by lucasp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +36,6 @@
 # include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <sys/param.h>
 # include <sys/resource.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -202,7 +202,6 @@ int						lst_to_tab(t_data *data, t_env *env);
 t_env					*alloc(char *str);
 t_env					*free_env(t_env *head);
 t_env					*free_node(t_env *node);
-int						handle_empty_env(t_data *data);
 
 //------------------------------BUILTINS-------------------------------
 void					ft_echo(char **content);
@@ -215,7 +214,6 @@ t_env					*ft_unset(char *str, t_all all);
 void					ft_exit(t_all *all);
 
 //--------------------------------EXEC---------------------------------
-<<<<<<< HEAD
 void					exec_one(t_data *data, t_all *all);
 void					exec_two(char **cmd, char **env);
 char					*path_finder2(char **paths, char *cmd);
@@ -227,21 +225,7 @@ void					child_one(t_all *all);
 void					infile_heredoc(t_all *all);
 void					outfile_or_err(t_all *all);
 int						parent_one(t_all *all);
-void					pid_waiter(t_all *all, int i);
-=======
-void	exec_one(t_data *data, t_all *all);
-void	exec_two(char **cmd, char **env);
-char	*path_finder2(char **paths, char *cmd);
-char	**get_cmd(char *str);
-char	**get_path(char **env, int i, int a);
-void	cleaner(char **str);
-void	exec_builtin(t_all *all, t_cmd *cmd, t_env **env);
-void	child_one(t_all *all);
-void	infile_heredoc(t_all *all);
-void	outfile_or_err(t_all *all);
-int		parent_one(t_all *all);
-void	pid_waiter(t_all *all, int i, int waited);
->>>>>>> origin/master
+void					pid_waiter(t_all *all, int i, int waited);
 
 void					fork_error(t_all *all, int i);
 void					path_error(void);

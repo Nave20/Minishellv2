@@ -31,7 +31,7 @@ int	tokenize_input(t_data *data, char *input)
 		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
 			if (handle_special_c(data, &nbword, &i) == -1)
 				return (-1);
-		if (input[i] != ' ' && input[i] != '\'' && input[i] != '"')
+		if (input[i] && input[i] != ' ' && input[i] != '\'' && input[i] != '"')
 			if (handle_normal(data, &nbword, &i) == -1)
 				return (-1);
 	}
@@ -42,6 +42,7 @@ static int	parsing_hub(t_data *data)
 {
 	if (tokenize_input(data, data->input) == -1)
 		return (-1);
+	// print_token(data);
 	free(data->input);
 	data->input = NULL;
 	data->cmd_count = 0;
@@ -59,26 +60,32 @@ static int	main_hub(t_data *data)
 {
 	int		nbword;
 	t_all	*all;
+	char	*line;
 
-	if (isatty(STDIN_FILENO) == 0 || isatty(STDOUT_FILENO) == 0)
+	if (isatty(STDIN_FILENO))
 	{
-		free_env(data->env);
-		return (1);
+		data->input = readline(BOLD CYAN "minishell> " RESET);
+		if (data->input)
+			add_history(data->input);
+		else
+			return (1);
 	}
-	all = malloc(sizeof(t_all));
-	all->exit_code = 0;
-	data->input = readline(BOLD CYAN "minishell> " RESET);
+	else
+	{
+		line = get_next_line(STDIN_FILENO);
+		data->input = ft_strtrim(line, "\n");
+		free(line);
+	}
 	if (data->input)
 	{
-		add_history(data->input);
 		nbword = word_count(data->input);
-		printf("nbword = %d\n", nbword);
 		data->token = ft_calloc(nbword + 1, sizeof(t_token));
 		if (!data->token)
 			return (err_return_token(data,
 					RED "minishell : memory allocation failed\n" RESET, 1));
 		if (parsing_hub(data) == -1)
 			return (-1);
+		all = malloc(sizeof(t_all));
 		all->data = data;
 		exec_one(data, all);
 		free_data(data);
@@ -91,15 +98,19 @@ static int	main_hub(t_data *data)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data data;
-	int err;
+	t_data	data;
+	int		err;
 
 	(void)argc;
 	(void)argv;
 	err = 0;
-	data.env = pars_env(envp, &err);
-	// else
-	// 	create_env(&data);
+	if (envp[0])
+		data.env = pars_env(envp, &err);
+	else
+	{
+		if (handle_empty_env(&data) == -1)
+			return (1);
+	}
 	if (err == 1)
 	{
 		ft_putstr_fd("minishell : memory allocation failed\n", 1);
