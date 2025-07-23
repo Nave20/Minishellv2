@@ -46,8 +46,21 @@ int	handle_redirect(t_data *data, int *nbword, int *i, int c)
 	return (0);
 }
 
+int	chevron_check(t_data *data, int i)
+{
+	if (data->input[i + 2] == '<')
+		return (err_return_token(data,
+				"minishell: syntax error near unexpected token `<'\n", 1));
+	if (data->input[i + 2] == '>')
+		return (err_return_token(data,
+				"minishell: syntax error near unexpected token `>'\n", 1));
+	return (0);
+}
+
 int	handle_chevron(t_data *data, int *nbword, int *i)
 {
+	if (chevron_check(data, *i) == -1)
+		return (-1);
 	if (data->input[*i] == '<')
 	{
 		if (data->input[*i + 1] == '<')

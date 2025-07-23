@@ -84,7 +84,7 @@ void	free_token(t_data *data)
 	int	i;
 
 	i = 0;
-	if (data->token)
+	if (data->token && data->token[0].tab)
 	{
 		while (data->token[i].tab)
 		{
@@ -95,6 +95,8 @@ void	free_token(t_data *data)
 		}
 		free(data->token);
 	}
+	if (data->token)
+		free(data->token);
 }
 
 void	free_data(t_data *data)
