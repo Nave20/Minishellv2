@@ -29,7 +29,7 @@ bool	valid_fag(const char *flag)
 	return (0);
 }
 
-void	ft_echo(char **content)
+void	ft_echo(char **content, t_all *all)
 {
 	if (!content[0])
 		ft_putendl_fd("", 1);
@@ -49,4 +49,5 @@ void	ft_echo(char **content)
 		else
 			ft_putendl_fd(content[0], 1);
 	}
+	all->exit_code = 0;
 }

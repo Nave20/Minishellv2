@@ -22,7 +22,7 @@ void	sigint_handler(int signum)
 void	exec_builtin(t_all *all, t_cmd *cmd, t_env **env)
 {
 	if (!ft_strncmp(cmd->cmd_bi, "echo", ft_strlen("echo")))
-		ft_echo(cmd->cmd_tab + 1);
+		ft_echo(cmd->cmd_tab + 1, all);
 	else if (!ft_strncmp(cmd->cmd_bi, "cd", ft_strlen("cd")))
 		ft_cd(cmd->cmd_tab, *env);
 	else if (!ft_strncmp(cmd->cmd_bi, "pwd", ft_strlen("pwd")))

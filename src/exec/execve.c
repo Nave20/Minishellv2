@@ -31,25 +31,26 @@ int	last_slash(const char *argv)
 
 void	exec_three(char **cmd, char **env)
 {
-	char	*path;
-	char	*r_path;
-	int		i;
-
 	if (!*env)
 		return (path_error());
-	i = last_slash(cmd[0]);
-	path = malloc(ft_strlen(cmd[0]) * sizeof(char));
-	if (!path)
-		return ;
-	ft_strlcpy(path, cmd[0], i + 1);
-	r_path = ft_strjoin(path, cmd[0]);
-	free(path);
-	if (!r_path)
-		return (cleaner(cmd));
-	if (access(r_path, X_OK) != 0)
-		error_two(r_path, cmd);
-	if (execve(r_path, cmd, env) == -1)
-		error_exit_one(cmd, r_path);
+	printf(RED"%s\n"RESET, cmd[0]);
+	printf(RED"%d\n"RESET, access(cmd[0], X_OK));
+	if (access(cmd[0], X_OK) != 0)
+	{
+		cleaner(cmd);
+		ft_putendl_fd(RED"command not found"RESET, 2);
+		exit(127);
+	}
+	if (execve(cmd[0], cmd, env) == -1)
+	{
+		cleaner(cmd);
+		perror(RED"execve"RESET);
+		if (errno == ENOENT)
+			exit(127);
+		if (errno == EACCES)
+			exit(126);
+		exit(1);
+	}
 }
 
 void	in_same_dir(char **cmd, char **env)
