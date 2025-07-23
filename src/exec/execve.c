@@ -78,14 +78,13 @@ void	exec_two(char **cmd, char **env)
 		exec_three(cmd, env);
 		return ;
 	}
-	if (cmd[0][0] == 0 || cmd[0][0] == ' ')
+	if (cmd[0][0] == 0)
 		exit(127);
 	in_same_dir(cmd, env);
 	paths = get_path(env, -1, -1);
 	if (!paths)
 		return ;
 	r_path = path_finder2(paths, cmd[0]);
-	dprintf(2, RED"%s\n"RESET, r_path);
 	if (!r_path)
 		error_three(paths, cmd);
 	cleaner(paths);
