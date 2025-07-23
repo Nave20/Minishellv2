@@ -48,6 +48,7 @@ static int	parsing_hub(t_data *data)
 	data->cmd_count = 0;
 	if (operator_check(data) == -1)
 		return (-1);
+	print_token(data);
 	if (define_token(data, 0) == -1)
 		return (-1);
 	cmd_count(data);
@@ -87,6 +88,7 @@ static int	main_hub(t_data *data)
 			return (-1);
 		all = malloc(sizeof(t_all));
 		all->data = data;
+		print_lst(data);
 		exec_one(data, all);
 		free_data(data);
 		free(all);

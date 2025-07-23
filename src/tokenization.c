@@ -15,7 +15,7 @@ int	handle_quotes(t_data *data, int *nbword, int *i)
 		else
 			(*i)++;
 	}
-	end = (*i);
+	end = (*i - 1);
 	data->token[*nbword].tab = put_token(data, start, end);
 	if (!data->token[*nbword].tab)
 		return (err_return_token(data, "minishell: memory allocation failed\n",
