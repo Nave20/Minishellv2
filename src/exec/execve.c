@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpirotti <vpirotti@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 16:14:49 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/07/15 16:15:10 by vpirotti         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:58:34 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 int	last_slash(const char *argv)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -36,13 +36,13 @@ void	exec_three(char **cmd, char **env)
 	if (access(cmd[0], X_OK) != 0)
 	{
 		cleaner(cmd);
-		ft_putendl_fd(RED"command not found"RESET, 2);
+		ft_putendl_fd(RED "command not found" RESET, 2);
 		exit(127);
 	}
 	if (execve(cmd[0], cmd, env) == -1)
 	{
 		cleaner(cmd);
-		perror(RED"execve"RESET);
+		perror(RED "execve" RESET);
 		if (errno == ENOENT)
 			exit(127);
 		if (errno == EACCES)
@@ -58,7 +58,7 @@ void	in_same_dir(char **cmd, char **env)
 		if (execve(cmd[0], cmd, env) == -1)
 		{
 			cleaner(cmd);
-			perror(RED"execve"RESET);
+			perror(RED "execve" RESET);
 			if (errno == ENOENT)
 				exit(127);
 			if (errno == EACCES)

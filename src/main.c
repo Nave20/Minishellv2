@@ -23,7 +23,7 @@ int	tokenize_input(t_data *data, char *input)
 	nbword = 0;
 	while (input[i])
 	{
-		if (input[i] == ' ')
+		if (ft_isspace(input[i]))
 			i++;
 		if (input[i] == '"' || input[i] == '\'')
 			if (handle_quotes(data, &nbword, &i) == -1)
@@ -31,7 +31,8 @@ int	tokenize_input(t_data *data, char *input)
 		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
 			if (handle_special_c(data, &nbword, &i) == -1)
 				return (-1);
-		if (input[i] && input[i] != ' ' && input[i] != '\'' && input[i] != '"')
+		if (input[i] && !(ft_isspace(input[i])) && input[i] != '\''
+			&& input[i] != '"')
 			if (handle_normal(data, &nbword, &i) == -1)
 				return (-1);
 	}
