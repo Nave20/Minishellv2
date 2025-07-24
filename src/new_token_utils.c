@@ -8,17 +8,20 @@ int	handle_double_quote_new(t_data *data, char *old, char **new, int *i)
 	if (!is_locked(old))
 		return (err_return_token(data, "minishell: unclosed quotes\n", 2));
 	start = (*i);
-	while (old[*i] && old[*i] != ' ')
+	while (old[*i])
 	{
-		if (old[*i] == '\'' || old[*i] == '"')
-			skip_quotes(old, i);
-		else
-			(*i)++;
+		skip_quotes(old, i);
+		if (ft_isspace(old[*i]) || old[*i] == '\0' || old[*i] == '<'
+			|| old[*i] == '>' || old[*i] == '|')
+		{
+			end = (*i) - 1;
+			if (put_token_new(old, new, start, end) == -1)
+				return (err_return_token(data,
+						"minishell: memory allocation failed\n", 1));
+			return (0);
+		}
+		(*i)++;
 	}
-	end = (*i);
-	if (put_token_new(old, new, start, end) == -1)
-		return (err_return_token(data, "minishell: memory allocation failed\n",
-				1));
 	return (0);
 }
 
@@ -30,17 +33,20 @@ int	handle_simple_quote_new(t_data *data, char *old, char **new, int *i)
 	if (!is_locked(old))
 		return (err_return_token(data, "minishell: unclosed quotes\n", 2));
 	start = (*i);
-	while (old[*i] && old[*i] != ' ')
+	while (old[*i])
 	{
-		if (old[*i] == '\'' || old[*i] == '"')
-			skip_quotes(old, i);
-		else
-			(*i)++;
+		skip_quotes(old, i);
+		if (ft_isspace(old[*i]) || old[*i] == '\0' || old[*i] == '<'
+			|| old[*i] == '>' || old[*i] == '|')
+		{
+			end = (*i) - 1;
+			if (put_token_new(old, new, start, end) == -1)
+				return (err_return_token(data,
+						"minishell: memory allocation failed\n", 1));
+			return (0);
+		}
+		(*i)++;
 	}
-	end = (*i);
-	if (put_token_new(old, new, start, end) == -1)
-		return (err_return_token(data, "minishell: memory allocation failed\n",
-				1));
 	return (0);
 }
 
@@ -95,7 +101,7 @@ int	handle_normal_new(t_data *data, char *old, char **new, int *i)
 	{
 		(*i)++;
 		skip_quotes(old, i);
-		if (old[*i] == ' ' || old[*i] == '\0' || old[*i] == '<'
+		if (ft_isspace(old[*i]) || old[*i] == '\0' || old[*i] == '<'
 			|| old[*i] == '>' || old[*i] == '|')
 		{
 			end = (*i) - 1;
