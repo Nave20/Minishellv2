@@ -121,6 +121,6 @@ void	ft_cd(char **args, t_env *env, t_all *all)
 	if (!target)
 		return ;
 	fflush(stdout);
-	cd_two(target, old_pwd, env);
+	cd_two(target, old_pwd, env, all);
 	all->exit_code = 0;
 }
