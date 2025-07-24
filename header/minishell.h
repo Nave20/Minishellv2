@@ -98,6 +98,7 @@ struct					s_cmd
 	char				*hrdc_path;
 	char				*infile_name;
 	char				*outfile_name;
+	int					is_append;
 	int					infile;
 	int					outfile;
 	int					err_inf;
@@ -147,8 +148,8 @@ int						define_token(t_data *data, int k);
 void					define_operator(t_data *data);
 void					handle_simple_cmd(t_data *data, int start, int end);
 void					handle_redir_cmd(t_data *data, int start, int end);
-void					handle_redirin_cmd(t_data *data, int *i);
-void					handle_redirout_cmd(t_data *data, int *i);
+void					handle_redirin_cmd(t_data *data, int *i, int start);
+void					handle_redirout_cmd(t_data *data, int *i, int start);
 bool					is_locked(char *tab);
 bool					is_build_in(char *cmd);
 bool					is_simple_cmd(t_data *data, int end);

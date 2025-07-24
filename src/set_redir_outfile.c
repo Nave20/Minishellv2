@@ -8,7 +8,10 @@ static int	set_append_file(t_data *data, t_cmd *cmd, int *i)
 	{
 		fd = open(data->token[++(*i)].tab, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (cmd->err_outf != OUTF_ERR)
+		{
 			cmd->outfile_name = ft_strdup(data->token[*i].tab);
+			cmd->is_append = 1;
+		}
 		if (fd == -1)
 		{
 			if (cmd->err_outf != OUTF_ERR)
