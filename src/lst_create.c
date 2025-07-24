@@ -4,13 +4,17 @@ static void	set_cmd_str(t_data *data)
 {
 	int		i;
 	int		j;
+	int		infile;
 	t_cmd	*cmd;
 
 	i = 0;
 	j = 0;
+	infile = 0;
 	cmd = data->cmd;
 	while (data->token[i].tab)
 	{
+		if (data->token[i].type == INFILE)
+			infile = i;
 		if (data->token[i].type == CMD)
 			cmd->cmd = ft_strdup(data->token[i].tab);
 		else if (data->token[i].type == CMD_BI)
@@ -22,10 +26,21 @@ static void	set_cmd_str(t_data *data)
 		}
 		else if (data->token[i].type == PIPE)
 		{
+			if (infile != 0)
+			{
+				printf("infile in cmdtab\n");
+				cmd->str[j] = ft_strdup(data->token[infile].tab);
+				infile = 0;
+			}
 			j = 0;
 			cmd = cmd->next;
 		}
 		i++;
+	}
+	if (infile != 0)
+	{
+		printf("infile in cmdtab\n");
+		cmd->str[j] = ft_strdup(data->token[infile].tab);
 	}
 }
 
@@ -55,6 +70,8 @@ static int	set_str(t_data *data)
 	while (data->token[i].tab)
 	{
 		if (data->token[i].type == STR)
+			str_count++;
+		if (data->token[i].type == INFILE)
 			str_count++;
 		if (data->token[i].type == PIPE)
 		{
@@ -108,6 +125,6 @@ int	create_cmd_lst(t_data *data)
 		return (-1);
 	if (create_cmd_tab(data) == -1)
 		return (-1);
-	//print_lst(data);
+	// print_lst(data);
 	return (0);
 }

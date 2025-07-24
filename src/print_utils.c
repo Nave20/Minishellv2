@@ -41,8 +41,9 @@ void	print_lst(t_data *data)
 				i++;
 			}
 		}
-		printf("hrdc_path = %s\ninfile  = %s\noutfile = %s\n", cmd->hrdc_path,
-			cmd->infile_name, cmd->outfile_name);
+		printf("hrdc_path = %s\ninfile  = %s\noutfile = %s\nis_append = %d\n",
+			cmd->hrdc_path, cmd->infile_name, cmd->outfile_name,
+			cmd->is_append);
 		i = 0;
 		len = 0;
 		if (!cmd->next)
