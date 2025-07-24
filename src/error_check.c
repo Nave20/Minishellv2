@@ -30,18 +30,19 @@ int	operator_check(t_data *data)
 			return (err_return_token(data,
 					"minishell: syntax error near unexpected token '|'\n", 2));
 		if (data->token[i].tab[0] == '<' && (!data->token[i + 1].tab
-				|| is_operator(data->token[i + 1].tab) || (data->token[i
-					+ 1].tab[0] == '\0')))
+				|| !(next_operator(data->token[i + 1].tab, '<'))
+				|| (data->token[i + 1].tab[0] == '\0')))
 			return (err_return_token(data,
 					"minishell: syntax error near unexpected token `newline'\n",
 					2));
 		if (data->token[i].tab[0] == '>' && (!data->token[i + 1].tab
-				|| is_operator(data->token[i + 1].tab) || (data->token[i
-					+ 1].tab[0] == '\0')))
+				|| !(next_operator(data->token[i + 1].tab, '>'))
+				|| (data->token[i + 1].tab[0] == '\0')))
 			return (err_return_token(data,
 					"minishell: syntax error near unexpected token `newline'\n",
 					2));
-		i++;
+		if (data->token[i].tab)
+			i++;
 	}
 	return (0);
 }

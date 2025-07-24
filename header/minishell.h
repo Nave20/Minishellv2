@@ -142,7 +142,7 @@ int						handle_redirect(t_data *data, int *nbword, int *i,
 							int c);
 int						handle_quotes(t_data *data, int *nbword, int *i);
 char					*put_token(t_data *data, int start, int end);
-bool					is_operator(char *str);
+bool					next_operator(char *str, int c);
 int						operator_check(t_data *data);
 int						define_token(t_data *data, int k);
 void					define_operator(t_data *data);
