@@ -44,7 +44,8 @@ int	ft_tablen(char **tab)
 
 bool	ft_isspace(char c)
 {
-	if (c >= 9 && c <= 13)
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\v'
+		|| c == '\f')
 		return (true);
 	else
 		return (false);
