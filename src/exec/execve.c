@@ -73,7 +73,6 @@ void	exec_two(char **cmd, char **env)
 	char	**paths;
 	char	*r_path;
 
-
 	if (cmd[0][0] == '/' || cmd[0][0] == '.')
 	{
 		exec_three(cmd, env);
