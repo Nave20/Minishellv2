@@ -48,10 +48,10 @@ int	handle_redirect(t_data *data, int *nbword, int *i, int c)
 
 int	chevron_check(t_data *data, int i)
 {
-	if (data->input[i + 2] == '<')
+	if (data->input[i + 1] == '<' && data->input[i + 2] == '<')
 		return (err_return_token(data,
 				"minishell: syntax error near unexpected token `<'\n", 1));
-	if (data->input[i + 2] == '>')
+	if (data->input[i + 1] == '>' && data->input[i + 2] == '>')
 		return (err_return_token(data,
 				"minishell: syntax error near unexpected token `>'\n", 1));
 	return (0);
@@ -84,7 +84,7 @@ int	handle_chevron(t_data *data, int *nbword, int *i)
 
 int	handle_special_c(t_data *data, int *nbword, int *i)
 {
-	if (data->input[*i] == '|')
+	if (data->input[*i] == '|' && *i != 0 && ft_isspace(data->input[*i - 1]))
 	{
 		data->token[*nbword].tab = put_token(data, *i, *i);
 		if (!data->token[*nbword].tab)
@@ -113,9 +113,7 @@ int	handle_normal(t_data *data, int *nbword, int *i)
 	{
 		(*i)++;
 		skip_quotes(data->input, i);
-		if (ft_isspace(data->input[*i]) || data->input[*i] == '\0'
-			|| data->input[*i] == '<' || data->input[*i] == '>'
-			|| data->input[*i] == '|')
+		if (ft_isspace(data->input[*i]) || !data->input[*i])
 		{
 			end = (*i) - 1;
 			data->token[*nbword].tab = put_token(data, start, end);

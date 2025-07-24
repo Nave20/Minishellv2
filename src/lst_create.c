@@ -28,7 +28,6 @@ static void	set_cmd_str(t_data *data)
 		{
 			if (infile != 0)
 			{
-				printf("infile in cmdtab\n");
 				cmd->str[j] = ft_strdup(data->token[infile].tab);
 				infile = 0;
 			}
@@ -38,10 +37,7 @@ static void	set_cmd_str(t_data *data)
 		i++;
 	}
 	if (infile != 0)
-	{
-		printf("infile in cmdtab\n");
 		cmd->str[j] = ft_strdup(data->token[infile].tab);
-	}
 }
 
 static int	create_str_tab(t_data *data, t_cmd *cmd, int str_count)

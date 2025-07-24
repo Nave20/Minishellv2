@@ -1,10 +1,12 @@
 #include "../header/minishell.h"
 
-bool	is_operator(char *str)
+bool	next_operator(char *str, int c)
 {
-	if (str[0] == '|' || str[0] == '<' || str[0] == '>')
-		return (true);
-	return (false);
+	if (c == '>' && (str[0] == '|' || str[0] == '<'))
+		return (false);
+	if (c == '<' && (str[0] == '|' || str[0] == '>'))
+		return (false);
+	return (true);
 }
 
 bool	is_simple_cmd(t_data *data, int end)

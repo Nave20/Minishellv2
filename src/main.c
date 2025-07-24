@@ -7,7 +7,7 @@ static void	cmd_count(t_data *data)
 	i = 0;
 	while (data->token[i].tab)
 	{
-		if (data->token[i].tab[0] == '|')
+		if (data->token[i].type == PIPE)
 			data->cmd_count++;
 		i++;
 	}
@@ -25,16 +25,22 @@ int	tokenize_input(t_data *data, char *input)
 	{
 		if (ft_isspace(input[i]))
 			i++;
-		if (input[i] == '"' || input[i] == '\'')
+		else if (input[i] == '"' || input[i] == '\'')
+		{
 			if (handle_quotes(data, &nbword, &i) == -1)
 				return (-1);
-		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
+		}
+		else if ((input[i] == '|' && i != 0 && ft_isspace(input[i - 1]))
+			|| input[i] == '<' || input[i] == '>')
+		{
 			if (handle_special_c(data, &nbword, &i) == -1)
 				return (-1);
-		if (input[i] && !(ft_isspace(input[i])) && input[i] != '\''
-			&& input[i] != '"')
+		}
+		else if (input[i])
+		{
 			if (handle_normal(data, &nbword, &i) == -1)
 				return (-1);
+		}
 	}
 	return (0);
 }
@@ -43,7 +49,7 @@ static int	parsing_hub(t_data *data)
 {
 	if (tokenize_input(data, data->input) == -1)
 		return (-1);
-	// print_token(data);
+	print_token(data);
 	free(data->input);
 	data->input = NULL;
 	data->cmd_count = 0;
@@ -55,7 +61,7 @@ static int	parsing_hub(t_data *data)
 	cmd_count(data);
 	if (create_cmd_lst(data) == -1)
 		return (-1);
-	print_lst(data);
+	// print_lst(data);
 	return (0);
 }
 
