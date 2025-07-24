@@ -49,12 +49,13 @@ static int	parsing_hub(t_data *data)
 	data->cmd_count = 0;
 	if (operator_check(data) == -1)
 		return (-1);
-	// print_token(data);
 	if (define_token(data, 0) == -1)
 		return (-1);
+	// print_token(data);
 	cmd_count(data);
 	if (create_cmd_lst(data) == -1)
 		return (-1);
+	print_lst(data);
 	return (0);
 }
 
