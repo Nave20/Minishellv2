@@ -44,9 +44,16 @@ void	outfile_or_err(t_all *all)
 	t_cmd	*cmd;
 
 	cmd = all->cmd;
-	if (cmd->outfile_name)
+	if (cmd->outfile_name && cmd->is_append == 0)
 	{
 		cmd->outfile = open(cmd->outfile_name, O_WRONLY | O_CREAT | O_TRUNC,
+				0644);
+		if (cmd->outfile == -1)
+			perror("open outfile");
+	}
+	else if (cmd->outfile_name && cmd->is_append == 1)
+	{
+		cmd->outfile = open(cmd->outfile_name, O_WRONLY | O_CREAT | O_APPEND,
 				0644);
 		if (cmd->outfile == -1)
 			perror("open outfile");
