@@ -24,15 +24,15 @@ void	exec_builtin(t_all *all, t_cmd *cmd, t_env **env)
 	if (!ft_strncmp(cmd->cmd_bi, "echo", ft_strlen("echo")))
 		ft_echo(cmd->cmd_tab + 1, all);
 	else if (!ft_strncmp(cmd->cmd_bi, "cd", ft_strlen("cd")))
-		ft_cd(cmd->cmd_tab, *env);
+		ft_cd(cmd->cmd_tab, *env, all);
 	else if (!ft_strncmp(cmd->cmd_bi, "pwd", ft_strlen("pwd")))
-		ft_pwd();
+		ft_pwd(all);
 	else if (!ft_strncmp(cmd->cmd_bi, "export", ft_strlen("export")))
 		ft_export(&cmd->cmd_tab[1], all);
 	else if (!ft_strncmp(cmd->cmd_bi, "unset", ft_strlen("unset")))
 		ft_unset(&cmd->cmd_tab[1], all);
 	else if (!ft_strncmp(cmd->cmd_bi, "env", ft_strlen("env")))
-		ft_env(*env);
+		ft_env(*env, all);
 	else if (!ft_strncmp(cmd->cmd_bi, "exit", ft_strlen("exit")))
 		ft_exit(all);
 	else

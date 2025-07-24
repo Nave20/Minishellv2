@@ -46,33 +46,39 @@ bool	env_update(t_env *env, char *name, char *new)
 	return (1);
 }
 
-void	cd_two(char *target, char *old_pwd, t_env *env)
+void	cd_two(char *target, char *old_pwd, t_env *env, t_all *all)
 {
 	char	new_pwd[PATH_MAX];
 
 	if (chdir(target) != 0)
 	{
 		free(old_pwd);
-		perror("cd");
+		perror(RED"cd"RESET);
+		all->exit_code = 1;
 		return ;
 	}
 	if (env_update(env, "OLDPWD", old_pwd) == 1)
 	{
 		free(old_pwd);
 		ft_putendl_fd(RED "CD : malloc failed" RESET, 2);
+		all->exit_code = 1;
 		return ;
 	}
 	free(old_pwd);
 	if (!getcwd(new_pwd, sizeof(new_pwd)))
 	{
 		ft_putendl_fd(RED "CD : getcwd failed" RESET, 2);
+		all->exit_code = 1;
 		return ;
 	}
 	if (env_update(env, "PWD", new_pwd) == 1)
+	{
+		all->exit_code = 1;
 		ft_putendl_fd(RED "CD : malloc failed" RESET, 2);
+	}
 }
 
-char	*get_target(char **args, char *old_pwd, t_env *env)
+char	*get_target(char **args, char *old_pwd, t_env *env, t_all *all)
 {
 	char	*target;
 
@@ -81,7 +87,7 @@ char	*get_target(char **args, char *old_pwd, t_env *env)
 		target = env_value(env, "HOME");
 		if (!target)
 		{
-			cd_no_home(old_pwd);
+			cd_no_home(old_pwd, all);
 			return (NULL);
 		}
 	}
@@ -90,8 +96,7 @@ char	*get_target(char **args, char *old_pwd, t_env *env)
 		target = env_value(env, "OLDPWD");
 		if (!target)
 		{
-			free(old_pwd);
-			ft_putendl_fd(RED "CD : OLDPWD not set" RESET, 2);
+			cd_no_pwd(old_pwd, all);
 			return (NULL);
 		}
 		printf(BLUE "%s\n" RESET, target);
@@ -101,7 +106,7 @@ char	*get_target(char **args, char *old_pwd, t_env *env)
 	return (target);
 }
 
-void	ft_cd(char **args, t_env *env)
+void	ft_cd(char **args, t_env *env, t_all *all)
 {
 	char	*target;
 	char	*old_pwd;
@@ -112,9 +117,10 @@ void	ft_cd(char **args, t_env *env)
 		ft_putendl_fd(RED "CD : OLDPWD not set" RESET, 2);
 		return ;
 	}
-	target = get_target(args, old_pwd, env);
+	target = get_target(args, old_pwd, env, all);
 	if (!target)
 		return ;
 	fflush(stdout);
 	cd_two(target, old_pwd, env);
+	all->exit_code = 0;
 }

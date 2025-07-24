@@ -48,7 +48,10 @@ void	printer(char **content)
 void	ft_echo(char **content, t_all *all)
 {
 	if (!content[0])
+	{
 		ft_putendl_fd("", 1);
+		return ;
+	}
 	if (ft_strncmp(content[0], "-n", 3) == 0)
 	{
 		all->exit_code = 0;

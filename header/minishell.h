@@ -24,7 +24,7 @@
 # define UNDER "\033[4m"
 # define BLINK "\033[5m"
 # define REVERSE "\033[7m"
-# define MAX_COM 100
+# define MAX_COM 10000
 
 //-------------------------------INCLUDE-------------------------------
 # include "../libft/libft.h"
@@ -208,10 +208,11 @@ t_env					*free_node(t_env *node);
 
 //------------------------------BUILTINS-------------------------------
 void					ft_echo(char **content, t_all *all);
-void					ft_cd(char **args, t_env *env);
-void					cd_no_home(char *old_pwd);
-bool					ft_pwd(void);
-void					ft_env(t_env *env);
+void					ft_cd(char **args, t_env *env, t_all *all);
+void					cd_no_home(char *old_pwd, t_all *all);
+void					cd_no_pwd(char *old_pwd, t_all *all);
+void					ft_pwd(t_all *all);
+void					ft_env(t_env *env, t_all *all);
 void					ft_export(char **str, t_all *all);
 void					ft_unset(char **str, t_all *all);
 void					ft_exit(t_all *all);

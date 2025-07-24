@@ -14,8 +14,18 @@
 #include "../../libft/libft.h"
 #include <limits.h>
 
-void	cd_no_home(char *old_pwd)
+void	cd_no_home(char *old_pwd, t_all *all)
 {
 	free(old_pwd);
+	all->exit_code = 1;
 	ft_putendl_fd(RED "CD : HOME not set" RESET, 2);
+
+}
+
+void	cd_no_pwd(char *old_pwd, t_all *all)
+{
+	free(old_pwd);
+	all->exit_code = 1;
+	ft_putendl_fd(RED "CD : OLDPWD not set" RESET, 2);
+
 }

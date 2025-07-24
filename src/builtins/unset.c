@@ -52,6 +52,7 @@ void	unset_bis(char *str, t_all *all)
 		{
 			printf(RED"unset:"RESET" '%s' "YELLOW"is not a valid "
 				"identifier\n"RESET, str);
+			all->exit_code = 1;
 		}
 		i++;
 	}
@@ -70,4 +71,5 @@ void	ft_unset(char **str, t_all *all)
 		unset_bis(str[i], all);
 		i++;
 	}
+	all->exit_code = 0;
 }

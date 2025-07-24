@@ -13,7 +13,7 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-void	ft_env(t_env *env)
+void	ft_env(t_env *env, t_all *all)
 {
 	while (env->next)
 	{
@@ -21,4 +21,5 @@ void	ft_env(t_env *env)
 		env = env->next;
 	}
 	printf(YELLOW "%s=" RESET "%s\n", env->name, env->line);
+	all->exit_code = 0;
 }

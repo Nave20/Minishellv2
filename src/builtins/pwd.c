@@ -14,15 +14,15 @@
 #include "../../libft/libft.h"
 #include <limits.h>
 
-bool	ft_pwd(void)
+void	ft_pwd(t_all *all)
 {
 	char	cwd[PATH_MAX];
 
 	if (!getcwd(cwd, sizeof(cwd)))
 	{
 		perror("pwd");
-		return (1);
+		all->exit_code = 1;
 	}
 	ft_printf(BLUE "%s\n" RESET, cwd);
-	return (0);
+	all->exit_code = 0;
 }
