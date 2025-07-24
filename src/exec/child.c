@@ -24,10 +24,20 @@ void	child_two(t_all *all)
 	{
 		if (lst_to_tab(data, all->env) == -1)
 			exit(EXIT_FAILURE);
+		// print_lst(all->data);
+		// int	i =0;
+		// while (all->cmd->cmd_tab[i])
+		// {
+		// 	dprintf(2, "---->%s\n",cmd->cmd_tab[i]);
+		// 	i++;
+		// }
 		exec_two(cmd->cmd_tab, data->env_tab);
 	}
 	else if (cmd->cmd_bi && all->cmd->next)
+	{
+		printf(RED"TEST"RESET);
 		exec_builtin(all, cmd, &all->env);
+	}
 	if (errno == ENOENT)
 		exit(127);
 	if (errno == EACCES)
