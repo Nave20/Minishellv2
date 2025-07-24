@@ -211,8 +211,8 @@ void					ft_cd(char **args, t_env *env);
 void					cd_no_home(char *old_pwd);
 bool					ft_pwd(void);
 void					ft_env(t_env *env);
-void					ft_export(char *str, t_all *all);
-t_env					*ft_unset(char *str, t_all all);
+void					ft_export(char **str, t_all *all);
+void					ft_unset(char **str, t_all *all);
 void					ft_exit(t_all *all);
 
 //--------------------------------EXEC---------------------------------

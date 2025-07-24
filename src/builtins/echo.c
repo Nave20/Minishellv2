@@ -22,11 +22,27 @@ bool	valid_fag(const char *flag)
 		return (1);
 	while (flag[i])
 	{
-		if (flag[i] != 'n')
+		if (flag[i] != 'n' && flag[i] != 0)
 			return (1);
 		i++;
 	}
 	return (0);
+}
+
+void	printer(char **content)
+{
+	int	i;
+
+	i = 0;
+	ft_putstr_fd(content[0], 1);
+	write(1, " ", 1);
+	while (content[i])
+	{
+		ft_putstr_fd(content[i], 1);
+		write(1, " ", 1);
+		i++;
+	}
+	ft_putendl_fd("", 1);
 }
 
 void	ft_echo(char **content, t_all *all)
@@ -45,12 +61,10 @@ void	ft_echo(char **content, t_all *all)
 			if (valid_fag(content[0]) == 0)
 				ft_putstr_fd(content[1], 1);
 			else
-			{
-				ft_putstr_fd(content[0], 1);
-				write(1, " ", 1);
-				ft_putendl_fd(content[1], 1);
-			}
+				printer(content);
 		}
+		else if (valid_fag(content[0]) == 0)
+			return ;
 		else
 			ft_putendl_fd(content[0], 1);
 	}

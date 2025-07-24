@@ -19,9 +19,12 @@ void	add_last(char *str, t_all *all)
 
 	while (all->env->next)
 	{
-		if (strncmp(str, all->env->name,
-				ft_strlen(all->env->name) - 1) == 0)
+		if (ft_strncmp(all->env->name, str,
+				ft_strlen(str) + 1) == 0)
+		{
+			dprintf(2, RED"test"RESET);
 			return ;
+		}
 		all->env = all->env->next;
 	}
 	new = alloc(str);
@@ -51,13 +54,8 @@ bool	verif(char *str)
 	return (1);
 }
 
-void	ft_export(char *str, t_all *all)
+void	export_bis(char *str, t_all *all)
 {
-	if (!str)
-	{
-		ft_env(all->env);
-		return ;
-	}
 	if (str[0] == '=' && str[1] == 0)
 	{
 		printf(RED "export:" RESET " '%s' " YELLOW "is not a valid "
@@ -67,4 +65,21 @@ void	ft_export(char *str, t_all *all)
 	if (verif(str) != 1)
 		return ;
 	add_last(str, all);
+}
+
+void	ft_export(char **str, t_all *all)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+	{
+		ft_env(all->env);
+		return ;
+	}
+	while (str[i])
+	{
+		export_bis(str[i], all);
+		i++;
+	}
 }
