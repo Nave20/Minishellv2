@@ -75,7 +75,7 @@ void	ft_export(char **str, t_all *all)
 	i = 0;
 	if (!str)
 	{
-		ft_env(all->env);
+		ft_env(all->env, all);
 		return ;
 	}
 	while (str[i])

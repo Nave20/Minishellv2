@@ -13,14 +13,12 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-int	parent_two(t_all *all)
+void	parent_two(t_all *all,const int *i)
 {
 	t_cmd		*cmd;
-	static int	i = 0;
 
 	cmd = all->cmd;
-	all->pid[i] = all->now_pid;
-	i++;
+	all->pid[*i] = all->now_pid;
 	if (all->prev_fd != -1)
 		close(all->prev_fd);
 	if (cmd->infile != -1)
@@ -33,7 +31,6 @@ int	parent_two(t_all *all)
 		all->prev_fd = -1;
 	if (all->pipe_fd[1] != -1)
 		close(all->pipe_fd[1]);
-	return (i);
 }
 
 void	fd_saver(t_all *all, t_cmd *cmd)
@@ -59,7 +56,7 @@ void	fd_saver(t_all *all, t_cmd *cmd)
 	close(all->stdout_save);
 }
 
-int	parent_one(t_all *all)
+int	parent_one(t_all *all, int *i)
 {
 	t_cmd	*cmd;
 
@@ -72,5 +69,6 @@ int	parent_one(t_all *all)
 		free(cmd->hrdc_path);
 		cmd->hrdc_path = NULL;
 	}
-	return (parent_two(all));
+	parent_two(all, i);
+	return (1);
 }

@@ -228,7 +228,7 @@ void					exec_builtin(t_all *all, t_cmd *cmd, t_env **env);
 void					child_one(t_all *all);
 void					infile_heredoc(t_all *all);
 void					outfile_or_err(t_all *all);
-int						parent_one(t_all *all);
+int						parent_one(t_all *all, int *i);
 void					pid_waiter(t_all *all, int i, int waited);
 
 void					fork_error(t_all *all, int i);

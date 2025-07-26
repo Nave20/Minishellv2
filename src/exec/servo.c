@@ -61,7 +61,7 @@ int	handle_fork(t_all *all, t_cmd **cmd, int *i)
 		child_one(all);
 	else
 	{
-		*i = parent_one(all);
+		*i += parent_one(all, i);
 		*cmd = (*cmd)->next;
 	}
 	return (0);
@@ -82,7 +82,7 @@ void	exec_one(t_data *data, t_all *all)
 		outfile_or_err(all);
 		if (!all->cmd->next && all->cmd->cmd_bi)
 		{
-			i = parent_one(all);
+			i += parent_one(all, &i);
 			break ;
 		}
 		if (handle_fork(all, &cmd, &i) == -1)
