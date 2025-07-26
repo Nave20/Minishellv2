@@ -13,7 +13,7 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-void	parent_two(t_all *all,const int *i)
+void	parent_two(t_all *all, const int *i)
 {
 	t_cmd		*cmd;
 
@@ -33,25 +33,57 @@ void	parent_two(t_all *all,const int *i)
 		close(all->pipe_fd[1]);
 }
 
-void	fd_saver(t_all *all, t_cmd *cmd)
+void	fd_saver_two(t_all *all, t_cmd *cmd)
 {
-	all->stdin_save = dup(STDIN_FILENO);
-	all->stdout_save = dup(STDOUT_FILENO);
-	dup2(all->stdin_save, STDIN_FILENO);
-	dup2(all->stdout_save, STDOUT_FILENO);
 	if (cmd->outfile != -1)
 	{
-		dup2(cmd->outfile, STDOUT_FILENO);
+		if (dup2(cmd->outfile, STDOUT_FILENO) == -1)
+		{
+			close(all->stdin_save);
+			close(all->stdout_save);
+			close(cmd->infile);
+			clean_exit(all);
+		}
 		close(cmd->outfile);
 	}
 	if (cmd->infile != -1)
 	{
-		dup2(cmd->infile, STDIN_FILENO);
+		if (dup2(cmd->infile, STDIN_FILENO) == -1)
+		{
+			close(all->stdin_save);
+			close(all->stdout_save);
+			close(cmd->infile);
+			clean_exit(all);
+		}
 		close(cmd->infile);
 	}
+}
+
+void	fd_saver(t_all *all, t_cmd *cmd)
+{
+	all->stdin_save = dup(STDIN_FILENO);
+	if (all->stdin_save == -1)
+		clean_exit(all);
+	all->stdout_save = dup(STDOUT_FILENO);
+	if (all->stdout_save == -1)
+	{
+		close(all->stdin_save);
+		clean_exit(all);
+	}
+	fd_saver_two(all, cmd);
 	exec_builtin(all, cmd, &all->env);
-	dup2(all->stdin_save, STDIN_FILENO);
-	dup2(all->stdout_save, STDOUT_FILENO);
+	if (dup2(all->stdin_save, STDIN_FILENO) == -1)
+	{
+		close(all->stdin_save);
+		close(all->stdout_save);
+		clean_exit(all);
+	}
+	if (dup2(all->stdout_save, STDOUT_FILENO) == -1)
+	{
+		close(all->stdin_save);
+		close(all->stdout_save);
+		clean_exit(all);
+	}
 	close(all->stdin_save);
 	close(all->stdout_save);
 }
