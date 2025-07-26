@@ -63,6 +63,8 @@ int	out_two(t_all *all, t_cmd *cmd)
 			return (1);
 		}
 	}
+	else
+		cmd->outfile = -1;
 	return (0);
 }
 
