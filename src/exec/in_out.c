@@ -92,6 +92,7 @@ int	outfile_or_err(t_all *all)
 	if (cmd->next && pipe(all->pipe_fd) == -1)
 	{
 		perror("pipe");
+		all->exit_code = 1;
 		exit(EXIT_FAILURE);
 	}
 	return (0);

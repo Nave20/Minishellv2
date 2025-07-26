@@ -46,7 +46,7 @@ void	goodbye_one(t_all *all)
 {
 	int	i;
 
-	i = all->data->exit_code;
+	i = all->exit_code;
 	rl_clear_history();
 	free_env(all->env);
 	free_data(all->data);
@@ -79,5 +79,4 @@ void	ft_exit(t_all *all)
 	}
 	else
 		goodbye_three(all);
-	exit(EXIT_SUCCESS);
 }
