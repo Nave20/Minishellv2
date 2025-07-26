@@ -39,30 +39,44 @@ void	infile_heredoc(t_all *all)
 		cmd->infile = -1;
 }
 
-void	outfile_or_err(t_all *all)
+int	out_two(t_all *all, t_cmd *cmd)
 {
-	t_cmd	*cmd;
-
-	cmd = all->cmd;
 	if (cmd->outfile_name && cmd->is_append == 0)
 	{
 		cmd->outfile = open(cmd->outfile_name, O_WRONLY | O_CREAT | O_TRUNC,
 				0644);
 		if (cmd->outfile == -1)
+		{
 			perror("open outfile");
+			all->exit_code = 1;
+			return (1);
+		}
 	}
 	else if (cmd->outfile_name && cmd->is_append == 1)
 	{
 		cmd->outfile = open(cmd->outfile_name, O_WRONLY | O_CREAT | O_APPEND,
 				0644);
 		if (cmd->outfile == -1)
+		{
 			perror("open outfile");
+			all->exit_code = 1;
+			return (1);
+		}
 	}
-	else
-		cmd->outfile = -1;
+	return (0);
+}
+
+int	outfile_or_err(t_all *all)
+{
+	t_cmd	*cmd;
+
+	cmd = all->cmd;
+	if (out_two(all, cmd) == 1)
+		return (1);
 	if (cmd->next && pipe(all->pipe_fd) == -1)
 	{
 		perror("pipe");
 		exit(EXIT_FAILURE);
 	}
+	return (0);
 }

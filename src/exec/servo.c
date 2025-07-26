@@ -75,11 +75,13 @@ void	exec_one(t_data *data, t_all *all)
 	exec_init(all, data);
 	cmd = all->cmd;
 	i = 0;
+	print_lst(all->data); ///remove
 	while (cmd)
 	{
 		all->cmd = cmd;
 		infile_heredoc(all);
-		outfile_or_err(all);
+		if (outfile_or_err(all) == 1)
+			return ;
 		if (!all->cmd->next && all->cmd->cmd_bi)
 		{
 			i += parent_one(all, &i);
