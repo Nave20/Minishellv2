@@ -13,30 +13,44 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-void	infile_heredoc(t_all *all)
+int	here_two(t_all *all, t_cmd *cmd)
+{
+	cmd->infile = open(cmd->hrdc_path, O_RDONLY);
+	if (cmd->infile == -1)
+	{
+		ft_putstr_fd(RED "Error opening heredoc file :", 2);
+		ft_putendl_fd(all->cmd->hrdc_path, 2);
+		ft_putendl_fd("->\n" RESET, 2);
+		all->exit_code = 1;
+		perror(NULL);
+		return (1);
+	}
+	return (0);
+}
+
+int	infile_heredoc(t_all *all)
 {
 	t_cmd	*cmd;
 
 	cmd = all->cmd;
 	if (cmd->hrdc_path)
 	{
-		cmd->infile = open(cmd->hrdc_path, O_RDONLY);
-		if (cmd->infile == -1)
-		{
-			ft_putstr_fd(RED "Error opening heredoc file :", 2);
-			ft_putendl_fd(all->cmd->hrdc_path, 2);
-			ft_putendl_fd("->\n" RESET, 2);
-			perror(NULL);
-		}
+		if (here_two(all, cmd) == 1)
+			return (1);
 	}
 	else if (cmd->infile_name)
 	{
 		cmd->infile = open(cmd->infile_name, O_RDONLY);
 		if (cmd->infile == -1)
+		{
+			all->exit_code = 1;
 			perror("open infile");
+			return (1);
+		}
 	}
 	else
 		cmd->infile = -1;
+	return (0);
 }
 
 int	out_two(t_all *all, t_cmd *cmd)

@@ -79,8 +79,10 @@ void	exec_one(t_data *data, t_all *all)
 	while (cmd)
 	{
 		all->cmd = cmd;
-		infile_heredoc(all);
-		outfile_or_err(all);
+		if (infile_heredoc(all) == 1)
+			return ;
+		if (outfile_or_err(all) == 1)
+			return ;
 		if (!all->cmd->next && all->cmd->cmd_bi)
 		{
 			i += parent_one(all, &i);
