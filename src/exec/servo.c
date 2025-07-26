@@ -75,7 +75,6 @@ void	exec_one(t_data *data, t_all *all)
 	exec_init(all, data);
 	cmd = all->cmd;
 	i = 0;
-	print_lst(all->data);
 	while (cmd)
 	{
 		all->cmd = cmd;
