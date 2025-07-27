@@ -38,7 +38,6 @@ char	**get_path(char **env, int i, int a)
 		if (ft_strnstr(env[a], "PATH=", 5))
 			break ;
 	}
-	dprintf(2, RED"%s\n"RESET, env[a]);
 	if (!*env)
 		return (path_error(), NULL);
 	output = ft_split(&env[a][5], ':');
