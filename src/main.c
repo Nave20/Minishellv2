@@ -65,7 +65,7 @@ static int	parsing_hub(t_data *data)
 	return (0);
 }
 
-static int	main_hub(t_data *data)
+static int	main_hub(t_all *all)
 {
 	int		nbword;
 	t_all	*all;
@@ -73,34 +73,33 @@ static int	main_hub(t_data *data)
 
 	if (isatty(STDIN_FILENO))
 	{
-		data->input = readline(BOLD CYAN "minishell> " RESET);
-		if (data->input)
-			add_history(data->input);
+		all->data->input = readline(BOLD CYAN "minishell> " RESET);
+		if (all->data->input)
+			add_history(all->data->input);
 		else
 			return (1);
 	}
 	else
 	{
 		line = get_next_line(STDIN_FILENO);
-		data->input = ft_strtrim(line, "\n");
+		all->data->input = ft_strtrim(line, "\n");
 		free(line);
 	}
-	if (data->input)
+	if (all->data->input)
 	{
-		nbword = word_count(data->input);
-		data->token = ft_calloc(nbword + 1, sizeof(t_token));
-		if (!data->token)
-			return (err_return_token(data,
+		nbword = word_count(all->data->input);
+		all->data->token = ft_calloc(nbword + 1, sizeof(t_token));
+		if (!all->data->token)
+			return (err_return_token(all->data,
 					RED "minishell : memory allocation failed\n" RESET, 1));
-		if (parsing_hub(data) == -1)
+		if (parsing_hub(all->data) == -1)
 			return (-1);
-		all = malloc(sizeof(t_all));
-		all->data = data;
-		all->exit_code = data->err_code;
+		// all = malloc(sizeof(t_all));
+		// all->exit_code = all->data->err_code;
 		// print_lst(data);
-		exec_one(data, all);
-		free_data(data);
-		free(all);
+		exec_one(all->data, all);
+		// free_data(data);
+		// free(all);
 	}
 	else
 		return (1);
@@ -109,17 +108,18 @@ static int	main_hub(t_data *data)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	data;
+	t_all	*all;
 	int		err;
 
 	(void)argc;
 	(void)argv;
 	err = 0;
+	all = malloc(sizeof(t_all));
 	if (envp[0])
-		data.env = pars_env(envp, &err);
+		all->data->env = pars_env(envp, &err);
 	else
 	{
-		if (handle_empty_env(&data) == -1)
+		if (handle_empty_env(all->data) == -1)
 			return (1);
 	}
 	if (err == 1)
@@ -129,7 +129,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	while (1)
 	{
-		if (main_hub(&data) == 1)
+		if (main_hub(all) == 1)
 			return (1);
 	}
 	return (0);

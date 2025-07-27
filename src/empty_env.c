@@ -10,15 +10,6 @@ static int	complete_env(t_data *data, t_env *ptr, t_env *head, t_env *next)
 				2));
 	}
 	ptr->next = next;
-	ptr = next;
-	next = alloc("PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin");
-	if (!ptr)
-	{
-		free_env(head);
-		return (err_return_token(data, "minishell : memory allocation failed\n",
-				2));
-	}
-	ptr->next = next;
 	data->env = head;
 	return (0);
 }
