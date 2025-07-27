@@ -8,21 +8,33 @@ int	handle_double_quote_new(t_data *data, char *old, char **new, int *i)
 	if (!is_locked(old))
 		return (err_return_token(data, "minishell: unclosed quotes\n", 2));
 	start = (*i);
-	while (old[*i])
+	while (old[*i] && !(ft_isspace(old[*i])))
 	{
-		skip_quotes(old, i);
-		if (ft_isspace(old[*i]) || old[*i] == '\0' || old[*i] == '<'
-			|| old[*i] == '>' || old[*i] == '|')
-		{
-			end = (*i) - 1;
-			if (put_token_new(old, new, start, end) == -1)
-				return (err_return_token(data,
-						"minishell: memory allocation failed\n", 1));
-			return (0);
-		}
-		(*i)++;
+		if (old[*i] == '\'' || old[*i] == '"')
+			skip_quotes(old, i);
+		else
+			(*i)++;
 	}
+	end = (*i) - 1;
+	if (put_token_new(old, new, start, end) == -1)
+		return (err_return_token(data, "minishell: memory allocation failed\n",
+				1));
 	return (0);
+	// while (old[*i])
+	// {
+	// 	skip_quotes(old, i);
+	// 	if (ft_isspace(old[*i]) || old[*i] == '\0' || old[*i] == '<'
+	// 		|| old[*i] == '>' || old[*i] == '|')
+	// 	{
+	// 		end = (*i) - 1;
+	// 		if (put_token_new(old, new, start, end) == -1)
+	// 			return (err_return_token(data,
+	// 					"minishell: memory allocation failed\n", 1));
+	// 		return (0);
+	// 	}
+	// 	(*i)++;
+	// }
+	// return (0);
 }
 
 int	handle_simple_quote_new(t_data *data, char *old, char **new, int *i)
@@ -33,21 +45,33 @@ int	handle_simple_quote_new(t_data *data, char *old, char **new, int *i)
 	if (!is_locked(old))
 		return (err_return_token(data, "minishell: unclosed quotes\n", 2));
 	start = (*i);
-	while (old[*i])
+	while (old[*i] && !(ft_isspace(old[*i])))
 	{
-		skip_quotes(old, i);
-		if (ft_isspace(old[*i]) || old[*i] == '\0' || old[*i] == '<'
-			|| old[*i] == '>' || old[*i] == '|')
-		{
-			end = (*i) - 1;
-			if (put_token_new(old, new, start, end) == -1)
-				return (err_return_token(data,
-						"minishell: memory allocation failed\n", 1));
-			return (0);
-		}
-		(*i)++;
+		if (old[*i] == '\'' || old[*i] == '"')
+			skip_quotes(old, i);
+		else
+			(*i)++;
 	}
+	end = (*i) - 1;
+	if (put_token_new(old, new, start, end) == -1)
+		return (err_return_token(data, "minishell: memory allocation failed\n",
+				1));
 	return (0);
+	// while (old[*i])
+	// {
+	// 	skip_quotes(old, i);
+	// 	if (ft_isspace(old[*i]) || old[*i] == '\0' || old[*i] == '<'
+	// 		|| old[*i] == '>' || old[*i] == '|')
+	// 	{
+	// 		end = (*i) - 1;
+	// 		if (put_token_new(old, new, start, end) == -1)
+	// 			return (err_return_token(data,
+	// 					"minishell: memory allocation failed\n", 1));
+	// 		return (0);
+	// 	}
+	// 	(*i)++;
+	// }
+	// return (0);
 }
 
 int	handle_redirect_new(char *old, char **new, int *i, int c)

@@ -39,7 +39,8 @@ static int	dbl_quotes_env_var(t_data *data, int i, int *j)
 	while (data->token[i].tab[*j] && data->token[i].tab[*j] != '"')
 	{
 		if (data->token[i].tab[*j] == '$' && (ft_isalnum(data->token[i].tab[*j
-					+ 1]) || data->token[i].tab[*j + 1] == '_'))
+					+ 1]) || data->token[i].tab[*j + 1] == '_'
+				|| data->token[i].tab[*j + 1] == '?'))
 		{
 			if (get_env_var(data, i) == -1)
 				return (-1);

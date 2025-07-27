@@ -2,7 +2,7 @@
 
 static int	char_check(t_data *data, char *old, char **new, int *i)
 {
-	if (old[*i] == ' ')
+	if (ft_isspace(old[*i]))
 		(*i)++;
 	if (old[*i] == '"')
 	{
