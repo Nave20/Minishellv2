@@ -102,8 +102,6 @@ void	pipeline_one(t_all *all)
 
 void	child_one(t_all *all)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	pipeline_one(all);
 	pipeline_two(all);
 	if (all->pipe_fd[0] != -1 && all->pipe_fd[0] != STDIN_FILENO)
@@ -112,5 +110,20 @@ void	child_one(t_all *all)
 		close(all->pipe_fd[1]);
 	if (all->prev_fd != -1 && all->prev_fd != STDIN_FILENO)
 		close(all->prev_fd);
+	if (all->cmd->infile != -1)
+	{
+		close(all->cmd->infile);
+		all->cmd->infile = -1;
+	}
+	if (all->cmd->outfile != -1)
+	{
+		close(all->cmd->outfile);
+		all->cmd->outfile = -1;
+	}
+	if (all->cmd->hrdc_path)
+	{
+		unlink(all->cmd->hrdc_path);
+		free(all->cmd->hrdc_path);
+	}
 	child_two(all);
 }
