@@ -13,31 +13,36 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
+void	last_two(char *str, t_all *all)
+{
+	t_env	*new;
+
+	while (all->data->env->next)
+	{
+		if (ft_strncmp(all->data->env->name, str,
+				ft_strlen(str) + 1) == 0)
+		{
+			dprintf(2, RED"test"RESET);
+			return ;
+		}
+		all->data->env = all->data->env->next;
+	}
+	new = alloc(str);
+	if (!new)
+	{
+		ft_putendl_fd(RED"EXPORT : malloc failed"RESET, 2);
+		all->data->err_code = 1;
+		return ;
+	}
+	all->data->env->next = new;
+}
+
 void	add_last(char *str, t_all *all)
 {
 	t_env	*new;
 
 	if (all->data->env)
-	{
-		while (all->data->env->next)
-		{
-			if (ft_strncmp(all->data->env->name, str,
-					ft_strlen(str) + 1) == 0)
-			{
-				dprintf(2, RED"test"RESET);
-				return ;
-			}
-			all->data->env = all->data->env->next;
-		}
-		new = alloc(str);
-		if (!new)
-		{
-			ft_putendl_fd(RED"EXPORT : malloc failed"RESET, 2);
-			all->data->err_code = 1;
-			return ;
-		}
-		all->data->env->next = new;
-	}
+		last_two(str, all);
 	else
 	{
 		new = alloc(str);
