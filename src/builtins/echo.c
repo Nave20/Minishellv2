@@ -39,7 +39,8 @@ void	printer(char **content)
 	while (content[i])
 	{
 		ft_putstr_fd(content[i], 1);
-		write(1, " ", 1);
+		if (content[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
 	ft_putendl_fd("", 1);
