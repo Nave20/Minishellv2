@@ -113,7 +113,9 @@ int	handle_normal(t_data *data, int *nbword, int *i)
 	{
 		(*i)++;
 		skip_quotes(data->input, i);
-		if (ft_isspace(data->input[*i]) || !data->input[*i])
+		if (ft_isspace(data->input[*i]) || !data->input[*i]
+			|| data->input[*i] == '>' || data->input[*i] == '<'
+			|| data->input[*i] == '|')
 		{
 			end = (*i) - 1;
 			data->token[*nbword].tab = put_token(data, start, end);
