@@ -19,13 +19,9 @@ void	last_two(char *str, t_all *all)
 	t_env	*ptr;
 
 	ptr = all->data->env;
-	while (ptr->next)
-	{
-		if (ft_strncmp(ptr->name, str,
-				ft_strlen(str) + 1) == 0)
-			return ;
-		ptr = ptr->next;
-	}
+	ptr = replace_logic(str, ptr);
+	if (!ptr)
+		return ;
 	new = alloc(str);
 	if (!new)
 	{

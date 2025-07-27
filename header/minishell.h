@@ -205,6 +205,7 @@ int						heredoc_destroyer(t_data *data);
 t_env					*alloc(char *str);
 t_env					*free_env(t_env *head);
 t_env					*free_node(t_env *node);
+void					replace_line(const char *str, t_env *node);
 
 //------------------------------BUILTINS-------------------------------
 void					ft_echo(char **content, t_all *all);
@@ -214,6 +215,7 @@ void					cd_no_pwd(char *old_pwd, t_all *all);
 void					ft_pwd(t_all *all);
 void					ft_env(t_env *env, t_all *all);
 void					ft_export(char **str, t_all *all);
+t_env					*replace_logic(char *str, t_env *ptr);
 void					ft_unset(char **str, t_all *all);
 void					ft_exit(t_all *all);
 

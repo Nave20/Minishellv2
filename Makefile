@@ -52,6 +52,7 @@ BUILTINS_FILES  = 	echo.c				\
 					pwd.c				\
 					env.c				\
 					export.c			\
+					export_bis.c		\
 					unset.c				\
 					exit.c				\
 
