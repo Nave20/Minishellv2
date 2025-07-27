@@ -91,7 +91,7 @@ void	exec_one(t_data *data, t_all *all)
 			break ;
 	}
 	pid_waiter(all, i, 0);
-	data->exit_code = all->exit_code;
+	data->exit_code = all->data->err_code;
 	if (all->prev_fd != -1)
 		close(all->prev_fd);
 }

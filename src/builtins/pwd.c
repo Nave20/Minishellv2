@@ -21,8 +21,8 @@ void	ft_pwd(t_all *all)
 	if (!getcwd(cwd, sizeof(cwd)))
 	{
 		perror("pwd");
-		all->exit_code = 1;
+		all->data->err_code = 1;
 	}
 	ft_printf(BLUE "%s\n" RESET, cwd);
-	all->exit_code = 0;
+	all->data->err_code = 0;
 }

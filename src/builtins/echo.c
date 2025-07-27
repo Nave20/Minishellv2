@@ -54,7 +54,7 @@ void	ft_echo(char **content, t_all *all)
 	}
 	if (ft_strncmp(content[0], "-n", 3) == 0)
 	{
-		all->exit_code = 0;
+		all->data->err_code = 0;
 		return ;
 	}
 	if (content[0])
@@ -71,5 +71,5 @@ void	ft_echo(char **content, t_all *all)
 		else
 			ft_putendl_fd(content[0], 1);
 	}
-	all->exit_code = 0;
+	all->data->err_code = 0;
 }

@@ -15,11 +15,13 @@
 
 void	ft_env(t_env *env, t_all *all)
 {
+	if (!env)
+		return ;
 	while (env->next)
 	{
 		printf(YELLOW "%s=" RESET "%s\n", env->name, env->line);
 		env = env->next;
 	}
 	printf(YELLOW "%s=" RESET "%s\n", env->name, env->line);
-	all->exit_code = 0;
+	all->data->err_code = 0;
 }

@@ -101,7 +101,6 @@ static int	main_hub(t_data *data)
 		exec_one(data, all);
 		free_data(data);
 		free(all);
-		data->err_code = all->exit_code;
 	}
 	else
 		return (1);

@@ -13,7 +13,7 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-void	logic(t_env *env, char *str)
+t_env	*logic(t_env *env, char *str)
 {
 	t_env	*prev;
 	t_env	*next;
@@ -22,6 +22,8 @@ void	logic(t_env *env, char *str)
 	prev = NULL;
 	next = NULL;
 	node = env;
+	if (!node)
+		return NULL;
 	while (node->next)
 	{
 		if (ft_strncmp(node->name, str, ft_strlen(node->name)) == 0)
@@ -38,7 +40,10 @@ void	logic(t_env *env, char *str)
 		free_node(node);
 		if (prev)
 			prev->next = next;
+		else
+			return (next);
 	}
+	return (env);
 }
 
 void	unset_bis(char *str, t_all *all)
@@ -52,11 +57,11 @@ void	unset_bis(char *str, t_all *all)
 		{
 			printf(RED"unset:"RESET" '%s' "YELLOW"is not a valid "
 				"identifier\n"RESET, str);
-			all->exit_code = 1;
+			all->data->err_code = 1;
 		}
 		i++;
 	}
-	logic(all->env, str);
+	all->env = logic(all->env, str);
 }
 
 void	ft_unset(char **str, t_all *all)
@@ -71,5 +76,6 @@ void	ft_unset(char **str, t_all *all)
 		unset_bis(str[i], all);
 		i++;
 	}
-	all->exit_code = 0;
+
+	all->data->err_code = 0;
 }

@@ -21,7 +21,7 @@ int	here_two(t_all *all, t_cmd *cmd)
 		ft_putstr_fd(RED "Error opening heredoc file :", 2);
 		ft_putendl_fd(all->cmd->hrdc_path, 2);
 		ft_putendl_fd("->\n" RESET, 2);
-		all->exit_code = 1;
+		all->data->err_code = 1;
 		perror(NULL);
 		return (1);
 	}
@@ -43,7 +43,7 @@ int	infile_heredoc(t_all *all)
 		cmd->infile = open(cmd->infile_name, O_RDONLY);
 		if (cmd->infile == -1)
 		{
-			all->exit_code = 1;
+			all->data->err_code = 1;
 			perror("open infile");
 			return (1);
 		}
@@ -62,7 +62,7 @@ int	out_two(t_all *all, t_cmd *cmd)
 		if (cmd->outfile == -1)
 		{
 			perror("open outfile");
-			all->exit_code = 1;
+			all->data->err_code = 1;
 			return (1);
 		}
 	}
@@ -73,7 +73,7 @@ int	out_two(t_all *all, t_cmd *cmd)
 		if (cmd->outfile == -1)
 		{
 			perror("open outfile");
-			all->exit_code = 1;
+			all->data->err_code = 1;
 			return (1);
 		}
 	}
@@ -92,7 +92,7 @@ int	outfile_or_err(t_all *all)
 	if (cmd->next && pipe(all->pipe_fd) == -1)
 	{
 		perror("pipe");
-		all->exit_code = 1;
+		all->data->err_code = 1;
 		exit(EXIT_FAILURE);
 	}
 	return (0);

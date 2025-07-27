@@ -84,6 +84,8 @@ void	exec_two(char **cmd, char **env)
 		exit(127);
 	}
 	in_same_dir(cmd, env);
+	if (!env)
+		return ;
 	paths = get_path(env, -1, -1);
 	if (!paths)
 		return ;

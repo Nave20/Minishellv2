@@ -18,13 +18,13 @@ void	waiter_two(t_all *all, int status, pid_t wpid)
 	int	sig;
 
 	if (WIFEXITED(status))
-		all->exit_code = WEXITSTATUS(status);
+		all->data->err_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
 		if (sig == SIGINT)
 			write(1, "\n", 1);
-		all->exit_code = 128 + sig;
+		all->data->err_code = 128 + sig;
 		if (sig != SIGPIPE)
 			printf("Process %d terminated by signal %d\n", wpid, sig);
 	}

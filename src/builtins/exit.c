@@ -46,7 +46,7 @@ void	goodbye_one(t_all *all)
 {
 	int	i;
 
-	i = all->exit_code;
+	i = all->data->err_code;
 	rl_clear_history();
 	free_env(all->env);
 	free_data(all->data);

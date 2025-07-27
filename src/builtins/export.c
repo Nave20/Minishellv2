@@ -31,7 +31,7 @@ void	add_last(char *str, t_all *all)
 	if (!new)
 	{
 		ft_putendl_fd(RED"EXPORT : malloc failed"RESET, 2);
-		all->exit_code = 1;
+		all->data->err_code = 1;
 		return ;
 	}
 	all->env->next = new;
@@ -83,5 +83,5 @@ void	ft_export(char **str, t_all *all)
 		export_bis(str[i], all);
 		i++;
 	}
-	all->exit_code = 0;
+	all->data->err_code = 0;
 }
