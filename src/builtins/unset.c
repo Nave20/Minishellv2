@@ -61,7 +61,7 @@ void	unset_bis(char *str, t_all *all)
 		}
 		i++;
 	}
-	all->env = logic(all->env, str);
+	all->data->env = logic(all->data->env, str);
 }
 
 void	ft_unset(char **str, t_all *all)
@@ -76,6 +76,5 @@ void	ft_unset(char **str, t_all *all)
 		unset_bis(str[i], all);
 		i++;
 	}
-
 	all->data->err_code = 0;
 }

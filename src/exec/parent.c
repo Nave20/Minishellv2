@@ -71,7 +71,7 @@ void	fd_saver(t_all *all, t_cmd *cmd)
 		clean_exit(all);
 	}
 	fd_saver_two(all, cmd);
-	exec_builtin(all, cmd, &all->env);
+	exec_builtin(all, cmd, &all->data->env);
 	if (dup2(all->stdin_save, STDIN_FILENO) == -1)
 	{
 		close(all->stdin_save);

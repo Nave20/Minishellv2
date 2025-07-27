@@ -16,6 +16,8 @@
 
 char	*env_value(t_env *env, char *param)
 {
+	if (!env)
+		return (NULL);
 	while (env)
 	{
 		if (ft_strncmp(env->name, param, ft_strlen(param)) == 0)

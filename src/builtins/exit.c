@@ -19,7 +19,7 @@ void	goodbye_three(t_all *all)
 
 	i = ft_atoi(all->cmd->cmd_tab[1]);
 	rl_clear_history();
-	free_env(all->env);
+	free_env(all->data->env);
 	free_data(all->data);
 	if (all->stdin_save)
 		close(all->stdin_save);
@@ -32,7 +32,7 @@ void	goodbye_three(t_all *all)
 void	goodbye_two(t_all *all)
 {
 	rl_clear_history();
-	free_env(all->env);
+	free_env(all->data->env);
 	free_data(all->data);
 	if (all->stdin_save)
 		close(all->stdin_save);
@@ -48,7 +48,7 @@ void	goodbye_one(t_all *all)
 
 	i = all->data->err_code;
 	rl_clear_history();
-	free_env(all->env);
+	free_env(all->data->env);
 	free_data(all->data);
 	if (all->stdin_save)
 		close(all->stdin_save);

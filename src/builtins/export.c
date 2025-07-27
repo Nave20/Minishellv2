@@ -17,24 +17,38 @@ void	add_last(char *str, t_all *all)
 {
 	t_env	*new;
 
-	while (all->env->next)
+	if (all->data->env)
 	{
-		if (ft_strncmp(all->env->name, str,
-				ft_strlen(str) + 1) == 0)
+		while (all->data->env->next)
 		{
-			dprintf(2, RED"test"RESET);
+			if (ft_strncmp(all->data->env->name, str,
+					ft_strlen(str) + 1) == 0)
+			{
+				dprintf(2, RED"test"RESET);
+				return ;
+			}
+			all->data->env = all->data->env->next;
+		}
+		new = alloc(str);
+		if (!new)
+		{
+			ft_putendl_fd(RED"EXPORT : malloc failed"RESET, 2);
+			all->data->err_code = 1;
 			return ;
 		}
-		all->env = all->env->next;
+		all->data->env->next = new;
 	}
-	new = alloc(str);
-	if (!new)
+	else
 	{
-		ft_putendl_fd(RED"EXPORT : malloc failed"RESET, 2);
-		all->data->err_code = 1;
-		return ;
+		new = alloc(str);
+		if (!new)
+		{
+			ft_putendl_fd(RED"EXPORT : malloc failed"RESET, 2);
+			all->data->err_code = 1;
+			return ;
+		}
+		all->data->env = new;
 	}
-	all->env->next = new;
 }
 
 bool	verif(char *str)
@@ -75,7 +89,7 @@ void	ft_export(char **str, t_all *all)
 	i = 0;
 	if (!str)
 	{
-		ft_env(all->env, all);
+		ft_env(all->data->env, all);
 		return ;
 	}
 	while (str[i])
