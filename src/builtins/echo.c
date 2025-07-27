@@ -33,7 +33,7 @@ void	printer(char **content)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	ft_putstr_fd(content[0], 1);
 	write(1, " ", 1);
 	while (content[i])
