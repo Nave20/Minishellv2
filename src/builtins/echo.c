@@ -46,31 +46,45 @@ void	printer(char **content)
 	ft_putendl_fd("", 1);
 }
 
+void	printer_two(char **content)
+{
+	int	i;
+
+	i = 1;
+	ft_putstr_fd(content[0], 1);
+	write(1, " ", 1);
+	while (content[i])
+	{
+		ft_putstr_fd(content[i], 1);
+		if (content[i + 1])
+			write(1, " ", 1);
+		i++;
+	}
+}
+
 void	ft_echo(char **content, t_all *all)
 {
+	// int	i = 0;
+	// while (content[i])
+	// {
+	// 	dprintf(2, RED"%s\n"RESET, content[i]);
+	// 	i++;
+	// }
 	if (!content[0])
 	{
 		ft_putendl_fd("", 1);
 		return ;
 	}
-	if (ft_strncmp(content[0], "-n", 3) == 0)
+	if (content[1])
 	{
-		all->data->err_code = 0;
-		return ;
-	}
-	if (content[0])
-	{
-		if (content[1])
-		{
-			if (valid_fag(content[0]) == 0)
-				ft_putstr_fd(content[1], 1);
-			else
-				printer(content);
-		}
-		else if (valid_fag(content[0]) == 0)
-			return ;
+		if (valid_fag(content[0]) == 0)
+			printer_two(content);
 		else
-			ft_putendl_fd(content[0], 1);
+			printer(content);
 	}
+	else if (valid_fag(content[0]) == 0)
+		return ;
+	else
+		ft_putendl_fd(content[0], 1);
 	all->data->err_code = 0;
 }
