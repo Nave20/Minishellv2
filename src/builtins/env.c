@@ -19,9 +19,11 @@ void	ft_env(t_env *env, t_all *all)
 		return ;
 	while (env->next)
 	{
-		printf(YELLOW "%s=" RESET "%s\n", env->name, env->line);
+		// printf(YELLOW "%s=" RESET "%s\n", env->name, env->line);
+		printf("%s=""%s\n", env->name, env->line);
 		env = env->next;
 	}
-	printf(YELLOW "%s=" RESET "%s\n", env->name, env->line);
+	// printf(YELLOW "%s=" RESET "%s\n", env->name, env->line);
+	printf("%s=""%s\n", env->name, env->line);
 	all->data->err_code = 0;
 }

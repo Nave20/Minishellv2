@@ -101,7 +101,8 @@ char	*get_target(char **args, char *old_pwd, t_env *env, t_all *all)
 			cd_no_pwd(old_pwd, all);
 			return (NULL);
 		}
-		printf(BLUE "%s\n" RESET, target);
+		// printf(BLUE "%s\n" RESET, target);
+		printf("%s\n", target);
 	}
 	else
 		target = args[1];
@@ -113,6 +114,11 @@ void	ft_cd(char **args, t_env *env, t_all *all)
 	char	*target;
 	char	*old_pwd;
 
+	if (args[2])
+	{
+		ft_putendl_fd(RED "CD : too many arguments" RESET, 2);
+		return ;
+	}
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 	{

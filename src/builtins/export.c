@@ -16,16 +16,15 @@
 void	last_two(char *str, t_all *all)
 {
 	t_env	*new;
+	t_env	*ptr;
 
-	while (all->data->env->next)
+	ptr = all->data->env;
+	while (ptr->next)
 	{
-		if (ft_strncmp(all->data->env->name, str,
+		if (ft_strncmp(ptr->name, str,
 				ft_strlen(str) + 1) == 0)
-		{
-			dprintf(2, RED"test"RESET);
 			return ;
-		}
-		all->data->env = all->data->env->next;
+		ptr = ptr->next;
 	}
 	new = alloc(str);
 	if (!new)
@@ -34,7 +33,7 @@ void	last_two(char *str, t_all *all)
 		all->data->err_code = 1;
 		return ;
 	}
-	all->data->env->next = new;
+	ptr->next = new;
 }
 
 void	add_last(char *str, t_all *all)
@@ -63,7 +62,8 @@ bool	verif(char *str)
 	i = 0;
 	while (str[i] != '=' && str[i])
 	{
-		if ((str[i] < 'A' || str[i] > 'Z') && str[i] != '_')
+		if (((str[i] < 'A' || str[i] > 'Z') &&
+			(str[i] <= '0' || str[i] >= '9') ) && str[i] != '_')
 		{
 			printf(RED "EXPORT:" RESET " '%s' " YELLOW "is not a valid "
 				"identifier\n" RESET, str);

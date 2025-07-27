@@ -18,7 +18,7 @@ bool	valid_fag(const char *flag)
 	int	i;
 
 	i = 1;
-	if (flag[0] != '-')
+	if (flag[0] != '-' || flag[1] == 0)
 		return (1);
 	while (flag[i])
 	{
@@ -33,9 +33,7 @@ void	printer(char **content)
 {
 	int	i;
 
-	i = 1;
-	ft_putstr_fd(content[0], 1);
-	write(1, " ", 1);
+	i = 0;
 	while (content[i])
 	{
 		ft_putstr_fd(content[i], 1);
@@ -50,9 +48,7 @@ void	printer_two(char **content)
 {
 	int	i;
 
-	i = 1;
-	ft_putstr_fd(content[0], 1);
-	write(1, " ", 1);
+	i = 0;
 	while (content[i])
 	{
 		ft_putstr_fd(content[i], 1);
@@ -70,6 +66,9 @@ void	ft_echo(char **content, t_all *all)
 	// 	dprintf(2, RED"%s\n"RESET, content[i]);
 	// 	i++;
 	// }
+	int	j;
+
+	j = 0;
 	if (!content[0])
 	{
 		ft_putendl_fd("", 1);
@@ -78,7 +77,11 @@ void	ft_echo(char **content, t_all *all)
 	if (content[1])
 	{
 		if (valid_fag(content[0]) == 0)
-			printer_two(content);
+		{
+			while (valid_fag(content[j]) == 0)
+				j++;
+			printer_two(&content[j]);
+		}
 		else
 			printer(content);
 	}

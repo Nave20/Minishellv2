@@ -55,8 +55,6 @@ void	unset_bis(char *str, t_all *all)
 	{
 		if ((str[i] < 'A' || str[i] > 'Z') && str[i] != '_')
 		{
-			printf(RED"unset:"RESET" '%s' "YELLOW"is not a valid "
-				"identifier\n"RESET, str);
 			all->data->err_code = 1;
 			break ;
 		}
