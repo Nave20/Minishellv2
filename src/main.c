@@ -116,17 +116,17 @@ int	main(int argc, char **argv, char **envp)
 	else
 	{
 		if (handle_empty_env(all->data) == -1)
-			return (1);
+			return (all->data->err_code);
 	}
 	if (err == 1)
 	{
 		ft_putstr_fd("minishell : memory allocation failed\n", 1);
-		return (1);
+		return (all->data->err_code);
 	}
 	while (1)
 	{
 		if (main_hub(all) == 1)
-			return (1);
+			return (all->data->err_code);
 	}
-	return (0);
+	return (all->data->err_code);
 }
