@@ -20,12 +20,13 @@ static int	get_env_var(t_data *data, int i)
 				else
 					return (0);
 			}
-			while (ft_isalnum(data->token[i].tab[end])
-				|| data->token[i].tab[end] == '_')
+			while (ft_isalnum(data->token[i].tab[end]))
 				end++;
 			if (rep_env_var(data, i, start + 1, end) == -1)
 				return (-1);
-			if (data->token[i].tab[0] == '\0')
+			// if (data->token[i].tab[0] == '\0')
+			// 	return (0);
+			else
 				return (0);
 		}
 		start++;

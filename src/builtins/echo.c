@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:41:00 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/07/10 13:28:17 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/07/27 14:51:28 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	printer(char **content)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	ft_putstr_fd(content[0], 1);
 	write(1, " ", 1);
 	while (content[i])
