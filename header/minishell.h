@@ -199,6 +199,7 @@ int						handle_qustn_mark(t_data *data, int i, int start,
 void					print_lst(t_data *data);
 void					print_token(t_data *data);
 int						lst_to_tab(t_data *data, t_env *env);
+int						heredoc_destroyer(t_data *data);
 
 //------------------------------PARS_ENV-------------------------------
 t_env					*alloc(char *str);
