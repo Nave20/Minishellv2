@@ -68,7 +68,6 @@ static int	parsing_hub(t_data *data)
 static int	main_hub(t_all *all)
 {
 	int		nbword;
-	t_all	*all;
 	char	*line;
 
 	if (isatty(STDIN_FILENO))
@@ -94,12 +93,8 @@ static int	main_hub(t_all *all)
 					RED "minishell : memory allocation failed\n" RESET, 1));
 		if (parsing_hub(all->data) == -1)
 			return (-1);
-		// all = malloc(sizeof(t_all));
-		// all->exit_code = all->data->err_code;
 		// print_lst(data);
 		exec_one(all->data, all);
-		// free_data(data);
-		// free(all);
 	}
 	else
 		return (1);
@@ -115,6 +110,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	err = 0;
 	all = malloc(sizeof(t_all));
+	all->data = malloc(sizeof(t_data));
 	if (envp[0])
 		all->data->env = pars_env(envp, &err);
 	else

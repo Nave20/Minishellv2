@@ -124,7 +124,6 @@ typedef struct s_all
 	int					prev_fd;
 	int					stdin_save;
 	int					stdout_save;
-	int					exit_code;
 	char				**env_tab;
 }						t_all;
 
