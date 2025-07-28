@@ -91,6 +91,7 @@ void	ft_export(char **str, t_all *all)
 	if (!str[0])
 	{
 		export_null(all->data->env);
+		all->data->err_code = 0;
 		return ;
 	}
 	while (str[i])
