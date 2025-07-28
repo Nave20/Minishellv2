@@ -61,8 +61,8 @@ bool	verif(char *str)
 		if (((str[i] < 'A' || str[i] > 'Z') &&
 			(str[i] <= '0' || str[i] >= '9') ) && str[i] != '_')
 		{
-			printf(RED "EXPORT:" RESET " '%s' " YELLOW "is not a valid "
-				"identifier\n" RESET, str);
+			// printf(RED "EXPORT:" RESET " '%s' " YELLOW "is not a valid "
+			// 	"identifier\n" RESET, str);
 			return (0);
 		}
 		i++;
@@ -74,8 +74,8 @@ void	export_bis(char *str, t_all *all)
 {
 	if (str[0] == '=' && str[1] == 0)
 	{
-		printf(RED "export:" RESET " '%s' " YELLOW "is not a valid "
-			"identifier\n" RESET, str);
+		// printf(RED "export:" RESET " '%s' " YELLOW "is not a valid "
+		// 	"identifier\n" RESET, str);
 		return ;
 	}
 	if (verif(str) != 1)
