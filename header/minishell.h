@@ -110,6 +110,7 @@ typedef struct s_env
 {
 	char				*name;
 	char				*line;
+	int					order;
 	struct s_env		*next;
 }						t_env;
 
@@ -216,6 +217,8 @@ void					ft_pwd(t_all *all);
 void					ft_env(t_env *env, t_all *all);
 void					ft_export(char **str, t_all *all);
 t_env					*replace_logic(char *str, t_env *ptr);
+void					export_null(t_env *env);
+int						alpha_sort(t_env *env);
 void					ft_unset(char **str, t_all *all);
 void					ft_exit(t_all *all);
 

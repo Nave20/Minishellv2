@@ -88,9 +88,9 @@ void	ft_export(char **str, t_all *all)
 	int	i;
 
 	i = 0;
-	if (!str)
+	if (!str[0])
 	{
-		ft_env(all->data->env, all);
+		export_null(all->data->env);
 		return ;
 	}
 	while (str[i])
