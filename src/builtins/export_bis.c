@@ -17,16 +17,14 @@ t_env	*replace_logic(char *str, t_env *ptr)
 {
 	while (ptr->next)
 	{
-		if (ft_strncmp(ptr->name, str,
-				ft_strlen(ptr->name)) == 0)
+		if (ft_strncmp(ptr->name, str,until_equal(str)) == 0)
 		{
 			replace_line(str, ptr);
 			return (NULL);
 		}
 		ptr = ptr->next;
 	}
-	if (ft_strncmp(ptr->name, str,
-				ft_strlen(ptr->name)) == 0)
+	if (ft_strncmp(ptr->name, str,until_equal(str)) == 0)
 	{
 		replace_line(str, ptr);
 		return (NULL);

@@ -18,13 +18,14 @@ bool	valid_fag(const char *flag)
 	int	i;
 
 	i = 0;
+
 	if (!flag || flag[0] == 0)
+		return (1);
+	if (flag[1] != 'n')
 		return (1);
 	while (flag[i])
 	{
 		if (i == 0 && flag[0] != '-')
-			return (1);
-		if (i == 1 && flag[1] == 0)
 			return (1);
 		if (flag[i] != 'n' && flag[i] != 0 && i > 0)
 			return (1);
@@ -64,12 +65,6 @@ void	printer_two(char **content)
 
 void	ft_echo(char **content, t_all *all)
 {
-	// int	i = 0;
-	// while (content[i])
-	// {
-	// 	dprintf(2, RED"|%s|\n"RESET, content[i]);
-	// 	i++;
-	// }
 	int	j;
 
 	j = 1;

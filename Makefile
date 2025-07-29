@@ -53,6 +53,7 @@ BUILTINS_FILES  = 	echo.c				\
 					env.c				\
 					export.c			\
 					export_bis.c		\
+					export_three.c		\
 					unset.c				\
 					exit.c				\
 

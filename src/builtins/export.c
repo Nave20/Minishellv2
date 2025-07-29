@@ -58,8 +58,8 @@ bool	verif(char *str)
 	i = 0;
 	if (str[0] == '=')
 	{
-		printf(RED "EXPORT:" RESET " '%s' " YELLOW "is not a valid "
-			"identifier\n" RESET, str);
+		// printf(RED "EXPORT:" RESET " '%s' " YELLOW "is not a valid "
+		// 	"identifier\n" RESET, str);
 		return (0);
 	}
 	while (str[i] != '=' && str[i])
@@ -68,8 +68,8 @@ bool	verif(char *str)
 			(str[i] <= '0' || str[i] >= '9') ) && str[i] != '_') &&
 				(str[i] < 'a' || str[i] > 'z'))
 		{
-			printf(RED "EXPORT:" RESET " '%s' " YELLOW "is not a valid "
-				"identifier\n" RESET, str);
+			// printf(RED "EXPORT:" RESET " '%s' " YELLOW "is not a valid "
+			// 	"identifier\n" RESET, str);
 			return (0);
 		}
 		i++;
@@ -77,17 +77,22 @@ bool	verif(char *str)
 	return (1);
 }
 
-void	export_bis(char *str, t_all *all)
+int	export_bis(char *str, t_all *all)
 {
 	if (str[0] == '=' && str[1] == 0)
 	{
-		printf(RED "export:" RESET " '%s' " YELLOW "is not a valid "
-			"identifier\n" RESET, str);
-		return ;
+		// printf(RED "export:" RESET " '%s' " YELLOW "is not a valid "
+		// 	"identifier\n" RESET, str);
+		all->data->err_code = 1;
+		return (1);
 	}
 	if (verif(str) != 1)
-		return ;
+	{
+		all->data->err_code = 1;
+		return (1);
+	}
 	add_last(str, all);
+	return (0);
 }
 
 void	ft_export(char **str, t_all *all)
@@ -99,12 +104,14 @@ void	ft_export(char **str, t_all *all)
 	{
 		export_null(all->data->env);
 		all->data->err_code = 0;
-		return ;
+		if (str[1])
+			i = 1;
+		else
+			return;
 	}
 	while (str[i])
 	{
-		export_bis(str[i], all);
+		all->data->err_code = export_bis(str[i], all);
 		i++;
 	}
-	all->data->err_code = 0;
 }

@@ -216,6 +216,7 @@ void					cd_no_pwd(char *old_pwd, t_all *all);
 void					ft_pwd(t_all *all);
 void					ft_env(t_env *env, t_all *all);
 void					ft_export(char **str, t_all *all);
+int						until_equal(char *str);
 t_env					*replace_logic(char *str, t_env *ptr);
 void					export_null(t_env *env);
 int						alpha_sort(t_env *env);
