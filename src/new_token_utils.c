@@ -8,7 +8,8 @@ int	handle_double_quote_new(t_data *data, char *old, char **new, int *i)
 	if (!is_locked(old))
 		return (err_return_token(data, "minishell: unclosed quotes\n", 2));
 	start = (*i);
-	while (old[*i] && !(ft_isspace(old[*i])))
+	while (old[*i] && !(ft_isspace(old[*i])) && old[*i] != '|' && old[*i] != '<'
+		&& old[*i] != '>')
 	{
 		if (old[*i] == '\'' || old[*i] == '"')
 			skip_quotes(old, i);
@@ -45,7 +46,8 @@ int	handle_simple_quote_new(t_data *data, char *old, char **new, int *i)
 	if (!is_locked(old))
 		return (err_return_token(data, "minishell: unclosed quotes\n", 2));
 	start = (*i);
-	while (old[*i] && !(ft_isspace(old[*i])))
+	while (old[*i] && !(ft_isspace(old[*i])) && old[*i] != '|' && old[*i] != '<'
+		&& old[*i] != '>')
 	{
 		if (old[*i] == '\'' || old[*i] == '"')
 			skip_quotes(old, i);
