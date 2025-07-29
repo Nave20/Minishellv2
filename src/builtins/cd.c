@@ -45,7 +45,7 @@ bool	env_update(t_env *env, char *name, char *new)
 		}
 		env = env->next;
 	}
-	return (1);
+	return (0);
 }
 
 int	cd_two(char *target, char *old_pwd, t_env *env, t_all *all)
@@ -59,14 +59,6 @@ int	cd_two(char *target, char *old_pwd, t_env *env, t_all *all)
 		all->data->err_code = 1;
 		return (1);
 	}
-	if (env_update(env, "OLDPWD", old_pwd) == 1)
-	{
-		free(old_pwd);
-		ft_putendl_fd(RED "CD : malloc failed" RESET, 2);
-		all->data->err_code = 1;
-		return (1);
-	}
-	free(old_pwd);
 	if (!getcwd(new_pwd, sizeof(new_pwd)))
 	{
 		ft_putendl_fd(RED "CD : getcwd failed" RESET, 2);
@@ -78,6 +70,14 @@ int	cd_two(char *target, char *old_pwd, t_env *env, t_all *all)
 		all->data->err_code = 1;
 		ft_putendl_fd(RED "CD : malloc failed" RESET, 2);
 	}
+	if (env_update(env, "OLDPWD", old_pwd) == 1)
+	{
+		free(old_pwd);
+		ft_putendl_fd(RED "CD : malloc failed" RESET, 2);
+		all->data->err_code = 1;
+		return (1);
+	}
+	free(old_pwd);
 	return (0);
 }
 
