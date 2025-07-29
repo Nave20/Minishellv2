@@ -82,7 +82,8 @@ int	fill_new_token(t_data *data, char **new, int nbword)
 		i++;
 	}
 	free_double_tab(new);
-	check_and_define_new(data);
+	if (check_and_define_new(data) == -1)
+		return (-1);
 	return (0);
 }
 
