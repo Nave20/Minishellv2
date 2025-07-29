@@ -12,7 +12,7 @@ static void	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 	{
 		ft_putendl_fd(input, fd);
 		free(input);
-		input = readline("heredoc> ");
+		input = readline("> ");
 	}
 	free(input);
 	close(fd);
@@ -27,7 +27,7 @@ static int	create_heredoc(t_data *data, t_cmd *cmd, char *delim, int i_hrdc)
 	char	*hrdc_nbr;
 
 	update_heredoc(cmd);
-	input = readline("heredoc> ");
+	input = readline("> ");
 	str = "/tmp/heredoc";
 	hrdc_nbr = ft_itoa(i_hrdc);
 	if (!hrdc_nbr)

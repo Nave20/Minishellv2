@@ -80,7 +80,6 @@ int	define_token(t_data *data, int k)
 {
 	handle_redir(data);
 	define_str(data);
-	define_build_in(data);
 	if (k == 0)
 	{
 		if (set_env_var(data) == -1)
@@ -91,5 +90,6 @@ int	define_token(t_data *data, int k)
 		if (remove_quotes(data) == -1)
 			return (-1);
 	}
+	define_build_in(data);
 	return (0);
 }
