@@ -17,12 +17,16 @@ bool	valid_fag(const char *flag)
 {
 	int	i;
 
-	i = 1;
-	if (flag[0] != '-' || flag[1] == 0)
-		return (1);
+	i = 0;
+	if (!flag)
+		return (2);
 	while (flag[i])
 	{
-		if (flag[i] != 'n' && flag[i] != 0)
+		if (i == 0 && flag[0] != '-')
+			return (1);
+		if (i == 1 && flag[1] == 0)
+			return (1);
+		if (flag[i] != 'n' && flag[i] != 0 && i > 0)
 			return (1);
 		i++;
 	}
@@ -68,7 +72,7 @@ void	ft_echo(char **content, t_all *all)
 	// }
 	int	j;
 
-	j = 0;
+	j = 1;
 	if (!content[0])
 	{
 		ft_putendl_fd("", 1);
