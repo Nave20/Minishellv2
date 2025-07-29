@@ -61,6 +61,20 @@ void	goodbye_one(t_all *all)
 	exit(i);
 }
 
+int	verif_arg(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isdigit(str[i]) != 1)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	ft_exit(t_all *all)
 {
 	t_cmd *cmd;
@@ -73,7 +87,7 @@ void	ft_exit(t_all *all)
 		ft_putendl_fd("exit: too many arguments", 2);
 		return ;
 	}
-	else if (!ft_isalnum(ft_atoi(cmd->cmd_tab[1])))
+	else if (verif_arg(cmd->cmd_tab[1]) != 0)
 	{
 		ft_putstr_fd("exit: ", 2);
 		ft_putstr_fd(cmd->cmd_tab[1], 2);
