@@ -66,6 +66,10 @@ int	verif_arg(char *str)
 	int	i;
 
 	i = 0;
+	if (str[0] == 0)
+		return (1);
+	if (str[i] == '+' || str[i] == '-')
+		i++;
 	while (str[i])
 	{
 		if (ft_isdigit(str[i]) != 1)
@@ -80,19 +84,22 @@ void	ft_exit(t_all *all)
 	t_cmd *cmd;
 
 	cmd = all->cmd;
+	// printf("exit\n");
 	if (!cmd->cmd_tab[1])
 		goodbye_one(all);
-	else if (cmd->cmd_tab[2])
-	{
-		ft_putendl_fd("exit: too many arguments", 2);
-		return ;
-	}
 	else if (verif_arg(cmd->cmd_tab[1]) != 0)
 	{
 		ft_putstr_fd("exit: ", 2);
 		ft_putstr_fd(cmd->cmd_tab[1], 2);
 		ft_putendl_fd(": numeric argument required", 2);
+		all->data->err_code = 2;
 		goodbye_two(all);
+	}
+	else if (cmd->cmd_tab[2])
+	{
+		ft_putendl_fd("exit: too many arguments", 2);
+		all->data->err_code = 1;
+		return ;
 	}
 	else
 		goodbye_three(all);

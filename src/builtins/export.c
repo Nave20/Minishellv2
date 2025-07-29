@@ -58,8 +58,7 @@ bool	verif(char *str)
 	i = 0;
 	if (str[0] == '=')
 	{
-		// printf(RED "EXPORT:" RESET " '%s' " YELLOW "is not a valid "
-		// 	"identifier\n" RESET, str);
+		export_error(str);
 		return (0);
 	}
 	while (str[i] != '=' && str[i])
@@ -68,9 +67,13 @@ bool	verif(char *str)
 			(str[i] <= '0' || str[i] >= '9') ) && str[i] != '_') &&
 				(str[i] < 'a' || str[i] > 'z'))
 		{
-			// printf(RED "EXPORT:" RESET " '%s' " YELLOW "is not a valid "
-			// 	"identifier\n" RESET, str);
-			return (0);
+			if (str[i] == '+' && str[i + 1] == '=')
+				;
+			else
+			{
+				export_error(str);
+				return (0);
+			}
 		}
 		i++;
 	}
@@ -81,8 +84,7 @@ int	export_bis(char *str, t_all *all)
 {
 	if (str[0] == '=' && str[1] == 0)
 	{
-		// printf(RED "export:" RESET " '%s' " YELLOW "is not a valid "
-		// 	"identifier\n" RESET, str);
+		export_error(str);
 		all->data->err_code = 1;
 		return (1);
 	}

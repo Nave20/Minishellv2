@@ -46,11 +46,18 @@ t_env	*logic(t_env *env, char *str)
 	return (env);
 }
 
-void	unset_bis(char *str, t_all *all)
+int	unset_bis(char *str, t_all *all)
 {
 	int		i;
 
 	i = 0;
+	if (str[0] == '-')
+	{
+		ft_putstr_fd("unset : ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(" invalid option\n", 2);
+		return (2);
+	}
 	while (str[i] != 0)
 	{
 		if ((str[i] < 'A' || str[i] > 'Z') && str[i] != '_')
@@ -61,6 +68,7 @@ void	unset_bis(char *str, t_all *all)
 		i++;
 	}
 	all->data->env = logic(all->data->env, str);
+	return (0);
 }
 
 void	ft_unset(char **str, t_all *all)
@@ -72,8 +80,7 @@ void	ft_unset(char **str, t_all *all)
 		return ;
 	while (str[i])
 	{
-		unset_bis(str[i], all);
+		all->data->err_code = unset_bis(str[i], all);
 		i++;
 	}
-	all->data->err_code = 0;
 }

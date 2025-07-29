@@ -39,10 +39,20 @@ t_env	*alloc(char *str)
 		return (NULL);
 	while (str[i] != '=' && str[i])
 		i++;
-	node->name = malloc((i + 1) * sizeof(char));
-	if (!node->name)
-		return (free_node(node));
-	ft_strlcpy(node->name, str, i + 1);
+	if (str[until_equal(str) - 1] == '+')
+	{
+		node->name = malloc((i) * sizeof(char));
+		if (!node->name)
+			return (free_node(node));
+		ft_strlcpy(node->name, str, i);
+	}
+	else
+	{
+		node->name = malloc((i + 1) * sizeof(char));
+		if (!node->name)
+			return (free_node(node));
+		ft_strlcpy(node->name, str, i + 1);
+	}
 	node->line = malloc(ft_strlen(&str[i + 1]) + 1 * sizeof(char));
 	if (!node->line)
 		return (free_node(node));
@@ -56,7 +66,8 @@ void	replace_line(const char *str, t_env *node)
 	int	i;
 
 	i = 0;
-	free(node->line);
+	if (node->line)
+		free(node->line);
 	while (str[i] != '=')
 		i++;
 	node->line = ft_strdup(&str[i + 1]);
