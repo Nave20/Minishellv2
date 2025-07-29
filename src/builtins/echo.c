@@ -18,8 +18,8 @@ bool	valid_fag(const char *flag)
 	int	i;
 
 	i = 0;
-	if (!flag)
-		return (2);
+	if (!flag || flag[0] == 0)
+		return (1);
 	while (flag[i])
 	{
 		if (i == 0 && flag[0] != '-')
@@ -67,12 +67,13 @@ void	ft_echo(char **content, t_all *all)
 	// int	i = 0;
 	// while (content[i])
 	// {
-	// 	dprintf(2, RED"%s\n"RESET, content[i]);
+	// 	dprintf(2, RED"|%s|\n"RESET, content[i]);
 	// 	i++;
 	// }
 	int	j;
 
 	j = 1;
+	all->data->err_code = 0;
 	if (!content[0])
 	{
 		ft_putendl_fd("", 1);
@@ -93,5 +94,4 @@ void	ft_echo(char **content, t_all *all)
 		return ;
 	else
 		ft_putendl_fd(content[0], 1);
-	all->data->err_code = 0;
 }
