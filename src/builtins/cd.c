@@ -48,7 +48,7 @@ bool	env_update(t_env *env, char *name, char *new)
 	return (1);
 }
 
-void	cd_two(char *target, char *old_pwd, t_env *env, t_all *all)
+int	cd_two(char *target, char *old_pwd, t_env *env, t_all *all)
 {
 	char	new_pwd[PATH_MAX];
 
@@ -57,27 +57,28 @@ void	cd_two(char *target, char *old_pwd, t_env *env, t_all *all)
 		free(old_pwd);
 		perror(RED"cd"RESET);
 		all->data->err_code = 1;
-		return ;
+		return (1);
 	}
 	if (env_update(env, "OLDPWD", old_pwd) == 1)
 	{
 		free(old_pwd);
 		ft_putendl_fd(RED "CD : malloc failed" RESET, 2);
 		all->data->err_code = 1;
-		return ;
+		return (1);
 	}
 	free(old_pwd);
 	if (!getcwd(new_pwd, sizeof(new_pwd)))
 	{
 		ft_putendl_fd(RED "CD : getcwd failed" RESET, 2);
 		all->data->err_code = 1;
-		return ;
+		return (1);
 	}
 	if (env_update(env, "PWD", new_pwd) == 1)
 	{
 		all->data->err_code = 1;
 		ft_putendl_fd(RED "CD : malloc failed" RESET, 2);
 	}
+	return (0);
 }
 
 char	*get_target(char **args, char *old_pwd, t_env *env, t_all *all)
@@ -117,18 +118,23 @@ void	ft_cd(char **args, t_env *env, t_all *all)
 	if (args[2])
 	{
 		ft_putendl_fd(RED "CD : too many arguments" RESET, 2);
+		all->data->err_code = 1;
 		return ;
 	}
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 	{
 		ft_putendl_fd(RED "CD : OLDPWD not set" RESET, 2);
+		all->data->err_code = 1;
 		return ;
 	}
 	target = get_target(args, old_pwd, env, all);
 	if (!target)
+	{
+		all->data->err_code = 1;
 		return ;
+	}
 	fflush(stdout);
-	cd_two(target, old_pwd, env, all);
-	all->data->err_code = 0;
+	if (cd_two(target, old_pwd, env, all) == 0)
+		all->data->err_code = 0;
 }
