@@ -104,10 +104,7 @@ void	ft_export(char **str, t_all *all)
 	{
 		export_null(all->data->env);
 		all->data->err_code = 0;
-		if (str[1])
-			i = 1;
-		else
-			return;
+		return;
 	}
 	while (str[i])
 	{
