@@ -79,6 +79,7 @@ struct					s_data
 	int					err_code;
 	int					nbhrdc;
 	int					exit_code;
+	int					is_env_var;
 	t_token				*token;
 	t_cmd				*cmd;
 };
@@ -87,6 +88,7 @@ struct					s_token
 {
 	int					quote;
 	int					type;
+	int					is_env_var;
 	char				*tab;
 };
 struct					s_cmd
