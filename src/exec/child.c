@@ -27,10 +27,7 @@ void	child_two(t_all *all)
 		exec_two(cmd->cmd_tab, data->env_tab);
 	}
 	else if (cmd->cmd_bi && all->cmd->next)
-	{
-		printf(RED"TEST"RESET);
 		exec_builtin(all, cmd, &all->data->env);
-	}
 	if (errno == ENOENT)
 		exit(127);
 	if (errno == EACCES)
