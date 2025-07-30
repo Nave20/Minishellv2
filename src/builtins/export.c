@@ -63,9 +63,9 @@ bool	verif(char *str)
 	}
 	while (str[i] != '=' && str[i])
 	{
-		if ((((str[i] < 'A' || str[i] > 'Z') &&
-			(str[i] <= '0' || str[i] >= '9') ) && str[i] != '_') &&
-				(str[i] < 'a' || str[i] > 'z'))
+		if ((((str[i] < 'A' || str[i] > 'Z')
+					&& (str[i] <= '0' || str[i] >= '9') ) && str[i] != '_')
+			&& (str[i] < 'a' || str[i] > 'z'))
 		{
 			if (str[i] == '+' && str[i + 1] == '=')
 				;
@@ -113,7 +113,7 @@ void	ft_export(char **str, t_all *all)
 	{
 		export_null(all->data->env);
 		all->data->err_code = 0;
-		return;
+		return ;
 	}
 	while (str[i])
 	{

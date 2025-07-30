@@ -70,13 +70,8 @@ int	cd_two(char *target, char *old_pwd, t_env *env, t_all *all)
 		all->data->err_code = 1;
 		ft_putendl_fd(RED "CD : malloc failed" RESET, 2);
 	}
-	if (env_update(env, "OLDPWD", old_pwd) == 1)
-	{
-		free(old_pwd);
-		ft_putendl_fd(RED "CD : malloc failed" RESET, 2);
-		all->data->err_code = 1;
+	if (cd_part(old_pwd, env, all) == 1)
 		return (1);
-	}
 	free(old_pwd);
 	return (0);
 }

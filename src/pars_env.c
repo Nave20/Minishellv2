@@ -61,7 +61,7 @@ t_env	*alloc(char *str)
 	return (node);
 }
 
-void	replace_line(const char *str, t_env *node)
+t_env	*replace_line(const char *str, t_env *node)
 {
 	int	i;
 
@@ -71,6 +71,7 @@ void	replace_line(const char *str, t_env *node)
 	while (str[i] != '=')
 		i++;
 	node->line = ft_strdup(&str[i + 1]);
+	return (NULL);
 }
 
 t_env	*pars_env(char **env, int *err)
