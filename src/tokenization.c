@@ -84,7 +84,7 @@ int	handle_chevron(t_data *data, int *nbword, int *i)
 
 int	handle_special_c(t_data *data, int *nbword, int *i)
 {
-	if (data->input[*i] == '|' && *i != 0 && ft_isspace(data->input[*i - 1]))
+	if (data->input[*i] == '|' && *i != 0)
 	{
 		data->token[*nbword].tab = put_token(data, *i, *i);
 		if (!data->token[*nbword].tab)

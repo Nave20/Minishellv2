@@ -30,8 +30,8 @@ int	tokenize_input(t_data *data, char *input)
 			if (handle_quotes(data, &nbword, &i) == -1)
 				return (-1);
 		}
-		else if ((input[i] == '|' && i != 0 && ft_isspace(input[i - 1]))
-			|| input[i] == '<' || input[i] == '>')
+		else if ((input[i] == '|' && i != 0) || input[i] == '<'
+			|| input[i] == '>')
 		{
 			if (handle_special_c(data, &nbword, &i) == -1)
 				return (-1);
