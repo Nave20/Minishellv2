@@ -56,7 +56,7 @@ bool	verif(char *str)
 	int	i;
 
 	i = 0;
-	if (str[0] == '=')
+	if (str[0] == '=' || (str[0] >= '0' && str[0] <= '9'))
 	{
 		export_error(str);
 		return (0);
@@ -67,11 +67,6 @@ bool	verif(char *str)
 			(str[i] <= '0' || str[i] >= '9') ) && str[i] != '_') &&
 				(str[i] < 'a' || str[i] > 'z'))
 		{
-			// if (i < until_equal(str) && (str[i] <= '0' || str[i] >= '9'))
-			// {
-			// 	export_error(str);
-			// 	return (0);
-			// }
 			if (str[i] == '+' && str[i + 1] == '=')
 				;
 			else
