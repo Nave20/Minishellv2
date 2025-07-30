@@ -67,6 +67,11 @@ bool	verif(char *str)
 			(str[i] <= '0' || str[i] >= '9') ) && str[i] != '_') &&
 				(str[i] < 'a' || str[i] > 'z'))
 		{
+			// if (i < until_equal(str) && (str[i] <= '0' || str[i] >= '9'))
+			// {
+			// 	export_error(str);
+			// 	return (0);
+			// }
 			if (str[i] == '+' && str[i + 1] == '=')
 				;
 			else
@@ -82,6 +87,13 @@ bool	verif(char *str)
 
 int	export_bis(char *str, t_all *all)
 {
+	if (str[0] == '-')
+	{
+		ft_putstr_fd("export : ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(" invalid option\n", 2);
+		return (2);
+	}
 	if (str[0] == '=' && str[1] == 0)
 	{
 		export_error(str);
