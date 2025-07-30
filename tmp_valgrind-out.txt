@@ -1,0 +1,93 @@
+==128658== Memcheck, a memory error detector
+==128658== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==128658== Using Valgrind-3.18.1-42b08ed5bd-20211015 and LibVEX; rerun with -h for copyright info
+==128658== Command: .//minishell
+==128658== Parent PID: 128533
+==128658== 
+--128658-- 
+--128658-- Valgrind options:
+--128658--    --leak-check=full
+--128658--    --show-leak-kinds=all
+--128658--    --track-origins=yes
+--128658--    --verbose
+--128658--    --log-file=tmp_valgrind-out.txt
+--128658-- Contents of /proc/version:
+--128658--   Linux version 5.15.0-144-generic (buildd@lcy02-amd64-099) (gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, GNU ld (GNU Binutils for Ubuntu) 2.38) #157-Ubuntu SMP Mon Jun 16 07:33:10 UTC 2025
+--128658-- 
+--128658-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand-rdseed
+--128658-- Page sizes: currently 4096, max supported 4096
+--128658-- Valgrind library directory: /usr/libexec/valgrind
+--128658-- Reading syms from /home/vpirotti/CLionProjects/minishellv3/minishell
+--128658-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+--128658--   Considering /usr/lib/debug/.build-id/9c/b53985768bb99f138f48655f7b8bf7e420d13d.debug ..
+--128658--   .. build-id is valid
+--128658-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
+--128658--    object doesn't have a symbol table
+--128658--    object doesn't have a dynamic symbol table
+--128658-- Scheduler: using generic scheduler lock implementation.
+--128658-- Reading suppressions file: /usr/libexec/valgrind/default.supp
+==128658== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-128658-by-vpirotti-on-???
+==128658== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-128658-by-vpirotti-on-???
+==128658== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-128658-by-vpirotti-on-???
+==128658== 
+==128658== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==128658== don't want to do, unless you know exactly what you're doing,
+==128658== or are doing some strange experiment):
+==128658==   /usr/bin/vgdb --pid=128658 ...command...
+==128658== 
+==128658== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==128658==   /path/to/gdb .//minishell
+==128658== and then give GDB the following command
+==128658==   target remote | /usr/bin/vgdb --pid=128658
+==128658== --pid is optional if only one valgrind process is running
+==128658== 
+--128658-- REDIR: 0x402aa40 (ld-linux-x86-64.so.2:strlen) redirected to 0x580bcec2 (???)
+--128658-- REDIR: 0x402a810 (ld-linux-x86-64.so.2:index) redirected to 0x580bcedc (???)
+--128658-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+--128658--    object doesn't have a symbol table
+--128658-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+--128658--    object doesn't have a symbol table
+==128658== WARNING: new redirection conflicts with existing -- ignoring it
+--128658--     old: 0x0402aa40 (strlen              ) R-> (0000.0) 0x580bcec2 ???
+--128658--     new: 0x0402aa40 (strlen              ) R-> (2007.0) 0x0484ee30 strlen
+--128658-- REDIR: 0x4027220 (ld-linux-x86-64.so.2:strcmp) redirected to 0x484fcd0 (strcmp)
+--128658-- REDIR: 0x402afa0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4853840 (mempcpy)
+--128658-- Reading syms from /usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+--128658--    object doesn't have a symbol table
+--128658-- Reading syms from /usr/lib/x86_64-linux-gnu/libc.so.6
+--128658--   Considering /usr/lib/debug/.build-id/d5/197096f709801829b118af1b7cf6631efa2dcd.debug ..
+--128658--   .. build-id is valid
+==128658== WARNING: new redirection conflicts with existing -- ignoring it
+--128658--     old: 0x0496bc60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--128658--     new: 0x0496bc60 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
+==128658== WARNING: new redirection conflicts with existing -- ignoring it
+--128658--     old: 0x0496bc60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--128658--     new: 0x0496bc60 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
+==128658== WARNING: new redirection conflicts with existing -- ignoring it
+--128658--     old: 0x0496bc60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--128658--     new: 0x0496bc60 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
+==128658== WARNING: new redirection conflicts with existing -- ignoring it
+--128658--     old: 0x0496bc60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--128658--     new: 0x0496bc60 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
+==128658== 
+==128658== Process terminating with default action of signal 2 (SIGINT)
+==128658==    at 0x4026B16: __open_nocancel (open64_nocancel.c:39)
+==128658==    by 0x4006978: open_verify.constprop.0 (dl-load.c:1626)
+==128658==    by 0x4007107: open_path (dl-load.c:1922)
+==128658==    by 0x400A6B0: _dl_map_object (dl-load.c:2158)
+==128658==    by 0x4003494: openaux (dl-deps.c:64)
+==128658==    by 0x401D349: _dl_catch_exception (dl-error-skeleton.c:208)
+==128658==    by 0x4003C7B: _dl_map_object_deps (dl-deps.c:248)
+==128658==    by 0x402339F: dl_main (rtld.c:1970)
+==128658==    by 0x401F83B: _dl_sysdep_start (dl-sysdep.c:256)
+==128658==    by 0x4021597: _dl_start_final (rtld.c:507)
+==128658==    by 0x4021597: _dl_start (rtld.c:596)
+==128658==    by 0x4020297: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+==128658== 
+==128658== HEAP SUMMARY:
+==128658==     in use at exit: 0 bytes in 0 blocks
+==128658==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==128658== 
+==128658== All heap blocks were freed -- no leaks are possible
+==128658== 
+==128658== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
