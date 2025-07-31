@@ -1,5 +1,35 @@
 #include "../header/minishell.h"
 
+int	new_len(t_new *new)
+{
+	int	i;
+
+	i = 0;
+	while (new[i].tab)
+		i++;
+	return (i);
+}
+
+void	free_new(t_new *new)
+{
+	int	i;
+
+	i = 0;
+	if (new)
+	{
+		if (new[i].tab)
+		{
+			while (new[i].tab)
+			{
+				free(new[i].tab);
+				new[i].tab = NULL;
+				i++;
+			}
+		}
+		new = NULL;
+	}
+}
+
 void	free_double_tab(char **str)
 {
 	int	i;

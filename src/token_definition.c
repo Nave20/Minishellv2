@@ -7,16 +7,16 @@ void	define_operator(t_data *data)
 	i = 0;
 	while (data->token[i].tab)
 	{
-		if (data->token[i].tab[0] == '|')
+		if (data->token[i].tab[0] == '|' && data->token[i].type != STR)
 			data->token[i].type = PIPE;
-		if (data->token[i].tab[0] == '<')
+		if (data->token[i].tab[0] == '<' && data->token[i].type != STR)
 		{
 			if (data->token[i].tab[1] == '<')
 				data->token[i].type = HEREDOC;
 			else
 				data->token[i].type = REDIR_IN;
 		}
-		if (data->token[i].tab[0] == '>')
+		if (data->token[i].tab[0] == '>' && data->token[i].type != STR)
 		{
 			if (data->token[i].tab[1] == '>')
 				data->token[i].type = APPEND;
@@ -62,13 +62,13 @@ static void	handle_redir(t_data *data)
 	j = 0;
 	while (data->token[i].tab)
 	{
-		while (data->token[i].tab && data->token[i].tab[0] != '|')
+		while (data->token[i].tab && data->token[i].type != PIPE)
 			i++;
 		if (is_simple_cmd(data, i))
 			handle_simple_cmd(data, j, i);
 		else
 			handle_redir_cmd(data, j, i);
-		if (data->token[i].tab && data->token[i].tab[0] == '|')
+		if (data->token[i].tab && data->token[i].type == PIPE)
 		{
 			i++;
 			j = i;
