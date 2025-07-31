@@ -23,7 +23,7 @@ t_env	*logic(t_env *env, char *str)
 	next = NULL;
 	node = env;
 	if (!node)
-		return NULL;
+		return (NULL);
 	while (node->next)
 	{
 		if (ft_strncmp(node->name, str, ft_strlen(node->name)) == 0)

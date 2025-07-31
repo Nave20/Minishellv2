@@ -81,7 +81,7 @@ int	verif_arg(char *str)
 
 void	ft_exit(t_all *all)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = all->cmd;
 	// printf("exit\n");

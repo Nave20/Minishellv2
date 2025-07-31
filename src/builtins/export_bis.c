@@ -24,20 +24,14 @@ t_env	*replace_logic(char *str, t_env *ptr)
 			if (ft_strncmp(ptr->name, str,until_equal(str)) == 0)
 			{
 				if (ft_strncmp(ptr->name, str,ft_strlen(ptr->name)) == 0)
-				{
-					replace_line(str, ptr);
-					return (NULL);
-				}
+					return (replace_line(str, ptr));
 			}
 			ptr = ptr->next;
 		}
 		if (ft_strncmp(ptr->name, str,until_equal(str)) == 0)
 		{
 			if (ft_strncmp(ptr->name, str,ft_strlen(ptr->name)) == 0)
-			{
-				replace_line(str, ptr);
-				return (NULL);
-			}
+				return (replace_line(str, ptr));
 		}
 	}
 	return (ptr);

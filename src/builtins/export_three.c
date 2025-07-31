@@ -13,7 +13,7 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-int	until_equal(char *str)
+int	until_equal(const char *str)
 {
 	int	i;
 
