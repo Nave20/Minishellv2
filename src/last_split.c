@@ -34,6 +34,7 @@ static int	fill_new(t_data *data, char *old, t_new *new)
 	i = 0;
 	if (old[0] == '\0')
 	{
+		data->nbword++;
 		if (put_token_new(old, new, 0, 0) == -1)
 			return (err_return_token(data,
 					"minishell: memory allocation failed\n", 1));

@@ -65,7 +65,10 @@ void	handle_redir_cmd(t_data *data, int start, int end)
 
 void	handle_simple_cmd(t_data *data, int start, int end)
 {
-	data->token[start].type = CMD;
+	if (data->token[start].type == STR && data->token[start].tab[0] == '\0')
+		data->token[start].type = STR;
+	else
+		data->token[start].type = CMD;
 	start++;
 	while (start < end)
 	{
