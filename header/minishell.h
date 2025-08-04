@@ -61,6 +61,7 @@ typedef struct s_data	t_data;
 typedef struct s_token	t_token;
 typedef struct s_cmd	t_cmd;
 typedef struct s_env	t_env;
+typedef struct s_new	t_new;
 
 typedef enum e_err
 {
@@ -79,14 +80,24 @@ struct					s_data
 	int					err_code;
 	int					nbhrdc;
 	int					exit_code;
+	int					is_env_var;
+	int					nbword;
+	t_new				*new;
 	t_token				*token;
 	t_cmd				*cmd;
+};
+
+struct					s_new
+{
+	char				*tab;
+	int					is_env;
 };
 
 struct					s_token
 {
 	int					quote;
 	int					type;
+	int					is_env_var;
 	char				*tab;
 };
 struct					s_cmd
@@ -159,6 +170,8 @@ void					free_token(t_data *data);
 void					free_cmd(t_data *data);
 void					free_cmd_content(t_cmd *cmd);
 void					free_double_tab(char **str);
+void					free_new(t_new *new);
+int						new_len(t_new *new);
 int						set_env_var(t_data *data);
 char					*srch_env_var(t_data *data, char *var);
 int						rep_env_var(t_data *data, int i, int start, int end);
@@ -180,18 +193,18 @@ bool					is_last_inf_hrdc(t_data *data, int start, int end);
 int						err_return(t_data *data, char *str, int err);
 int						err_return_token(t_data *data, char *str, int err);
 int						last_split(t_data *data);
-int						handle_normal_new(t_data *data, char *old, char **new,
+int						handle_normal_new(t_data *data, char *old, t_new *new,
 							int *i);
 int						handle_special_c_new(t_data *data, char *old,
-							char **new, int *i);
-int						handle_redirect_new(char *old, char **new, int *i,
+							t_new *new, int *i);
+int						handle_redirect_new(char *old, t_new *new, int *i,
 							int c);
 int						handle_simple_quote_new(t_data *data, char *old,
-							char **new, int *i);
+							t_new *new, int *i);
 int						handle_double_quote_new(t_data *data, char *old,
-							char **new, int *i);
+							t_new *new, int *i);
 int						ft_tablen(char **tab);
-int						put_token_new(char *old, char **new, int start,
+int						put_token_new(char *old, t_new *new, int start,
 							int end);
 void					skip_quotes(char *data, int *i);
 int						create_cmd_tab(t_data *data);

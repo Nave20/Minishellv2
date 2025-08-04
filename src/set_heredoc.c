@@ -2,17 +2,26 @@
 
 static void	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 {
+	char	*line;
+
 	fd = open(f_name, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	if (fd == -1)
 	{
 		free(input);
 		return ;
 	}
-	while (ft_strncmp(input, delim, ft_strlen(delim)) != 0)
+	while (ft_strncmp(input, delim, ft_strlen(delim) + 1) != 0)
 	{
 		ft_putendl_fd(input, fd);
 		free(input);
-		input = readline("> ");
+		if (isatty(STDIN_FILENO))
+			input = readline("> ");
+		else
+		{
+			line = get_next_line(STDIN_FILENO);
+			input = ft_strtrim(line, "\n");
+			free(line);
+		}
 	}
 	free(input);
 	close(fd);
@@ -25,9 +34,17 @@ static int	create_heredoc(t_data *data, t_cmd *cmd, char *delim, int i_hrdc)
 	char	*str;
 	char	*f_name;
 	char	*hrdc_nbr;
+	char	*line;
 
 	update_heredoc(cmd);
-	input = readline("> ");
+	if (isatty(STDIN_FILENO))
+		input = readline("> ");
+	else
+	{
+		line = get_next_line(STDIN_FILENO);
+		input = ft_strtrim(line, "\n");
+		free(line);
+	}
 	str = "/tmp/heredoc";
 	hrdc_nbr = ft_itoa(i_hrdc);
 	if (!hrdc_nbr)

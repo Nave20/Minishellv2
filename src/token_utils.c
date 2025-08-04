@@ -30,7 +30,7 @@ void	skip_quotes(char *str, int *i)
 	}
 }
 
-int	put_token_new(char *old, char **new, int start, int end)
+int	put_token_new(char *old, t_new *new, int start, int end)
 {
 	int			i;
 	static int	nbword;
@@ -41,17 +41,17 @@ int	put_token_new(char *old, char **new, int start, int end)
 		nbword = 0;
 		return (0);
 	}
-	new[nbword] = ft_calloc(end - start + 2, sizeof(char));
-	if (!new[nbword])
+	new[nbword].tab = ft_calloc(end - start + 2, sizeof(char));
+	if (!new[nbword].tab)
 	{
-		free_double_tab(new);
+		free_new(new);
 		return (-1);
 	}
 	while (start <= end)
-		new[nbword][i++] = old[start++];
-	new[nbword][i] = '\0';
+		new[nbword].tab[i++] = old[start++];
+	new[nbword].tab[i] = '\0';
 	nbword++;
-	if (nbword > ft_tablen(new))
+	if (nbword > new_len(new))
 		nbword = 0;
 	return (0);
 }

@@ -26,18 +26,20 @@ int	operator_check(t_data *data)
 	{
 		if (data->token[i].tab[0] == '|' && (!data->token[i + 1].tab
 				|| data->token[i + 1].tab[0] == '|' || i == 0 || data->token[i
-				+ 1].tab[0] == '\0'))
+				+ 1].tab[0] == '\0') && data->token[i].type == PIPE)
 			return (err_return_token(data,
 					"minishell: syntax error near unexpected token '|'\n", 2));
 		if (data->token[i].tab[0] == '<' && (!data->token[i + 1].tab
 				|| !(next_operator(data->token[i + 1].tab, '<'))
-				|| (data->token[i + 1].tab[0] == '\0')))
+				|| (data->token[i + 1].tab[0] == '\0'))
+			&& data->token[i].type != STR && data->token[i].type != NONE)
 			return (err_return_token(data,
 					"minishell: syntax error near unexpected token `newline'\n",
 					2));
 		if (data->token[i].tab[0] == '>' && (!data->token[i + 1].tab
 				|| !(next_operator(data->token[i + 1].tab, '>'))
-				|| (data->token[i + 1].tab[0] == '\0')))
+				|| (data->token[i + 1].tab[0] == '\0'))
+			&& data->token[i].type != STR && data->token[i].type != NONE)
 			return (err_return_token(data,
 					"minishell: syntax error near unexpected token `newline'\n",
 					2));

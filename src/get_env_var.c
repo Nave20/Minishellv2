@@ -115,5 +115,6 @@ int	rep_env_var(t_data *data, int i, int start, int end)
 		if (update_null_var(data, &data->token[i].tab, start - 1, end) == -1)
 			return (-1);
 	}
+	data->token[i].is_env_var = 1;
 	return (0);
 }
