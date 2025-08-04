@@ -233,7 +233,7 @@ void					ft_env(t_env *env, t_all *all);
 void					ft_export(char **str, t_all *all);
 t_env					*concat_exp(char *str, t_env *ptr);
 void					export_error(char *str);
-int						until_equal(char *str);
+int						until_equal(const char *str);
 t_env					*replace_logic(char *str, t_env *ptr);
 void					export_null(t_env *env);
 int						alpha_sort(t_env *env);
