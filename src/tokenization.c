@@ -8,7 +8,9 @@ int	handle_quotes(t_data *data, int *nbword, int *i)
 	if (!is_locked(data->input))
 		return (err_return_token(data, "minishell : unclosed quotes\n", 2));
 	start = (*i);
-	while (data->input[*i] && !(ft_isspace(data->input[*i])))
+	while (data->input[*i] && !(ft_isspace(data->input[*i]))
+		&& data->input[*i] != '<' && data->input[*i] != '>'
+		&& data->input[*i] != '|')
 	{
 		if (data->input[*i] == '\'' || data->input[*i] == '"')
 			skip_quotes(data->input, i);

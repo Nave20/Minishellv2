@@ -48,6 +48,9 @@ static int	dbl_quotes_env_var(t_data *data, int i, int *j)
 				return (-1);
 			*j = 0;
 		}
+		else if (data->token[i].tab[*j] == '$' && data->token[i].tab[*j
+			+ 1] == '$')
+			update_null_var(data, &data->token[i].tab, *j, *j + 2);
 		else
 			(*j)++;
 	}
@@ -65,8 +68,10 @@ static int	other_dol_cases(t_data *data, int i, int *j)
 					"mnishell: memory allocation failed\n", 1));
 		*j = 0;
 	}
-	else if (data->token[i].tab[*j + 1] == ' ' || data->token[i].tab[*j
-		+ 1] == '\0')
+	else if (ft_isspace(data->token[i].tab[*j + 1]) || data->token[i].tab[*j
+		+ 1] == '\0' || (!(ft_isalnum(data->token[i].tab[*j + 1]))
+			&& data->token[i].tab[*j + 1] != '_' && data->token[i].tab[*j
+			+ 1] != '\'' && data->token[i].tab[*j + 1] != '"'))
 		(*j)++;
 	else
 	{
