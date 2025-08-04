@@ -42,6 +42,15 @@
 # include <unistd.h>
 
 //-------------------------------STRUCTS-------------------------------
+
+typedef enum e_sig
+{
+	NO,
+	INT,
+	QUIT,
+	E_O_F
+}						t_sig;
+
 typedef enum e_type
 {
 	NONE,

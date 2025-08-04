@@ -1,5 +1,15 @@
 #include "../header/minishell.h"
 
+volatile sig_atomic_t	g_sig_state = NO;
+
+void	sig_handler(int signal)
+{
+	if (signal == SIGINT)
+		g_sig_state = INT;
+	if (signal == SIGQUIT)
+		g_sig_state = QUIT;
+}
+
 static void	cmd_count(t_data *data)
 {
 	int	i;
@@ -70,6 +80,7 @@ static int	main_hub(t_all *all)
 	int		nbword;
 	char	*line;
 
+	signal(SIGINT, sig_handler);
 	if (isatty(STDIN_FILENO))
 	{
 		all->data->input = readline(BOLD CYAN "minishell> " RESET);
@@ -95,6 +106,10 @@ static int	main_hub(t_all *all)
 			return (-1);
 		// print_lst(data);
 		exec_one(all->data, all);
+		free_cmd(all->data);
+		// free_env(all->data->env);
+		// free(all->data);
+		// free(all);
 	}
 	else
 		return (1);

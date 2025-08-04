@@ -26,6 +26,7 @@ void	free_new(t_new *new)
 				i++;
 			}
 		}
+		free(new);
 		new = NULL;
 	}
 }

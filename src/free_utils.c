@@ -75,6 +75,7 @@ void	free_cmd(t_data *data)
 		}
 		free_cmd_content(cmd);
 		free(cmd);
+		cmd = NULL;
 		cmd = next;
 	}
 }
@@ -88,18 +89,15 @@ void	free_token(t_data *data)
 	{
 		while (data->token[i].tab)
 		{
-			if (data->token[i].tab)
-				free(data->token[i].tab);
+			free(data->token[i].tab);
 			data->token[i].tab = NULL;
 			i++;
 		}
-		free(data->token);
 	}
-	// if (data->token)
-	// {
-	// 	free(data->token);
-	// 	data->token = NULL;
-	// }
+	free(data->token[i].tab);
+	data->token[i].tab = NULL;
+	free(data->token);
+	data->token = NULL;
 }
 
 void	free_data(t_data *data)
@@ -107,11 +105,16 @@ void	free_data(t_data *data)
 	if (data)
 	{
 		if (data->input)
+		{
 			free(data->input);
+			data->input = NULL;
+		}
 		if (data->token)
 			free_token(data);
 		if (data->cmd)
 			free_cmd(data);
 		data->cmd_count = 0;
+		free(data);
+		data = NULL;
 	}
 }
