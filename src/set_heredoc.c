@@ -10,20 +10,30 @@ static void	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 		free(input);
 		return ;
 	}
-	while (ft_strncmp(input, delim, ft_strlen(delim) + 1) != 0)
+	if (input)
 	{
-		ft_putendl_fd(input, fd);
-		free(input);
-		if (isatty(STDIN_FILENO))
-			input = readline("> ");
-		else
+		while (input != NULL && ft_strncmp(input, delim, ft_strlen(delim)
+				+ 1) != 0)
 		{
-			line = get_next_line(STDIN_FILENO);
-			input = ft_strtrim(line, "\n");
-			free(line);
+			ft_putendl_fd(input, fd);
+			free(input);
+			if (isatty(STDIN_FILENO))
+				input = readline("> ");
+			else
+			{
+				line = get_next_line(STDIN_FILENO);
+				input = ft_strtrim(line, "\n");
+				free(line);
+			}
 		}
+		if (!input)
+			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
+				delim);
+		free(input);
 	}
-	free(input);
+	else
+		printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
+			delim);
 	close(fd);
 	return ;
 }

@@ -122,5 +122,6 @@ int	create_cmd_lst(t_data *data)
 	if (create_cmd_tab(data) == -1)
 		return (-1);
 	// print_lst(data);
+	free_token(data);
 	return (0);
 }

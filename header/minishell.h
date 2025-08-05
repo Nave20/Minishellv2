@@ -41,6 +41,10 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+//---------------------------GLOBAL VARIABLES--------------------------
+
+extern volatile sig_atomic_t	g_sig_state;
+
 //-------------------------------STRUCTS-------------------------------
 typedef enum e_type
 {
