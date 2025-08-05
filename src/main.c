@@ -107,9 +107,6 @@ static int	main_hub(t_all *all)
 		// print_lst(data);
 		exec_one(all->data, all);
 		free_cmd(all->data);
-		// free_env(all->data->env);
-		// free(all->data);
-		// free(all);
 	}
 	else
 		return (1);
@@ -141,7 +138,13 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		if (main_hub(all) == 1)
-			return (all->data->err_code);
+		{
+			err = all->data->err_code;
+			free_env(all->data->env);
+			free(all->data);
+			free(all);
+			return (err);
+		}
 	}
 	return (all->data->err_code);
 }
