@@ -30,6 +30,13 @@ void	export_error(char *str)
 	ft_putendl_fd(YELLOW" is not a valid identifier"RESET, 2);
 }
 
+void	malloc_err(t_env *node, t_all *all)
+{
+	ft_putstr_fd(RED"malloc failed\n"RESET, 2);
+	all->data->err_code = 2;
+	super_free_node(node, all);
+}
+
 void	concat_line(const char *str, t_env *node, t_all *all)
 {
 	int	i;
@@ -37,25 +44,18 @@ void	concat_line(const char *str, t_env *node, t_all *all)
 	i = 0;
 	while (str[i] != '=')
 		i++;
-	if (!node->line)
+	if (node->line[0] == 0)
 	{
+		free(node->line);
 		node->line = ft_strdup(str);
-		if (1) //(!node->line)
-		{
-			ft_putstr_fd(RED"malloc failed\n"RESET, 2);
-			all->data->err_code = 2;
-			super_free_node(node, all);
-		}
+		if (!node->line)
+			malloc_err(node, all);
 	}
 	else
 	{
 		node->line = ft_strjoin(node->line, &str[i + 1]);
-		if (1)
-		{
-			ft_putstr_fd(RED"malloc failed\n"RESET, 2);
-			all->data->err_code = 2;
-			super_free_node(node, all);
-		}
+		if (!node->line)
+			malloc_err(node, all);
 	}
 }
 

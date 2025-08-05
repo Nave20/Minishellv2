@@ -13,6 +13,44 @@
 #include "../header/minishell.h"
 #include "../libft/libft.h"
 
+t_env	*alloc_bis(char *str, t_env *node, int i)
+{
+	if (str[until_equal(str) - 1] == '+')
+	{
+		node->name = malloc((i) * sizeof(char));
+		if (!node->name)
+			return (free_node(node));
+		ft_strlcpy(node->name, str, i);
+	}
+	else
+	{
+		node->name = malloc((i + 1) * sizeof(char));
+		if (!node->name)
+			return (free_node(node));
+		ft_strlcpy(node->name, str, i + 1);
+	}
+	return (node);
+}
+
+t_env	*alloc_third(char *str, t_env *node, int i)
+{
+	if (str[until_equal(str)] != 0)
+	{
+		node->line = malloc(ft_strlen(&str[i + 1]) + 1 * sizeof(char));
+		if (!node->line)
+			return (free_node(node));
+		ft_strlcpy(node->line, &str[i + 1], 1 + ft_strlen(&str[i + 1]));
+	}
+	else
+	{
+		node->line = malloc(1 * sizeof(char));
+		if (!node->line)
+			return (free_node(node));
+		node->line[0] = 0;
+	}
+	return (node);
+}
+
 t_env	*super_free_node(t_env *node, t_all *all)
 {
 	t_env	*ptr;

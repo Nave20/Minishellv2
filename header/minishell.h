@@ -217,6 +217,8 @@ int						heredoc_destroyer(t_data *data);
 
 //------------------------------PARS_ENV-------------------------------
 t_env					*alloc(char *str);
+t_env					*alloc_bis(char *str, t_env *node, int i);
+t_env					*alloc_third(char *str, t_env *node, int i);
 t_env					*free_env(t_env *head);
 t_env					*free_node(t_env *node);
 t_env					*super_free_node(t_env *node, t_all *all);

@@ -39,34 +39,8 @@ t_env	*alloc(char *str)
 		return (NULL);
 	while (str[i] != '=' && str[i])
 		i++;
-	if (str[until_equal(str) - 1] == '+')
-	{
-		node->name = malloc((i) * sizeof(char));
-		if (!node->name)
-			return (free_node(node));
-		ft_strlcpy(node->name, str, i);
-	}
-	else
-	{
-		node->name = malloc((i + 1) * sizeof(char));
-		if (!node->name)
-			return (free_node(node));
-		ft_strlcpy(node->name, str, i + 1);
-	}
-	if (str[until_equal(str)] != 0)
-	{
-		node->line = malloc(ft_strlen(&str[i + 1]) + 1 * sizeof(char));
-		if (!node->line)
-			return (free_node(node));
-		ft_strlcpy(node->line, &str[i + 1], 1 + ft_strlen(&str[i + 1]));
-	}
-	else
-	{
-		node->line = malloc(1 * sizeof(char));
-		if (!node->line)
-			return (free_node(node));
-		node->line[0] = 0;
-	}
+	alloc_bis(str, node, i);
+	alloc_third(str, node, i);
 	node->next = NULL;
 	return (node);
 }
