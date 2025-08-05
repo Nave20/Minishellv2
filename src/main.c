@@ -123,6 +123,7 @@ int	main(int argc, char **argv, char **envp)
 	err = 0;
 	all = malloc(sizeof(t_all));
 	all->data = malloc(sizeof(t_data));
+	all->data->err_code = 0;
 	if (envp[0])
 		all->data->env = pars_env(envp, &err);
 	else

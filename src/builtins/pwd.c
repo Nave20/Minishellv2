@@ -23,7 +23,6 @@ void	ft_pwd(t_all *all)
 		perror("pwd");
 		all->data->err_code = 1;
 	}
-	//ft_printf(BLUE "%s\n" RESET, cwd);
-	ft_printf("%s\n", cwd);
+	ft_printf(BLUE "%s\n" RESET, cwd);
 	all->data->err_code = 0;
 }
