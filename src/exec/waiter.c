@@ -42,7 +42,7 @@ void	pid_waiter(t_all *all, int i, int waited)
 	{
 		wpid = waitpid(-1, &status, 0);
 		if (wpid == -1)
-			break;
+			break ;
 		if (wpid == lst_pid)
 			waiter_two(all, status, wpid);
 		waited++;

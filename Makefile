@@ -11,6 +11,7 @@ BUILTINS_DIR    = $(SRC_DIR)builtins/
 BUILTINS_OBJDIR = $(OBJ_DIR)builtins/
 
 EXEC_FILES      =	servo.c				\
+					servo_bis.c			\
 					execve.c			\
 					exec_error.c		\
 					fork_error.c		\

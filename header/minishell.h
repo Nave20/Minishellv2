@@ -242,6 +242,8 @@ void					ft_exit(t_all *all);
 
 //--------------------------------EXEC---------------------------------
 void					exec_one(t_data *data, t_all *all);
+int						handle_fork(t_all *all, t_cmd **cmd, int *i);
+int						sub_exec(t_all *all, t_cmd *cmd, int *i);
 void					exec_two(char **cmd, char **env);
 char					*path_finder2(char **paths, char *cmd);
 char					**get_cmd(char *str);
