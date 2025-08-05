@@ -26,8 +26,14 @@ static void	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 				free(line);
 			}
 		}
+		if (!input)
+			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
+				delim);
 		free(input);
 	}
+	else
+		printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
+			delim);
 	close(fd);
 	return ;
 }
