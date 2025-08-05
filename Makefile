@@ -43,6 +43,7 @@ SRC_FILES       =	main.c \
                     					token_utils.c \
                     					create_and_fill_cmd_tab.c \
                     					pars_env.c \
+                    					pars_env_bis.c \
                     					lst_to_tab.c \
 										empty_env.c \
                     					print_utils.c

@@ -53,15 +53,25 @@ t_env	*alloc(char *str)
 			return (free_node(node));
 		ft_strlcpy(node->name, str, i + 1);
 	}
-	node->line = malloc(ft_strlen(&str[i + 1]) + 1 * sizeof(char));
-	if (!node->line)
-		return (free_node(node));
-	ft_strlcpy(node->line, &str[i + 1], 1 + ft_strlen(&str[i + 1]));
+	if (str[until_equal(str)] != 0)
+	{
+		node->line = malloc(ft_strlen(&str[i + 1]) + 1 * sizeof(char));
+		if (!node->line)
+			return (free_node(node));
+		ft_strlcpy(node->line, &str[i + 1], 1 + ft_strlen(&str[i + 1]));
+	}
+	else
+	{
+		node->line = malloc(1 * sizeof(char));
+		if (!node->line)
+			return (free_node(node));
+		node->line[0] = 0;
+	}
 	node->next = NULL;
 	return (node);
 }
 
-t_env	*replace_line(const char *str, t_env *node)
+t_env	*replace_line(const char *str, t_env *node, t_all *all)
 {
 	int	i;
 
@@ -71,6 +81,12 @@ t_env	*replace_line(const char *str, t_env *node)
 	while (str[i] != '=')
 		i++;
 	node->line = ft_strdup(&str[i + 1]);
+	if (!node->line)
+	{
+		ft_putstr_fd(RED"malloc failed\n"RESET, 2);
+		all->data->err_code = 2;
+		free_node(node);
+	}
 	return (NULL);
 }
 
