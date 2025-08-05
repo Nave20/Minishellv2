@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:31:36 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/07/10 13:03:12 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/05 15:40:48 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +40,11 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+//---------------------------GLOBAL VARIABLES--------------------------
+
+extern volatile sig_atomic_t	g_sig_state;
+
 //-------------------------------STRUCTS-------------------------------
-
-typedef enum e_sig
-{
-	NO,
-	INT,
-	QUIT,
-	E_O_F
-}								t_sig;
-
 typedef enum e_type
 {
 	NONE,
@@ -147,8 +141,7 @@ typedef struct s_all
 	int							stdout_save;
 	char						**env_tab;
 }								t_all;
-//-------------------------------GLOBAL VARIABLES----------------------
-extern volatile sig_atomic_t	g_sig_state;
+
 //-------------------------------PARSING-------------------------------
 int								handle_empty_env(t_data *data);
 int								word_count(char *input);
@@ -240,8 +233,9 @@ int								heredoc_destroyer(t_data *data);
 t_env							*alloc(char *str);
 t_env							*free_env(t_env *head);
 t_env							*free_node(t_env *node);
-t_env							*replace_line(const char *str, t_env *node);
-
+t_env							*super_free_node(t_env *node, t_all *all);
+t_env							*replace_line(const char *str, t_env *node,
+									t_all *all);
 //------------------------------BUILTINS-------------------------------
 void							ft_echo(char **content, t_all *all);
 void							ft_cd(char **args, t_env *env, t_all *all);
@@ -252,10 +246,11 @@ int								cd_part(char *old_pwd, t_env *env, t_all *all);
 void							ft_pwd(t_all *all);
 void							ft_env(t_env *env, t_all *all);
 void							ft_export(char **str, t_all *all);
-t_env							*concat_exp(char *str, t_env *ptr);
+t_env							*concat_exp(char *str, t_env *ptr, t_all *all);
 void							export_error(char *str);
 int								until_equal(const char *str);
-t_env							*replace_logic(char *str, t_env *ptr);
+t_env							*replace_logic(char *str, t_env *ptr,
+									t_all *all);
 void							export_null(t_env *env);
 int								alpha_sort(t_env *env);
 void							ft_unset(char **str, t_all *all);
@@ -263,6 +258,8 @@ void							ft_exit(t_all *all);
 
 //--------------------------------EXEC---------------------------------
 void							exec_one(t_data *data, t_all *all);
+int								handle_fork(t_all *all, t_cmd **cmd, int *i);
+int								sub_exec(t_all *all, t_cmd *cmd, int *i);
 void							exec_two(char **cmd, char **env);
 char							*path_finder2(char **paths, char *cmd);
 char							**get_cmd(char *str);

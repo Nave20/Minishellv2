@@ -19,7 +19,7 @@ void	last_two(char *str, t_all *all)
 	t_env	*ptr;
 
 	ptr = all->data->env;
-	ptr = replace_logic(str, ptr);
+	ptr = replace_logic(str, ptr, all);
 	if (!ptr)
 		return ;
 	new = alloc(str);

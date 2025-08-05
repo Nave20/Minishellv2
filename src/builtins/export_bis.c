@@ -13,10 +13,10 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-t_env	*replace_logic(char *str, t_env *ptr)
+t_env	*replace_logic(char *str, t_env *ptr, t_all *all)
 {
 	if (str[until_equal(str) - 1] == '+')
-		ptr = concat_exp(str, ptr);
+		ptr = concat_exp(str, ptr, all);
 	else
 	{
 		while (ptr->next)
@@ -24,14 +24,14 @@ t_env	*replace_logic(char *str, t_env *ptr)
 			if (ft_strncmp(ptr->name, str,until_equal(str)) == 0)
 			{
 				if (ft_strncmp(ptr->name, str,ft_strlen(ptr->name)) == 0)
-					return (replace_line(str, ptr));
+					return (replace_line(str, ptr, all));
 			}
 			ptr = ptr->next;
 		}
 		if (ft_strncmp(ptr->name, str,until_equal(str)) == 0)
 		{
 			if (ft_strncmp(ptr->name, str,ft_strlen(ptr->name)) == 0)
-				return (replace_line(str, ptr));
+				return (replace_line(str, ptr, all));
 		}
 	}
 	return (ptr);
@@ -52,7 +52,8 @@ void	export_null(t_env *env)
 		ptr = env;
 		while (ptr->order != i)
 			ptr = ptr->next;
-		printf("declare -x %s=""%s\n", ptr->name, ptr->line);
+		printf(RED"declare -x "YELLOW"%s="RESET"%s\n",
+			ptr->name, ptr->line);
 		i++;
 	}
 }

@@ -71,49 +71,19 @@ void	exec_one(t_data *data, t_all *all)
 {
 	t_cmd	*cmd;
 	int		i;
+	int		tmp;
 
 	exec_init(all, data);
 	cmd = all->cmd;
 	i = 0;
 	while (cmd)
 	{
-		all->cmd = cmd;
-		if (infile_heredoc(all) == 1)
-		{
-			if (cmd->next)
-				cmd = cmd->next;
-			else
-				return ;
-		}
-		else if (outfile_or_err(all) == 1)
-		{
-			if (all->cmd->infile >= 0)
-			{
-				close(all->cmd->infile);
-				all->cmd->infile = -1;
-			}
-			else if (all->cmd->hrdc_path)
-			{
-				close(all->cmd->infile);
-				all->cmd->infile = -1;
-				unlink(all->cmd->hrdc_path);
-				free(all->cmd->hrdc_path);
-			}
-			if (cmd->next)
-				cmd = cmd->next;
-			else
-				return ;
-		}
-		else
-		{
-			if (!all->cmd->next && all->cmd->cmd_bi)
-			{
-				i += parent_one(all, &i);
-				break ;
-			}
-			if (handle_fork(all, &cmd, &i) == -1)
-				break ;
-		}
+		tmp = sub_exec(all, cmd, &i);
+		if (tmp == 2)
+			return ;
+		if (tmp == 1)
+			break ;
+		cmd = cmd->next;
 	}
 	pid_waiter(all, i, 0);
 	data->exit_code = all->data->err_code;

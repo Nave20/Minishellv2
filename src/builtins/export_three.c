@@ -30,7 +30,7 @@ void	export_error(char *str)
 	ft_putendl_fd(YELLOW" is not a valid identifier"RESET, 2);
 }
 
-void	concat_line(const char *str, t_env *node)
+void	concat_line(const char *str, t_env *node, t_all *all)
 {
 	int	i;
 
@@ -38,12 +38,28 @@ void	concat_line(const char *str, t_env *node)
 	while (str[i] != '=')
 		i++;
 	if (!node->line)
+	{
 		node->line = ft_strdup(str);
+		if (1) //(!node->line)
+		{
+			ft_putstr_fd(RED"malloc failed\n"RESET, 2);
+			all->data->err_code = 2;
+			super_free_node(node, all);
+		}
+	}
 	else
+	{
 		node->line = ft_strjoin(node->line, &str[i + 1]);
+		if (1)
+		{
+			ft_putstr_fd(RED"malloc failed\n"RESET, 2);
+			all->data->err_code = 2;
+			super_free_node(node, all);
+		}
+	}
 }
 
-t_env	*concat_exp(char *str, t_env *ptr)
+t_env	*concat_exp(char *str, t_env *ptr, t_all *all)
 {
 	while (ptr->next)
 	{
@@ -51,7 +67,7 @@ t_env	*concat_exp(char *str, t_env *ptr)
 		{
 			if (ft_strncmp(ptr->name, str,ft_strlen(ptr->name) - 1) == 0)
 			{
-				concat_line(str, ptr);
+				concat_line(str, ptr, all);
 				return (NULL);
 			}
 		}
@@ -61,7 +77,7 @@ t_env	*concat_exp(char *str, t_env *ptr)
 	{
 		if (ft_strncmp(ptr->name, str,ft_strlen(ptr->name) - 1) == 0)
 		{
-			concat_line(str, ptr);
+			concat_line(str, ptr, all);
 			return (NULL);
 		}
 	}

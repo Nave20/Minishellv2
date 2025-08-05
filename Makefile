@@ -11,6 +11,7 @@ BUILTINS_DIR    = $(SRC_DIR)builtins/
 BUILTINS_OBJDIR = $(OBJ_DIR)builtins/
 
 EXEC_FILES      =	servo.c				\
+					servo_bis.c			\
 					execve.c			\
 					exec_error.c		\
 					fork_error.c		\
@@ -42,6 +43,7 @@ SRC_FILES       =	main.c \
                     					token_utils.c \
                     					create_and_fill_cmd_tab.c \
                     					pars_env.c \
+                    					pars_env_bis.c \
                     					lst_to_tab.c \
 										empty_env.c \
                     					print_utils.c
