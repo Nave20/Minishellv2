@@ -18,7 +18,6 @@ bool	valid_fag(const char *flag)
 	int	i;
 
 	i = 0;
-
 	if (!flag || flag[0] == 0)
 		return (1);
 	if (flag[1] != 'n')

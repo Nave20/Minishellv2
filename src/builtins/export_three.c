@@ -63,9 +63,9 @@ t_env	*concat_exp(char *str, t_env *ptr, t_all *all)
 {
 	while (ptr->next)
 	{
-		if (ft_strncmp(ptr->name, str,until_equal(str) - 1) == 0)
+		if (ft_strncmp(ptr->name, str, until_equal(str) - 1) == 0)
 		{
-			if (ft_strncmp(ptr->name, str,ft_strlen(ptr->name) - 1) == 0)
+			if (ft_strncmp(ptr->name, str, ft_strlen(ptr->name) - 1) == 0)
 			{
 				concat_line(str, ptr, all);
 				return (NULL);
@@ -73,9 +73,9 @@ t_env	*concat_exp(char *str, t_env *ptr, t_all *all)
 		}
 		ptr = ptr->next;
 	}
-	if (ft_strncmp(ptr->name, str,until_equal(str) - 1) == 0)
+	if (ft_strncmp(ptr->name, str, until_equal(str) - 1) == 0)
 	{
-		if (ft_strncmp(ptr->name, str,ft_strlen(ptr->name) - 1) == 0)
+		if (ft_strncmp(ptr->name, str, ft_strlen(ptr->name) - 1) == 0)
 		{
 			concat_line(str, ptr, all);
 			return (NULL);
@@ -83,5 +83,3 @@ t_env	*concat_exp(char *str, t_env *ptr, t_all *all)
 	}
 	return (ptr);
 }
-
-

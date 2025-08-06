@@ -21,16 +21,16 @@ t_env	*replace_logic(char *str, t_env *ptr, t_all *all)
 	{
 		while (ptr->next)
 		{
-			if (ft_strncmp(ptr->name, str,until_equal(str)) == 0)
+			if (ft_strncmp(ptr->name, str, until_equal(str)) == 0)
 			{
-				if (ft_strncmp(ptr->name, str,ft_strlen(ptr->name)) == 0)
+				if (ft_strncmp(ptr->name, str, ft_strlen(ptr->name)) == 0)
 					return (replace_line(str, ptr, all));
 			}
 			ptr = ptr->next;
 		}
-		if (ft_strncmp(ptr->name, str,until_equal(str)) == 0)
+		if (ft_strncmp(ptr->name, str, until_equal(str)) == 0)
 		{
-			if (ft_strncmp(ptr->name, str,ft_strlen(ptr->name)) == 0)
+			if (ft_strncmp(ptr->name, str, ft_strlen(ptr->name)) == 0)
 				return (replace_line(str, ptr, all));
 		}
 	}

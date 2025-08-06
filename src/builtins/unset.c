@@ -13,14 +13,15 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-t_env	*logic(t_env *env, char *str)
+// t_env	*logic_bis(t_env *node, t_env *prev, t_env *next, char *str)
+// {
+//
+// }
+
+t_env	*logic(t_env *env, char *str, t_env *prev, t_env *next)
 {
-	t_env	*prev;
-	t_env	*next;
 	t_env	*node;
 
-	prev = NULL;
-	next = NULL;
 	node = env;
 	if (!node)
 		return (NULL);
@@ -46,6 +47,10 @@ t_env	*logic(t_env *env, char *str)
 	return (env);
 }
 
+// next = logic_bis(env, prev, next, str);
+// if (next)
+// 	return (next);
+
 int	unset_bis(char *str, t_all *all)
 {
 	int		i;
@@ -67,7 +72,7 @@ int	unset_bis(char *str, t_all *all)
 		}
 		i++;
 	}
-	all->data->env = logic(all->data->env, str);
+	all->data->env = logic(all->data->env, str, NULL, NULL);
 	return (0);
 }
 

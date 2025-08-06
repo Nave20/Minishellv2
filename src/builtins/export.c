@@ -64,7 +64,7 @@ bool	verif(char *str)
 	while (str[i] != '=' && str[i])
 	{
 		if ((((str[i] < 'A' || str[i] > 'Z')
-					&& (str[i] <= '0' || str[i] >= '9') ) && str[i] != '_')
+					&& (str[i] <= '0' || str[i] >= '9')) && str[i] != '_')
 			&& (str[i] < 'a' || str[i] > 'z'))
 		{
 			if (str[i] == '+' && str[i + 1] == '=')

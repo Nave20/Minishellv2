@@ -97,8 +97,7 @@ char	*get_target(char **args, char *old_pwd, t_env *env, t_all *all)
 			cd_no_pwd(old_pwd, all);
 			return (NULL);
 		}
-		// printf(BLUE "%s\n" RESET, target);
-		printf("%s\n", target);
+		printf(BLUE "%s\n" RESET, target);
 	}
 	else
 		target = args[1];
