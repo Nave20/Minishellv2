@@ -6,14 +6,20 @@ void	sig_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
-		g_sig_state = INT;
-		ft_putstr_fd("\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		if (g_sig_state != IN_HRDC)
+		{
+			ft_putstr_fd("\n", 1);
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
+		}
+		else
+		{
+			rl_replace_line("", 0);
+			rl_redisplay();
+			g_sig_state = HRDC_INT;
+		}
 	}
-	if (signal == SIGQUIT)
-		g_sig_state = QUIT;
 }
 
 static void	cmd_count(t_data *data)
@@ -86,7 +92,6 @@ static int	main_hub(t_all *all)
 	int		nbword;
 	char	*line;
 
-	signal(SIGINT, sig_handler);
 	if (isatty(STDIN_FILENO))
 	{
 		all->data->input = readline(BOLD CYAN "minishell> " RESET);
@@ -129,7 +134,10 @@ int	main(int argc, char **argv, char **envp)
 	err = 0;
 	all = malloc(sizeof(t_all));
 	all->data = malloc(sizeof(t_data));
+	all->data->cmd = NULL;
+	all->data->token = NULL;
 	all->data->err_code = 0;
+	signal(SIGINT, sig_handler);
 	if (envp[0])
 		all->data->env = pars_env(envp, &err);
 	else
@@ -148,7 +156,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			err = all->data->err_code;
 			free_env(all->data->env);
-			free(all->data);
+			free_data(all->data);
 			free(all);
 			return (err);
 		}
