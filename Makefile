@@ -99,8 +99,10 @@ $(BUILTINS_OBJDIR)%.o: $(BUILTINS_DIR)%.c $(HEADER)
 $(NAME): $(OBJS) $(LIB) $(HEADER) Makefile
 	$(CC) $(FLAGS) -o $@ $(OBJS) -lreadline $(LIB)
 
-$(LIB):
+$(LIB): FORCE
 	make -C libft
+
+FORCE:
 
 clean:
 	make clean -C libft/
@@ -112,4 +114,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re FORCE
