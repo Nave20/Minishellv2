@@ -6,7 +6,7 @@
 /*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:31:36 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/08/05 16:11:20 by lpaysant         ###   ########.fr       */
+/*   Updated: 2025/08/06 12:45:16 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ typedef enum e_sig
 {
 	NO,
 	QUIT,
-	INT
+	INT,
+	IN_HRDC,
+	HRDC_INT
 }								t_sig;
 
 typedef enum e_type

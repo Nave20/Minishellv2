@@ -1,6 +1,13 @@
 #include "../header/minishell.h"
 
-static void	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
+int	event_hook(void)
+{
+	if (g_sig_state == HRDC_INT)
+		rl_done = 1;
+	return (0);
+}
+
+static int	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 {
 	char	*line;
 
@@ -8,17 +15,21 @@ static void	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 	if (fd == -1)
 	{
 		free(input);
-		return ;
+		return (0);
 	}
 	if (input)
 	{
-		while (input != NULL && ft_strncmp(input, delim, ft_strlen(delim)
-				+ 1) != 0)
+		while (input && ft_strncmp(input, delim, ft_strlen(delim) + 1) != 0
+			&& g_sig_state != HRDC_INT)
 		{
 			ft_putendl_fd(input, fd);
 			free(input);
 			if (isatty(STDIN_FILENO))
+			{
+				rl_event_hook = event_hook;
 				input = readline("> ");
+				rl_event_hook = NULL;
+			}
 			else
 			{
 				line = get_next_line(STDIN_FILENO);
@@ -26,16 +37,34 @@ static void	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 				free(line);
 			}
 		}
+		if (g_sig_state == HRDC_INT)
+		{
+			printf("rldone 2\n");
+			free(input);
+			g_sig_state = NO;
+			rl_done = 0;
+			close(fd);
+			return (-1);
+		}
 		if (!input)
 			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
 				delim);
 		free(input);
 	}
-	else
+	else if (g_sig_state == HRDC_INT)
+	{
+		printf("rldone 3\n");
+		free(input);
+		g_sig_state = NO;
+		rl_done = 0;
+		close(fd);
+		return (-1);
+	}
+	else if (!input)
 		printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
 			delim);
 	close(fd);
-	return ;
+	return (0);
 }
 
 static int	create_heredoc(t_data *data, t_cmd *cmd, char *delim, int i_hrdc)
@@ -47,8 +76,23 @@ static int	create_heredoc(t_data *data, t_cmd *cmd, char *delim, int i_hrdc)
 	char	*line;
 
 	update_heredoc(cmd);
+	input = NULL;
 	if (isatty(STDIN_FILENO))
+	{
+		g_sig_state = IN_HRDC;
+		rl_event_hook = event_hook;
 		input = readline("> ");
+		rl_event_hook = NULL;
+		if (g_sig_state == HRDC_INT)
+		{
+			printf("rldone 1\n");
+			free(input);
+			g_sig_state = NO;
+			rl_done = 0;
+			heredoc_destroyer(data);
+			return (-1);
+		}
+	}
 	else
 	{
 		line = get_next_line(STDIN_FILENO);
@@ -64,7 +108,12 @@ static int	create_heredoc(t_data *data, t_cmd *cmd, char *delim, int i_hrdc)
 	hrdc_nbr = NULL;
 	if (!f_name)
 		err_return(data, "minishell : memory allocation failed\n", 1);
-	open_and_fill_hrdc(0, delim, input, f_name);
+	if (open_and_fill_hrdc(0, delim, input, f_name) == -1)
+	{
+		free(f_name);
+		heredoc_destroyer(data);
+		return (-1);
+	}
 	free(f_name);
 	return (0);
 }
@@ -90,7 +139,11 @@ void	handle_cmd_ending(t_data *data, t_cmd **cmd, int *i, int *j)
 static int	handle_heredoc(t_data *data, t_cmd *cmd, int i)
 {
 	if (data->token[i + 1].type == DELIM)
-		create_heredoc(data, cmd, data->token[i + 1].tab, data->nbhrdc);
+	{
+		if (create_heredoc(data, cmd, data->token[i + 1].tab, data->nbhrdc) ==
+			-1)
+			return (-1);
+	}
 	else
 		return (err_return(data,
 				"minishell: syntax error near unexpected token `newline'", 2));

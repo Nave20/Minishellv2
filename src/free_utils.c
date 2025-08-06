@@ -78,6 +78,7 @@ void	free_cmd(t_data *data)
 		cmd = NULL;
 		cmd = next;
 	}
+	data->cmd = NULL;
 }
 
 void	free_token(t_data *data)
@@ -89,6 +90,7 @@ void	free_token(t_data *data)
 	{
 		while (data->token[i].tab)
 		{
+			printf("token : %s [FREE]\n", data->token[i].tab);
 			free(data->token[i].tab);
 			data->token[i].tab = NULL;
 			i++;
