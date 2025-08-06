@@ -5,7 +5,13 @@ volatile sig_atomic_t	g_sig_state = NO;
 void	sig_handler(int signal)
 {
 	if (signal == SIGINT)
+	{
 		g_sig_state = INT;
+		ft_putstr_fd("\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 	if (signal == SIGQUIT)
 		g_sig_state = QUIT;
 }
