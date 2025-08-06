@@ -13,12 +13,6 @@
 #include "../../header/minishell.h"
 #include "../../libft/libft.h"
 
-void	sigint_handler(int signum)
-{
-	(void)signum;
-	write(STDOUT_FILENO, "\nminishell> ", 12);
-}
-
 void	exec_builtin(t_all *all, t_cmd *cmd, t_env **env)
 {
 	if (!ft_strncmp(cmd->cmd_bi, "echo", ft_strlen("echo")))
@@ -58,7 +52,11 @@ int	handle_fork(t_all *all, t_cmd **cmd, int *i)
 		return (-1);
 	}
 	if (all->now_pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT,SIG_DFL);
 		child_one(all);
+	}
 	else
 	{
 		*i += parent_one(all, i);
