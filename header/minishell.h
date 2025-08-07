@@ -17,6 +17,7 @@
 # define YELLOW "\033[33m"
 # define RESET "\033[0m"
 # define BLUE "\033[34m"
+# define GREEN "\033[0;32m"
 # define CYAN "\033[36m"
 # define RED "\033[31m"
 # define BOLD "\033[1m"
@@ -238,6 +239,9 @@ void							print_lst(t_data *data);
 void							print_token(t_data *data);
 int								lst_to_tab(t_data *data, t_env *env);
 int								heredoc_destroyer(t_data *data);
+void							rl_line(t_all *all);
+char							*find_pwd(t_all *all);
+char							*find_user(t_all *all);
 
 //------------------------------PARS_ENV-------------------------------
 t_env							*alloc(char *str);

@@ -46,6 +46,8 @@ SRC_FILES       =	main.c \
                     					pars_env_bis.c \
                     					lst_to_tab.c \
 										empty_env.c \
+										rl_line.c \
+										rl_line_bis.c \
                     					print_utils.c
 
 BUILTINS_FILES  = 	echo.c				\
