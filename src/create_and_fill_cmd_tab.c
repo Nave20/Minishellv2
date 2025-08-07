@@ -31,7 +31,7 @@ static int	fill_cmd_tab(t_data *data, t_cmd *cmd, int i, int j)
 
 static int	handle_no_str(t_data *data, t_cmd *cmd)
 {
-	cmd->cmd_tab = ft_calloc(2, sizeof(char *));
+	cmd->cmd_tab = ft_calloc(3, sizeof(char *));
 	if (!cmd->cmd_tab)
 		return (err_return(data, "minishell: memory allocation failed\n", 1));
 	if (cmd->cmd)
@@ -65,5 +65,3 @@ int	create_cmd_tab(t_data *data)
 	}
 	return (0);
 }
-
-// sdf

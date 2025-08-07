@@ -123,7 +123,7 @@ static int	main_hub(t_all *all)
 					RED "minishell : memory allocation failed\n" RESET, 1));
 		if (parsing_hub(all->data) == -1)
 			return (-1);
-		// print_lst(data);
+		print_lst(all->data);
 		exec_one(all->data, all);
 		free_cmd(all->data);
 	}
@@ -132,28 +132,48 @@ static int	main_hub(t_all *all)
 	return (0);
 }
 
-int	init_main_structs(t_all *all)
+int	init_env(t_all *all, char **envp)
 {
 	int	err;
 
-	all->data = malloc(sizeof(t_data));
-	all->data->cmd = NULL;
-	all->data->token = NULL;
-	all->data->err_code = 0;
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, SIG_IGN);
+	err = 0;
 	if (envp[0])
 		all->data->env = pars_env(envp, &err);
 	else
 	{
 		if (handle_empty_env(all->data) == -1)
-			return (all->data->err_code);
+		{
+			free_env(all->data->env);
+			free(all->data);
+			free(all);
+			return (-1);
+		}
 	}
 	if (err == 1)
 	{
+		free_env(all->data->env);
+		free(all->data);
+		free(all);
 		ft_putstr_fd("minishell : memory allocation failed\n", 1);
-		return (all->data->err_code);
+		return (-1);
 	}
+	return (0);
+}
+
+int	init_main_structs(t_all *all)
+{
+	all->data = malloc(sizeof(t_data));
+	if (!all->data)
+	{
+		free(all);
+		return (-1);
+	}
+	all->data->cmd = NULL;
+	all->data->token = NULL;
+	all->data->err_code = 0;
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -165,24 +185,13 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	err = 0;
 	all = malloc(sizeof(t_all));
-	all->data = malloc(sizeof(t_data));
-	all->data->cmd = NULL;
-	all->data->token = NULL;
+	if (!all)
+		return (ft_putstr_fd("minishell: memory allocation failed\n", 1));
+	if (init_main_structs(all) == -1)
+		return (1);
+	if (init_env(all, envp) == -1)
+		return (1);
 	all->data->err_code = 0;
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, SIG_IGN);
-	if (envp[0])
-		all->data->env = pars_env(envp, &err);
-	else
-	{
-		if (handle_empty_env(all->data) == -1)
-			return (all->data->err_code);
-	}
-	if (err == 1)
-	{
-		ft_putstr_fd("minishell : memory allocation failed\n", 1);
-		return (all->data->err_code);
-	}
 	while (1)
 	{
 		if (main_hub(all) == 1)
