@@ -39,7 +39,6 @@ static int	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 		}
 		if (g_sig_state == HRDC_INT)
 		{
-			printf("rldone 2\n");
 			free(input);
 			g_sig_state = NO;
 			rl_done = 0;
@@ -53,7 +52,6 @@ static int	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 	}
 	else if (g_sig_state == HRDC_INT)
 	{
-		printf("rldone 3\n");
 		free(input);
 		g_sig_state = NO;
 		rl_done = 0;
@@ -85,8 +83,9 @@ static int	create_heredoc(t_data *data, t_cmd *cmd, char *delim, int i_hrdc)
 		rl_event_hook = NULL;
 		if (g_sig_state == HRDC_INT)
 		{
-			printf("rldone 1\n");
 			free(input);
+			free_token(data);
+			free_cmd(data);
 			g_sig_state = NO;
 			rl_done = 0;
 			heredoc_destroyer(data);
@@ -110,6 +109,8 @@ static int	create_heredoc(t_data *data, t_cmd *cmd, char *delim, int i_hrdc)
 		err_return(data, "minishell : memory allocation failed\n", 1);
 	if (open_and_fill_hrdc(0, delim, input, f_name) == -1)
 	{
+		free_token(data);
+		free_cmd(data);
 		free(f_name);
 		heredoc_destroyer(data);
 		return (-1);

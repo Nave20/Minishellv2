@@ -12,6 +12,7 @@ void	sig_handler(int signal)
 			rl_replace_line("", 0);
 			rl_on_new_line();
 			rl_redisplay();
+			g_sig_state = INT;
 		}
 		else
 		{
@@ -98,7 +99,14 @@ static int	main_hub(t_all *all)
 		if (all->data->input)
 			add_history(all->data->input);
 		else
+		{
+			if (g_sig_state == INT)
+			{
+				free_token(all->data);
+				free_cmd(all->data);
+			}
 			return (1);
+		}
 	}
 	else
 	{
@@ -124,6 +132,30 @@ static int	main_hub(t_all *all)
 	return (0);
 }
 
+int	init_main_structs(t_all *all)
+{
+	int	err;
+
+	all->data = malloc(sizeof(t_data));
+	all->data->cmd = NULL;
+	all->data->token = NULL;
+	all->data->err_code = 0;
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
+	if (envp[0])
+		all->data->env = pars_env(envp, &err);
+	else
+	{
+		if (handle_empty_env(all->data) == -1)
+			return (all->data->err_code);
+	}
+	if (err == 1)
+	{
+		ft_putstr_fd("minishell : memory allocation failed\n", 1);
+		return (all->data->err_code);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_all	*all;
@@ -138,6 +170,7 @@ int	main(int argc, char **argv, char **envp)
 	all->data->token = NULL;
 	all->data->err_code = 0;
 	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 	if (envp[0])
 		all->data->env = pars_env(envp, &err);
 	else

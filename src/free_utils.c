@@ -90,14 +90,13 @@ void	free_token(t_data *data)
 	{
 		while (data->token[i].tab)
 		{
-			printf("token : %s [FREE]\n", data->token[i].tab);
 			free(data->token[i].tab);
 			data->token[i].tab = NULL;
 			i++;
 		}
 	}
-	free(data->token[i].tab);
-	data->token[i].tab = NULL;
+	// free(data->token[i].tab);
+	// data->token[i].tab = NULL;
 	free(data->token);
 	data->token = NULL;
 }
