@@ -25,8 +25,6 @@ static int	get_env_var(t_data *data, int i)
 				end++;
 			if (rep_env_var(data, i, start + 1, end) == -1)
 				return (-1);
-			// if (data->token[i].tab[0] == '\0')
-			// 	return (0);
 			else
 				return (0);
 		}

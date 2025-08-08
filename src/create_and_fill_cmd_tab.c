@@ -50,7 +50,7 @@ int	create_cmd_tab(t_data *data)
 	{
 		if (cmd->cmd || cmd->cmd_bi)
 		{
-			if (cmd->str)
+			if (cmd->str && cmd->str[0])
 			{
 				if (fill_cmd_tab(data, cmd, 0, 0) == -1)
 					return (-1);
