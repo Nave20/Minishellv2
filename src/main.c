@@ -95,6 +95,7 @@ static int	main_hub(t_all *all)
 
 	if (isatty(STDIN_FILENO))
 	{
+		rl_line(all);
 		all->data->input = readline(BOLD CYAN "minishell> " RESET);
 		if (all->data->input)
 			add_history(all->data->input);
