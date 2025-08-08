@@ -6,7 +6,7 @@
 /*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:31:36 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/08/07 12:46:22 by lpaysant         ###   ########.fr       */
+/*   Updated: 2025/08/08 16:39:45 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,8 @@ int								word_count(char *input);
 t_env							*pars_env(char **env, int *err);
 t_env							*free_env(t_env *head);
 int								ft_envsize(t_env *lst);
-int								tokenize_input(t_data *data, char *input);
+int								tokenize_input(t_data *data, char *input, int i,
+									int nbword);
 int								handle_normal(t_data *data, int *nbword,
 									int *i);
 int								handle_special_c(t_data *data, int *nbword,
@@ -200,7 +201,8 @@ int								set_env_var(t_data *data);
 char							*srch_env_var(t_data *data, char *var);
 int								rep_env_var(t_data *data, int i, int start,
 									int end);
-int								rep_env_var_bis(t_data *data, int i, int start, int end);
+int								rep_env_var_bis(t_data *data, int i, int start,
+									int end);
 int								update_null_var(t_data *data, char **str,
 									int start, int end);
 int								update_var(char **str, int start, int end,
@@ -247,7 +249,8 @@ char							*find_pwd(t_all *all);
 char							*find_user(t_all *all);
 void							err_line(t_all *all, char *ptr);
 void							err_line_two(t_all *all);
-void							devmod_line(t_all *all, char *line, char *user, char *pwd);
+void							devmod_line(t_all *all, char *line, char *user,
+									char *pwd);
 
 //------------------------------PARS_ENV-------------------------------
 t_env							*alloc(char *str);

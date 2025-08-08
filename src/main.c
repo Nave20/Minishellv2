@@ -37,13 +37,8 @@ static void	cmd_count(t_data *data)
 	data->cmd_count++;
 }
 
-int	tokenize_input(t_data *data, char *input)
+int	tokenize_input(t_data *data, char *input, int i, int nbword)
 {
-	int	i;
-	int	nbword;
-
-	i = 0;
-	nbword = 0;
 	while (input[i])
 	{
 		if (ft_isspace(input[i]))
@@ -70,7 +65,7 @@ int	tokenize_input(t_data *data, char *input)
 
 static int	parsing_hub(t_data *data)
 {
-	if (tokenize_input(data, data->input) == -1)
+	if (tokenize_input(data, data->input, 0, 0) == -1)
 		return (-1);
 	// print_token(data);
 	free(data->input);
@@ -90,32 +85,15 @@ static int	parsing_hub(t_data *data)
 
 static int	main_hub(t_all *all)
 {
-	int		nbword;
-	char	*line;
+	int	nbword;
 
 	if (isatty(STDIN_FILENO))
-	{
 		rl_line(all);
-		if (all->data->input)
-			add_history(all->data->input);
-		else
-		{
-			if (g_sig_state == INT)
-			{
-				free_token(all->data);
-				free_cmd(all->data);
-			}
-			return (1);
-		}
-	}
 	else
-	{
-		line = get_next_line(STDIN_FILENO);
-		all->data->input = ft_strtrim(line, "\n");
-		free(line);
-	}
+		return (1);
 	if (all->data->input)
 	{
+		add_history(all->data->input);
 		nbword = word_count(all->data->input);
 		all->data->token = ft_calloc(nbword + 1, sizeof(t_token));
 		if (!all->data->token)
@@ -129,7 +107,14 @@ static int	main_hub(t_all *all)
 		free_cmd(all->data);
 	}
 	else
+	{
+		if (g_sig_state == INT)
+		{
+			free_token(all->data);
+			free_cmd(all->data);
+		}
 		return (1);
+	}
 	return (0);
 }
 
