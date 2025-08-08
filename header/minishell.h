@@ -17,6 +17,7 @@
 # define YELLOW "\033[33m"
 # define RESET "\033[0m"
 # define BLUE "\033[34m"
+# define GREEN "\033[0;32m"
 # define CYAN "\033[36m"
 # define RED "\033[31m"
 # define BOLD "\033[1m"
@@ -95,6 +96,7 @@ struct							s_data
 	int							exit_code;
 	int							is_env_var;
 	int							nbword;
+	char						*env_var;
 	t_new						*new;
 	t_token						*token;
 	t_cmd						*cmd;
@@ -149,6 +151,7 @@ typedef struct s_all
 	int							prev_fd;
 	int							stdin_save;
 	int							stdout_save;
+	bool						devmod;
 	char						**env_tab;
 }								t_all;
 
@@ -197,6 +200,7 @@ int								set_env_var(t_data *data);
 char							*srch_env_var(t_data *data, char *var);
 int								rep_env_var(t_data *data, int i, int start,
 									int end);
+int								rep_env_var_bis(t_data *data, int i, int start, int end);
 int								update_null_var(t_data *data, char **str,
 									int start, int end);
 int								update_var(char **str, int start, int end,
@@ -234,10 +238,16 @@ void							skip_quotes(char *data, int *i);
 int								create_cmd_tab(t_data *data);
 int								handle_qustn_mark(t_data *data, int i,
 									int start, int end);
-void							print_lst(t_data *data);
+void							print_lst(t_data *data, t_cmd *cmd);
 void							print_token(t_data *data);
 int								lst_to_tab(t_data *data, t_env *env);
 int								heredoc_destroyer(t_data *data);
+void							rl_line(t_all *all);
+char							*find_pwd(t_all *all);
+char							*find_user(t_all *all);
+void							err_line(t_all *all, char *ptr);
+void							err_line_two(t_all *all);
+void							devmod_line(t_all *all, char *line, char *user, char *pwd);
 
 //------------------------------PARS_ENV-------------------------------
 t_env							*alloc(char *str);
@@ -267,6 +277,7 @@ void							export_null(t_env *env);
 int								alpha_sort(t_env *env);
 void							ft_unset(char **str, t_all *all);
 void							ft_exit(t_all *all);
+void							devmod(t_all *all);
 
 //--------------------------------EXEC---------------------------------
 void							exec_one(t_data *data, t_all *all);

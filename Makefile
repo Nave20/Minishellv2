@@ -40,13 +40,16 @@ SRC_FILES       =	main.c \
                     					new_token_utils.c \
                     					remove_quotes.c \
                     					get_env_var.c \
+                    					get_env_var_bis.c \
                     					token_utils.c \
                     					create_and_fill_cmd_tab.c \
                     					pars_env.c \
                     					pars_env_bis.c \
                     					lst_to_tab.c \
 										empty_env.c \
-                    					print_utils.c
+										rl_line.c \
+										rl_line_bis.c \
+                    					print_utils.c \
 
 BUILTINS_FILES  = 	echo.c				\
 					cd.c				\
@@ -58,6 +61,7 @@ BUILTINS_FILES  = 	echo.c				\
 					export_three.c		\
 					unset.c				\
 					exit.c				\
+					devmod.c			\
 
 SOURCES         = $(addprefix $(SRC_DIR), $(SRC_FILES)) \
                   $(addprefix $(EXEC_DIR), $(EXEC_FILES)) \

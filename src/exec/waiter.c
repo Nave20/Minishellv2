@@ -6,7 +6,7 @@
 /*   By: vpirotti <vpirotti@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 13:48:54 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/07/19 13:48:54 by vpirotti         ###   ########.fr       */
+/*   Updated: 2025/08/07 17:30:02 by vpirotti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ void	waiter_two(t_all *all, int status, pid_t wpid)
 	else if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
-		if (sig == SIGINT)
-			write(1, "\n", 1);
 		all->data->err_code = 128 + sig;
-		if (sig != SIGPIPE)
+		if (sig == SIGINT)
+			return ;
+		else if (sig == SIGQUIT)
+			printf("Quit (core dumped)\n");
+		else if (sig != SIGPIPE)
 			printf("Process %d terminated by signal %d\n", wpid, sig);
 	}
 }

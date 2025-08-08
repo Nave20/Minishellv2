@@ -1,12 +1,7 @@
 #include "../header/minishell.h"
 
-static int	get_env_var(t_data *data, int i)
+static int	get_env_var(t_data *data, int i, int end, int start)
 {
-	int	start;
-	int	end;
-
-	start = 0;
-	end = 0;
 	while (data->token[i].tab[start])
 	{
 		if (data->token[i].tab[start] == '$' && data->token[i].tab[start
@@ -42,7 +37,7 @@ static int	dbl_quotes_env_var(t_data *data, int i, int *j)
 					+ 1]) || data->token[i].tab[*j + 1] == '_'
 				|| data->token[i].tab[*j + 1] == '?'))
 		{
-			if (get_env_var(data, i) == -1)
+			if (get_env_var(data, i, 0, 0) == -1)
 				return (-1);
 			*j = 0;
 		}
@@ -94,7 +89,7 @@ static int	search_env_var(t_data *data, int *i, int *j)
 		&& (ft_isalnum(data->token[*i].tab[*j + 1]) || data->token[*i].tab[*j
 			+ 1] == '_' || data->token[*i].tab[*j + 1] == '?'))
 	{
-		if (get_env_var(data, *i) == -1)
+		if (get_env_var(data, *i, 0, 0) == -1)
 			return (-1);
 		*j = 0;
 	}
