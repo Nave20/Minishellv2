@@ -248,7 +248,7 @@ char							*find_user(t_all *all);
 void	err_line_two(t_all *all, char *str, char *str2);
 void	err_line(t_all *all, char *ptr, char *str, char *str2);
 void							devmod_line(t_all *all, char *line, char *user, char *pwd);
-void							print_banner();
+void							print_banner(void);
 
 //------------------------------PARS_ENV-------------------------------
 t_env							*alloc(char *str);
