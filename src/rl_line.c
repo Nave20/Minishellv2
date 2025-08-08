@@ -17,15 +17,23 @@
 #define ERR_ONE "\033[0m\033[0;32m ➜\033[0m\033[33m $PWD\033[0m\n$"
 #define ERR_TWO "\033[1m\033[36m$USER\033[0m\033[0;32m ➜\033[0m\033[33m "
 
-void	err_line(t_all *all, char *ptr)
+void	err_line(t_all *all, char *ptr, char *str, char *str2)
 {
+	if (str)
+		free(str);
+	if (str2)
+		free(str2);
 	perror("malloc failed");
 	free(ptr);
 	all->data->input = readline(BOLD_CYAN"$USER"ARROW"$PWD"RESET_NL);
 }
 
-void	err_line_two(t_all *all)
+void	err_line_two(t_all *all, char *str, char *str2)
 {
+	if (str)
+		free(str);
+	if (str2)
+		free(str2);
 	perror("malloc failed");
 	all->data->input = readline(BOLD_CYAN"$USER"ARROW"$PWD"RESET_NL);
 }
@@ -36,13 +44,14 @@ void	error_line_two(t_all *all, char *line, char *pwd)
 
 	line = ft_strjoin(ERR_TWO, pwd);
 	if (!line)
-		return (err_line_two(all));
+		return (err_line_two(all, pwd, NULL));
 	ptr = line;
 	line = ft_strjoin(line, RESET_NL);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, pwd, NULL));
 	free(ptr);
 	all->data->input = readline(line);
+	free(pwd);
 	free(line);
 }
 
@@ -52,13 +61,14 @@ void	error_line_one(t_all *all, char *line, char *user)
 
 	line = ft_strjoin(BOLD_CYAN, user);
 	if (!line)
-		return (err_line_two(all));
+		return (err_line_two(all, user, NULL));
 	ptr = line;
 	line = ft_strjoin(line, ERR_ONE);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr,user, NULL));
 	free(ptr);
 	all->data->input = readline(line);
+	free(user);
 	free(line);
 }
 
@@ -68,23 +78,25 @@ void	normal_line(t_all *all, char *line, char *user, char *pwd)
 
 	line = ft_strjoin(BOLD_CYAN, user);
 	if (!line)
-		return (err_line_two(all));
+		return (err_line_two(all, user, pwd));
 	ptr = line;
 	line = ft_strjoin(line, ARROW);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, user, pwd));
 	free(ptr);
 	ptr = line;
 	line = ft_strjoin(line, pwd);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, user, pwd));
 	free(ptr);
 	ptr = line;
 	line = ft_strjoin(line, RESET_NL);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, user, pwd));
 	free(ptr);
 	all->data->input = readline(line);
+	free(user);
+	free(pwd);
 	free(line);
 }
 

@@ -22,6 +22,7 @@ EXEC_FILES      =	servo.c				\
 					waiter.c			\
 
 SRC_FILES       =	main.c \
+										banner.c \
                     					word_count.c \
                     					tokenization.c \
                     					token_definition.c \

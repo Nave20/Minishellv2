@@ -21,26 +21,26 @@ void	devmod_line_two(t_all *all, char *line, char *ptr, char *ptr2)
 {
 	line = ft_strjoin(line, LEFT_SQUARE);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, NULL, NULL));
 	free(ptr);
 	ptr = line;
 	line = ft_strjoin(line, RED_BOLD);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, NULL, NULL));
 	free(ptr);
 	ptr = line;
 	ptr2 = ft_itoa(all->data->err_code);
 	if (!ptr2)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, NULL, NULL));
 	line = ft_strjoin(line, ptr2);
 	free(ptr2);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, NULL, NULL));
 	free(ptr);
 	ptr = line;
 	line = ft_strjoin(line, RESET_NL);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, NULL, NULL));
 	free(ptr);
 	all->data->input = readline(line);
 	free(line);
@@ -52,17 +52,19 @@ void	devmod_line(t_all *all, char *line, char *user, char *pwd)
 
 	line = ft_strjoin(BOLD_CYAN, user);
 	if (!line)
-		return (err_line_two(all));
+		return (err_line_two(all, user, pwd));
 	ptr = line;
 	line = ft_strjoin(line, ARROW);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, user, pwd));
 	free(ptr);
 	ptr = line;
 	line = ft_strjoin(line, pwd);
 	if (!line)
-		return (err_line(all, ptr));
+		return (err_line(all, ptr, user, pwd));
 	free(ptr);
+	free(pwd);
+	free(user);
 	ptr = line;
 	devmod_line_two(all, line, ptr, NULL);
 }

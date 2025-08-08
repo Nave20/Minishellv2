@@ -186,6 +186,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	err = 0;
+	print_banner();
 	all = malloc(sizeof(t_all));
 	if (!all)
 		return (ft_putstr_fd("minishell: memory allocation failed\n", 1));
