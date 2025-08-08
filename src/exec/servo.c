@@ -29,6 +29,8 @@ void	exec_builtin(t_all *all, t_cmd *cmd, t_env **env)
 		ft_env(*env, all);
 	else if (!ft_strncmp(cmd->cmd_bi, "exit", ft_strlen("exit")))
 		ft_exit(all);
+	else if (!ft_strncmp(cmd->cmd_bi, "devmod", ft_strlen("devmod")))
+		devmod(all);
 	else
 		perror(RED"builtin not found"RESET);
 }

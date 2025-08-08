@@ -11,6 +11,61 @@
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+#define BOLD_CYAN "\033[1m\033[36m"
+#define ARROW "\033[0m\033[0;32m ➜\033[0m\033[33m "
+#define LEFT_SQUARE "\t\033[0m["
+#define RESET_NL "\033[0m]\n$"
+#define RED_BOLD "\033[1m\033[31m"
+
+void	devmod_line_two(t_all *all, char *line, char *ptr, char *ptr2)
+{
+	line = ft_strjoin(line, LEFT_SQUARE);
+	if (!line)
+		return (err_line(all, ptr));
+	free(ptr);
+	ptr = line;
+	line = ft_strjoin(line, RED_BOLD);
+	if (!line)
+		return (err_line(all, ptr));
+	free(ptr);
+	ptr = line;
+	ptr2 = ft_itoa(all->data->err_code);
+	if (!ptr2)
+		return (err_line(all, ptr));
+	line = ft_strjoin(line, ptr2);
+	free(ptr2);
+	if (!line)
+		return (err_line(all, ptr));
+	free(ptr);
+	ptr = line;
+	line = ft_strjoin(line, RESET_NL);
+	if (!line)
+		return (err_line(all, ptr));
+	free(ptr);
+	all->data->input = readline(line);
+	free(line);
+}
+
+void	devmod_line(t_all *all, char *line, char *user, char *pwd)
+{
+	char *ptr;
+
+	line = ft_strjoin(BOLD_CYAN, user);
+	if (!line)
+		return (err_line_two(all));
+	ptr = line;
+	line = ft_strjoin(line, ARROW);
+	if (!line)
+		return (err_line(all, ptr));
+	free(ptr);
+	ptr = line;
+	line = ft_strjoin(line, pwd);
+	if (!line)
+		return (err_line(all, ptr));
+	free(ptr);
+	ptr = line;
+	devmod_line_two(all, line, ptr, NULL);
+}
 
 char	*find_pwd(t_all *all)
 {

@@ -60,6 +60,7 @@ BUILTINS_FILES  = 	echo.c				\
 					export_three.c		\
 					unset.c				\
 					exit.c				\
+					devmod.c			\
 
 SOURCES         = $(addprefix $(SRC_DIR), $(SRC_FILES)) \
                   $(addprefix $(EXEC_DIR), $(EXEC_FILES)) \

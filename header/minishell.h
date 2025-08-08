@@ -150,6 +150,7 @@ typedef struct s_all
 	int							prev_fd;
 	int							stdin_save;
 	int							stdout_save;
+	bool						devmod;
 	char						**env_tab;
 }								t_all;
 
@@ -235,13 +236,16 @@ void							skip_quotes(char *data, int *i);
 int								create_cmd_tab(t_data *data);
 int								handle_qustn_mark(t_data *data, int i,
 									int start, int end);
-void							print_lst(t_data *data);
+void							print_lst(t_data *data, t_cmd *cmd);
 void							print_token(t_data *data);
 int								lst_to_tab(t_data *data, t_env *env);
 int								heredoc_destroyer(t_data *data);
 void							rl_line(t_all *all);
 char							*find_pwd(t_all *all);
 char							*find_user(t_all *all);
+void							err_line(t_all *all, char *ptr);
+void							err_line_two(t_all *all);
+void							devmod_line(t_all *all, char *line, char *user, char *pwd);
 
 //------------------------------PARS_ENV-------------------------------
 t_env							*alloc(char *str);
@@ -271,6 +275,7 @@ void							export_null(t_env *env);
 int								alpha_sort(t_env *env);
 void							ft_unset(char **str, t_all *all);
 void							ft_exit(t_all *all);
+void							devmod(t_all *all);
 
 //--------------------------------EXEC---------------------------------
 void							exec_one(t_data *data, t_all *all);

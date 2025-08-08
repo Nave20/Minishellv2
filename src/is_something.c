@@ -32,7 +32,8 @@ bool	is_build_in(char *cmd)
 			ft_strlen("unset") + 1) == 0 || ft_strncmp(cmd, "env",
 			ft_strlen("env") + 1) == 0 || ft_strncmp(cmd, "exit",
 			ft_strlen("exit") + 1) == 0 || ft_strncmp(cmd, "pwd",
-			ft_strlen("pwd") + 1) == 0)
+			ft_strlen("pwd") + 1) == 0 || ft_strncmp(cmd, "devmod",
+			ft_strlen("devmod") + 1) == 0)
 		return (true);
 	else
 		return (false);

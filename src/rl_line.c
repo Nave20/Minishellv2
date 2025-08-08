@@ -103,6 +103,8 @@ void	rl_line(t_all *all)
 		error_line_one(all, line, user);
 	else if (!user)
 		error_line_two(all, line, pwd);
+	else if (all->devmod)
+		devmod_line(all, line, user, pwd);
 	else
 		normal_line(all, line, user, pwd);
 }

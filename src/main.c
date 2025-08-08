@@ -123,7 +123,8 @@ static int	main_hub(t_all *all)
 					RED "minishell : memory allocation failed\n" RESET, 1));
 		if (parsing_hub(all->data) == -1)
 			return (-1);
-		print_lst(all->data);
+		if (all->devmod)
+			print_lst(all->data, all->data->cmd);
 		exec_one(all->data, all);
 		free_cmd(all->data);
 	}
@@ -170,6 +171,7 @@ int	init_main_structs(t_all *all)
 	}
 	all->data->cmd = NULL;
 	all->data->token = NULL;
+	all->devmod = 0;
 	all->data->err_code = 0;
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
@@ -191,7 +193,6 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	if (init_env(all, envp) == -1)
 		return (1);
-	all->data->err_code = 0;
 	while (1)
 	{
 		if (main_hub(all) == 1)
