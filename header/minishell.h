@@ -96,6 +96,7 @@ struct							s_data
 	int							exit_code;
 	int							is_env_var;
 	int							nbword;
+	char						*env_var;
 	t_new						*new;
 	t_token						*token;
 	t_cmd						*cmd;
@@ -199,6 +200,7 @@ int								set_env_var(t_data *data);
 char							*srch_env_var(t_data *data, char *var);
 int								rep_env_var(t_data *data, int i, int start,
 									int end);
+int								rep_env_var_bis(t_data *data, int i, int start, int end);
 int								update_null_var(t_data *data, char **str,
 									int start, int end);
 int								update_var(char **str, int start, int end,

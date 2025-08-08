@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_env_var.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vpirotti <vpirotti@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 12:40:52 by vpirotti          #+#    #+#             */
+/*   Updated: 2025/08/08 14:43:00 by vpirotti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 static void	cpy_env_var(int *i, char *env_var, char *update)
@@ -89,7 +101,6 @@ int	update_null_var(t_data *data, char **str, int start, int end)
 int	rep_env_var(t_data *data, int i, int start, int end)
 {
 	char	*var;
-	char	*env_var;
 	int		j;
 
 	j = 0;
@@ -102,19 +113,7 @@ int	rep_env_var(t_data *data, int i, int start, int end)
 		var[j] = data->token[i].tab[start + j];
 		j++;
 	}
-	env_var = srch_env_var(data, var);
+	data->env_var = srch_env_var(data, var);
 	free(var);
-	if (env_var)
-	{
-		if (update_var(&data->token[i].tab, start - 1, end, env_var) == -1)
-			return (err_return_token(data,
-					"minishell : memory allocation failed\n", 1));
-	}
-	else
-	{
-		if (update_null_var(data, &data->token[i].tab, start - 1, end) == -1)
-			return (-1);
-	}
-	data->token[i].is_env_var = 1;
-	return (0);
+	return (rep_env_var_bis(data, i, start, end));
 }

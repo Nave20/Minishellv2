@@ -40,6 +40,7 @@ SRC_FILES       =	main.c \
                     					new_token_utils.c \
                     					remove_quotes.c \
                     					get_env_var.c \
+                    					get_env_var_bis.c \
                     					token_utils.c \
                     					create_and_fill_cmd_tab.c \
                     					pars_env.c \
@@ -48,7 +49,7 @@ SRC_FILES       =	main.c \
 										empty_env.c \
 										rl_line.c \
 										rl_line_bis.c \
-                    					print_utils.c
+                    					print_utils.c \
 
 BUILTINS_FILES  = 	echo.c				\
 					cd.c				\

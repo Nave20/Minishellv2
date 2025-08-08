@@ -22,11 +22,11 @@ void	devmod(t_all *all)
 		perror(RED"too many arguments"RESET);
 		all->data->err_code = 1;
 	}
-	else if (!ft_strncmp(all->cmd->cmd_tab[1], "1", 2) ||
-		!ft_strncmp(all->cmd->cmd_tab[1], "true", 5))
+	else if (!ft_strncmp(all->cmd->cmd_tab[1], "1", 2)
+		|| !ft_strncmp(all->cmd->cmd_tab[1], "true", 5))
 		all->devmod = 1;
-	else if (!ft_strncmp(all->cmd->cmd_tab[1], "0", 2) ||
-	!ft_strncmp(all->cmd->cmd_tab[1], "false", 5))
+	else if (!ft_strncmp(all->cmd->cmd_tab[1], "0", 2)
+		|| !ft_strncmp(all->cmd->cmd_tab[1], "false", 5))
 		all->devmod = 0;
 	else
 	{

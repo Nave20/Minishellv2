@@ -56,7 +56,7 @@ int	handle_fork(t_all *all, t_cmd **cmd, int *i)
 	if (all->now_pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT,SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		child_one(all);
 	}
 	else
