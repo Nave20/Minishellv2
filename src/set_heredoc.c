@@ -7,10 +7,42 @@ int	event_hook(void)
 	return (0);
 }
 
+void	hrdc_int_handler(t_data *data, char *input, char *f_name)
+{
+	free(f_name);
+	free(input);
+	free_token(data);
+	free_cmd(data);
+	g_sig_state = NO;
+	rl_done = 0;
+	heredoc_destroyer(data);
+}
+
+int	fill_hrdc(char *input, char *delim, int fd)
+{
+	while (input && ft_strncmp(input, delim, ft_strlen(delim) + 1) != 0
+		&& g_sig_state != HRDC_INT)
+	{
+		ft_putendl_fd(input, fd);
+		free(input);
+		rl_event_hook = event_hook;
+		input = readline("> ");
+		rl_event_hook = NULL;
+	}
+	if (g_sig_state == HRDC_INT)
+	{
+		close(fd);
+		return (-1);
+	}
+	if (!input)
+		printf("warning: here-document delimited by end-of-file (wanted `%s')\n",
+			delim);
+	free(input);
+	return (0);
+}
+
 static int	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 {
-	char	*line;
-
 	fd = open(f_name, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	if (fd == -1)
 	{
@@ -18,101 +50,53 @@ static int	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
 		return (0);
 	}
 	if (input)
-	{
-		while (input && ft_strncmp(input, delim, ft_strlen(delim) + 1) != 0
-			&& g_sig_state != HRDC_INT)
-		{
-			ft_putendl_fd(input, fd);
-			free(input);
-			if (isatty(STDIN_FILENO))
-			{
-				rl_event_hook = event_hook;
-				input = readline("> ");
-				rl_event_hook = NULL;
-			}
-			else
-			{
-				line = get_next_line(STDIN_FILENO);
-				input = ft_strtrim(line, "\n");
-				free(line);
-			}
-		}
-		if (g_sig_state == HRDC_INT)
-		{
-			free(input);
-			g_sig_state = NO;
-			rl_done = 0;
-			close(fd);
-			return (-1);
-		}
-		if (!input)
-			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
-				delim);
-		free(input);
-	}
-	else if (g_sig_state == HRDC_INT)
-	{
-		free(input);
-		g_sig_state = NO;
-		rl_done = 0;
-		close(fd);
-		return (-1);
-	}
-	else if (!input)
-		printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
+		fill_hrdc(input, delim, fd);
+	else
+		printf("warning: here-document delimited by end-of-file (wanted `%s')\n",
 			delim);
 	close(fd);
+	return (0);
+}
+
+int	create_new_hrdc_name(t_data *data, int i_hrdc, char **f_name)
+{
+	char	*str;
+	char	*hrdc_nbr;
+
+	str = "/tmp/heredoc";
+	hrdc_nbr = ft_itoa(i_hrdc);
+	if (!hrdc_nbr)
+		err_return(data, "minishell : memory allocation failed\n, 1", 1);
+	*f_name = ft_strjoin(str, hrdc_nbr);
+	free(hrdc_nbr);
+	hrdc_nbr = NULL;
+	if (!*f_name)
+		err_return(data, "minishell : memory allocation failed\n", 1);
 	return (0);
 }
 
 static int	create_heredoc(t_data *data, t_cmd *cmd, char *delim, int i_hrdc)
 {
 	char	*input;
-	char	*str;
 	char	*f_name;
-	char	*hrdc_nbr;
-	char	*line;
 
-	update_heredoc(cmd);
+	f_name = NULL;
 	input = NULL;
-	if (isatty(STDIN_FILENO))
+	update_heredoc(cmd);
+	if (create_new_hrdc_name(data, i_hrdc, &f_name) == -1)
+		return (-1);
+	g_sig_state = IN_HRDC;
+	rl_event_hook = event_hook;
+	input = readline("> ");
+	rl_event_hook = NULL;
+	if (g_sig_state == HRDC_INT)
 	{
-		g_sig_state = IN_HRDC;
-		rl_event_hook = event_hook;
-		input = readline("> ");
-		rl_event_hook = NULL;
-		if (g_sig_state == HRDC_INT)
-		{
-			free(input);
-			free_token(data);
-			free_cmd(data);
-			g_sig_state = NO;
-			rl_done = 0;
-			heredoc_destroyer(data);
-			return (-1);
-		}
+		hrdc_int_handler(data, input, f_name);
+		return (-1);
 	}
-	else
-	{
-		line = get_next_line(STDIN_FILENO);
-		input = ft_strtrim(line, "\n");
-		free(line);
-	}
-	str = "/tmp/heredoc";
-	hrdc_nbr = ft_itoa(i_hrdc);
-	if (!hrdc_nbr)
-		err_return(data, "minishell : memory allocation failed\n, 1", 1);
-	f_name = ft_strjoin(str, hrdc_nbr);
-	free(hrdc_nbr);
-	hrdc_nbr = NULL;
-	if (!f_name)
-		err_return(data, "minishell : memory allocation failed\n", 1);
 	if (open_and_fill_hrdc(0, delim, input, f_name) == -1)
 	{
-		free_token(data);
-		free_cmd(data);
-		free(f_name);
-		heredoc_destroyer(data);
+		hrdc_int_handler(data, input, f_name);
 		return (-1);
 	}
 	free(f_name);
@@ -139,10 +123,12 @@ void	handle_cmd_ending(t_data *data, t_cmd **cmd, int *i, int *j)
 
 static int	handle_heredoc(t_data *data, t_cmd *cmd, int i)
 {
+	int	nb;
+
+	nb = data->nbhrdc;
 	if (data->token[i + 1].type == DELIM)
 	{
-		if (create_heredoc(data, cmd, data->token[i + 1].tab, data->nbhrdc) ==
-			-1)
+		if (create_heredoc(data, cmd, data->token[i + 1].tab, nb) == -1)
 			return (-1);
 	}
 	else

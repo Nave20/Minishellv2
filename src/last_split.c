@@ -59,18 +59,11 @@ int	check_and_define_new(t_data *data)
 	return (0);
 }
 
-int	fill_new_token(t_data *data, t_new *new, int nbword)
+int	fill_new_token_loop(t_data *data, t_new *new)
 {
 	int	i;
 
 	i = 0;
-	data->token = ft_calloc(nbword + 1, sizeof(t_token));
-	if (!data->token)
-	{
-		free_new(new);
-		return (err_return_token(data, "minishell: memory allocation failed\n",
-				1));
-	}
 	while (new[i].tab)
 	{
 		data->token[i].tab = ft_strdup(new[i].tab);
@@ -84,9 +77,43 @@ int	fill_new_token(t_data *data, t_new *new, int nbword)
 			data->token[i].type = STR;
 		i++;
 	}
-	// free_double_tab(new);
+	return (0);
+}
+
+int	fill_new_token(t_data *data, t_new *new, int nbword)
+{
+	data->token = ft_calloc(nbword + 1, sizeof(t_token));
+	if (!data->token)
+	{
+		free_new(new);
+		return (err_return_token(data, "minishell: memory allocation failed\n",
+				1));
+	}
+	if (fill_new_token_loop(data, new) == -1)
+		return (-1);
 	if (check_and_define_new(data) == -1)
 		return (-1);
+	return (0);
+}
+
+int	last_split_loop(t_data *data, int *nbword)
+{
+	int	i;
+
+	i = 0;
+	while (data->token[i].tab)
+	{
+		if (fill_new(data, data->token[i].tab, data->new) == -1)
+			return (-1);
+		if (data->token[i].is_env_var == 1)
+		{
+			while (*nbword < data->nbword)
+				data->new[(*nbword)++].is_env = 1;
+		}
+		else
+			*nbword = data->nbword;
+		i++;
+	}
 	return (0);
 }
 
@@ -106,19 +133,8 @@ int	last_split(t_data *data)
 	put_token_new(NULL, NULL, 0, -5);
 	i = 0;
 	nbword = 0;
-	while (data->token[i].tab)
-	{
-		if (fill_new(data, data->token[i].tab, data->new) == -1)
-			return (-1);
-		if (data->token[i].is_env_var == 1)
-		{
-			while (nbword < data->nbword)
-				data->new[nbword++].is_env = 1;
-		}
-		else
-			nbword = data->nbword;
-		i++;
-	}
+	if (last_split_loop(data, &nbword) == -1)
+		return (-1);
 	free_token(data);
 	if (fill_new_token(data, data->new, nbword) == -1)
 		return (-1);

@@ -37,13 +37,8 @@ static void	cmd_count(t_data *data)
 	data->cmd_count++;
 }
 
-int	tokenize_input(t_data *data, char *input)
+int	tokenize_input(t_data *data, char *input, int i, int nbword)
 {
-	int	i;
-	int	nbword;
-
-	i = 0;
-	nbword = 0;
 	while (input[i])
 	{
 		if (ft_isspace(input[i]))
@@ -70,7 +65,7 @@ int	tokenize_input(t_data *data, char *input)
 
 static int	parsing_hub(t_data *data)
 {
-	if (tokenize_input(data, data->input) == -1)
+	if (tokenize_input(data, data->input, 0, 0) == -1)
 		return (-1);
 	// print_token(data);
 	free(data->input);
@@ -88,48 +83,57 @@ static int	parsing_hub(t_data *data)
 	return (0);
 }
 
-static int	main_hub(t_all *all)
+int	main_hub(t_all *all)
 {
-	int		nbword;
-	char	*line;
+	int	nbword;
 
+	add_history(all->data->input);
+	nbword = word_count(all->data->input);
+	all->data->token = ft_calloc(nbword + 1, sizeof(t_token));
+	if (!all->data->token)
+		return (err_return_token(all->data,
+				RED "minishell : memory allocation failed\n" RESET, 1));
+	if (parsing_hub(all->data) == -1)
+		return (-1);
+	if (all->devmod)
+		print_lst(all->data, all->data->cmd);
+	exec_one(all->data, all);
+	free_cmd(all->data);
+	return (0);
+}
+
+static int	check_rl(t_all *all)
+{
 	if (isatty(STDIN_FILENO))
-	{
 		rl_line(all);
-		if (all->data->input)
-			add_history(all->data->input);
-		else
-		{
-			if (g_sig_state == INT)
-			{
-				free_token(all->data);
-				free_cmd(all->data);
-			}
-			return (1);
-		}
-	}
-	else
-	{
-		line = get_next_line(STDIN_FILENO);
-		all->data->input = ft_strtrim(line, "\n");
-		free(line);
-	}
-	if (all->data->input)
-	{
-		nbword = word_count(all->data->input);
-		all->data->token = ft_calloc(nbword + 1, sizeof(t_token));
-		if (!all->data->token)
-			return (err_return_token(all->data,
-					RED "minishell : memory allocation failed\n" RESET, 1));
-		if (parsing_hub(all->data) == -1)
-			return (-1);
-		if (all->devmod)
-			print_lst(all->data, all->data->cmd);
-		exec_one(all->data, all);
-		free_cmd(all->data);
-	}
 	else
 		return (1);
+	if (all->data->input)
+	{
+		if (main_hub(all) == -1)
+			return (-1);
+		// add_history(all->data->input);
+		// nbword = word_count(all->data->input);
+		// all->data->token = ft_calloc(nbword + 1, sizeof(t_token));
+		// if (!all->data->token)
+		// 	return (err_return_token(all->data,
+		// 			RED "minishell : memory allocation failed\n" RESET, 1));
+		// if (parsing_hub(all->data) == -1)
+		// 	return (-1);
+		// if (all->devmod)
+		// 	print_lst(all->data, all->data->cmd);
+		// exec_one(all->data, all);
+		// free_cmd(all->data);
+	}
+	else
+	{
+		if (g_sig_state == INT)
+		{
+			free_token(all->data);
+			free_cmd(all->data);
+		}
+		return (1);
+	}
 	return (0);
 }
 
@@ -169,6 +173,7 @@ int	init_main_structs(t_all *all)
 		free(all);
 		return (-1);
 	}
+	all->data->nbhrdc = 0;
 	all->data->cmd = NULL;
 	all->data->token = NULL;
 	all->devmod = 0;
@@ -196,7 +201,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
-		if (main_hub(all) == 1)
+		if (check_rl(all) == 1)
 		{
 			err = all->data->err_code;
 			free_env(all->data->env);

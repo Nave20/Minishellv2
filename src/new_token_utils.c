@@ -75,25 +75,6 @@ int	handle_special_c_new(t_data *data, char *old, t_new *new, int *i)
 	if (put_token_new(old, new, start, *i) == -1)
 		return (err_return_token(data, "minishell: memory allocation failed\n",
 				1));
-	// if (old[*i] == '|')
-	// {
-	// 	if (put_token_new(old, new, *i, *i) == -1)
-	// 		return (err_return_token(data,
-	// 				"minishell: memory allocation failed\n", 1));
-	// 	(*i)++;
-	// }
-	// if (old[*i] == '<')
-	// {
-	// 	if (handle_redirect_new(old, new, i, '<') == -1)
-	// 		return (err_return_token(data,
-	// 				"minishell: memory allocation failed\n", 1));
-	// }
-	// if (old[*i] == '>')
-	// {
-	// 	if (handle_redirect_new(old, new, i, '>') == -1)
-	// 		return (err_return_token(data,
-	// 				"minishell: memory allocation failed\n", 1));
-	// }
 	data->nbword++;
 	return (0);
 }

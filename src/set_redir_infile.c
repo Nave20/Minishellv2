@@ -1,11 +1,29 @@
 #include "../header/minishell.h"
 
+int	update_hrdc_cmd(t_data *data, t_cmd *cmd, char *hrdc)
+{
+	if (cmd->err_inf != HRDC_ERR && cmd->err_inf != INF_ERR)
+	{
+		if (cmd->hrdc_path)
+			free(cmd->hrdc_path);
+		if (cmd->infile_name)
+			free(cmd->infile_name);
+		cmd->infile_name = ft_strdup(hrdc);
+		if (!cmd->infile_name)
+		{
+			free(hrdc);
+			return (err_return(data, "minishell: memory allocation failed\n",
+					1));
+		}
+	}
+	return (0);
+}
+
 static int	open_hrdc(t_data *data, t_cmd *cmd, char *hrdc, int fd)
 {
 	fd = open(hrdc, O_RDONLY);
-	if (cmd->err_inf != HRDC_ERR && cmd->err_inf != INF_ERR)
-		if (cmd->hrdc_path)
-			free(cmd->hrdc_path);
+	if (update_hrdc_cmd(data, cmd, hrdc) == -1)
+		return (-1);
 	cmd->hrdc_path = ft_strdup(hrdc);
 	free(hrdc);
 	if (!cmd->hrdc_path)
@@ -37,6 +55,20 @@ static int	handle_hrdc(t_data *data, t_cmd *cmd, int fd, int hrdc_nb)
 	return (0);
 }
 
+int	update_infile_cmd(t_data *data, t_cmd *cmd, int *i)
+{
+	if (cmd->err_inf != HRDC_ERR && cmd->err_inf != INF_ERR)
+	{
+		if (cmd->infile_name)
+			free(cmd->infile_name);
+		cmd->infile_name = ft_strdup(data->token[*i].tab);
+		if (!cmd->infile_name)
+			return (err_return(data, "minishell: memory allocation failed\n",
+					1));
+	}
+	return (0);
+}
+
 static int	open_redir_in(t_data *data, t_cmd *cmd, int *i)
 {
 	int	fd;
@@ -44,13 +76,8 @@ static int	open_redir_in(t_data *data, t_cmd *cmd, int *i)
 	if (data->token[*i + 1].tab)
 	{
 		fd = open(data->token[++(*i)].tab, O_RDONLY);
-		if (cmd->err_inf != HRDC_ERR && cmd->err_inf != INF_ERR)
-		{
-			cmd->infile_name = ft_strdup(data->token[*i].tab);
-			if (!cmd->infile_name)
-				return (err_return(data,
-						"minishell: memory allocation failed\n", 1));
-		}
+		if (update_infile_cmd(data, cmd, i) == -1)
+			return (-1);
 		if (fd == -1)
 		{
 			if (cmd->err_inf != HRDC_ERR && cmd->err_inf != INF_ERR)
