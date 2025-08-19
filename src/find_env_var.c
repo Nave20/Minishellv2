@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_env_var.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 19:22:49 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 19:22:51 by lucasp           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 static int	get_env_var(t_data *data, int i, int end, int start)
 {
 	while (data->token[i].tab[start])
 	{
-		if (data->token[i].tab[start] == '$' && data->token[i].tab[start
-			+ 1] != '\0')
+		if (data->token[i].tab[start + 1] != '\0'
+			&& data->token[i].tab[start] == '$')
 		{
 			end = start + 1;
 			if (data->token[i].tab[end] == '?')
@@ -33,16 +45,16 @@ static int	dbl_quotes_env_var(t_data *data, int i, int *j)
 	(*j)++;
 	while (data->token[i].tab[*j] && data->token[i].tab[*j] != '"')
 	{
-		if (data->token[i].tab[*j] == '$' && (ft_isalnum(data->token[i].tab[*j
-					+ 1]) || data->token[i].tab[*j + 1] == '_'
+		if (data->token[i].tab[*j] == '$' && (data->token[i].tab[*j + 1] == '_'
+				|| ft_isalnum(data->token[i].tab[*j + 1])
 				|| data->token[i].tab[*j + 1] == '?'))
 		{
 			if (get_env_var(data, i, 0, 0) == -1)
 				return (-1);
 			*j = 0;
 		}
-		else if (data->token[i].tab[*j] == '$' && data->token[i].tab[*j
-			+ 1] == '$')
+		else if (data->token[i].tab[*j + 1] == '$'
+			&& data->token[i].tab[*j] == '$')
 			update_null_var(data, &data->token[i].tab, *j, *j + 2);
 		else
 			(*j)++;
@@ -61,10 +73,11 @@ static int	other_dol_cases(t_data *data, int i, int *j)
 					"mnishell: memory allocation failed\n", 1));
 		*j = 0;
 	}
-	else if (ft_isspace(data->token[i].tab[*j + 1]) || data->token[i].tab[*j
-		+ 1] == '\0' || (!(ft_isalnum(data->token[i].tab[*j + 1]))
-			&& data->token[i].tab[*j + 1] != '_' && data->token[i].tab[*j
-			+ 1] != '\'' && data->token[i].tab[*j + 1] != '"'))
+	else if (data->token[i].tab[*j + 1] == '\0'
+		|| ft_isspace(data->token[i].tab[*j + 1])
+		|| (!(ft_isalnum(data->token[i].tab[*j + 1])) && data->token[i].tab[*j
+			+ 1] != '_' && data->token[i].tab[*j + 1] != '\''
+			&& data->token[i].tab[*j + 1] != '"'))
 		(*j)++;
 	else
 	{

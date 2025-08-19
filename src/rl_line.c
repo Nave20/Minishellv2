@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rl_line.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpirotti <vpirotti@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 16:21:33 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/08/07 16:21:33 by vpirotti         ###   ########.fr       */
+/*   Updated: 2025/08/19 21:31:51 by lucasp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,7 @@ void	err_line(t_all *all, char *ptr, char *str, char *str2)
 		free(str2);
 	perror("malloc failed");
 	free(ptr);
-	all->data->input = readline(BOLD_CYAN"$USER"ARROW"$PWD"RESET_NL);
-}
-
-void	err_line_two(t_all *all, char *str, char *str2)
-{
-	if (str)
-		free(str);
-	if (str2)
-		free(str2);
-	perror("malloc failed");
-	all->data->input = readline(BOLD_CYAN"$USER"ARROW"$PWD"RESET_NL);
+	all->data->input = readline(BOLD_CYAN "$USER" ARROW "$PWD" RESET_NL);
 }
 
 void	error_line_two(t_all *all, char *line, char *pwd)
@@ -65,7 +55,7 @@ void	error_line_one(t_all *all, char *line, char *user)
 	ptr = line;
 	line = ft_strjoin(line, ERR_ONE);
 	if (!line)
-		return (err_line(all, ptr,user, NULL));
+		return (err_line(all, ptr, user, NULL));
 	free(ptr);
 	all->data->input = readline(line);
 	free(user);
@@ -74,7 +64,7 @@ void	error_line_one(t_all *all, char *line, char *user)
 
 void	normal_line(t_all *all, char *line, char *user, char *pwd)
 {
-	char *ptr;
+	char	*ptr;
 
 	line = ft_strjoin(BOLD_CYAN, user);
 	if (!line)
@@ -110,7 +100,7 @@ void	rl_line(t_all *all)
 	user = find_user(all);
 	pwd = find_pwd(all);
 	if (!user && !pwd)
-		all->data->input = readline(BOLD_CYAN"$USER"ARROW"$PWD"RESET_NL);
+		all->data->input = readline(BOLD_CYAN "$USER" ARROW "$PWD" RESET_NL);
 	else if (!pwd)
 		error_line_one(all, line, user);
 	else if (!user)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 08:31:36 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/08/07 12:46:22 by lpaysant         ###   ########.fr       */
+/*   Updated: 2025/08/19 21:29:26 by lucasp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,12 +156,16 @@ typedef struct s_all
 }								t_all;
 
 //-------------------------------PARSING-------------------------------
+void							print_banner(void);
+int								init_main_structs(t_all *all);
+int								init_env(t_all *all, char **envp);
 int								handle_empty_env(t_data *data);
 int								word_count(char *input);
 t_env							*pars_env(char **env, int *err);
 t_env							*free_env(t_env *head);
 int								ft_envsize(t_env *lst);
-int								tokenize_input(t_data *data, char *input);
+int								tokenize_input(t_data *data, char *input, int i,
+									int nbword);
 int								handle_normal(t_data *data, int *nbword,
 									int *i);
 int								handle_special_c(t_data *data, int *nbword,
@@ -200,27 +204,45 @@ int								set_env_var(t_data *data);
 char							*srch_env_var(t_data *data, char *var);
 int								rep_env_var(t_data *data, int i, int start,
 									int end);
-int								rep_env_var_bis(t_data *data, int i, int start, int end);
+int								rep_env_var_bis(t_data *data, int i, int start,
+									int end);
 int								update_null_var(t_data *data, char **str,
 									int start, int end);
 int								update_var(char **str, int start, int end,
 									char *env_var);
 int								remove_quotes(t_data *data);
+void							cmd_count(t_data *data);
 int								create_cmd_lst(t_data *data);
+int								handle_pipe_cmd(t_data *data, t_cmd **cmd,
+									int *infile, int *j);
+int								define_cmd_type(t_data *data, t_cmd **cmd,
+									int i);
+int								define_cmd_lst(t_data *data, int *i,
+									t_cmd **cmd, int *infile);
 t_cmd							*ft_cmdnew(t_data *data);
 void							ft_cmdadd_back(t_cmd **lst, t_cmd *new);
 t_cmd							*ft_cmdlast(t_cmd *lst);
 int								set_infile(t_data *data);
+int								handle_hrdc(t_data *data, t_cmd *cmd, int fd,
+									int hrdc_nb);
 int								set_outfile(t_data *data);
 int								handle_return(int ret, t_data *data, int *i);
 int								set_heredoc(t_data *data);
 void							update_heredoc(t_cmd *cmd);
 bool							is_last_inf_hrdc(t_data *data, int start,
 									int end);
+int								open_and_fill_hrdc(int fd, char *delim,
+									char *input, char *f_name);
+int								fill_hrdc(char *input, char *delim, int fd);
+void							hrdc_int_handler(t_data *data, char *input,
+									char *f_name);
 int								err_return(t_data *data, char *str, int err);
 int								err_return_token(t_data *data, char *str,
 									int err);
 int								last_split(t_data *data);
+int								char_check(t_data *data, char *old, t_new *new,
+									int *i);
+int								fill_new(t_data *data, char *old, t_new *new);
 int								handle_normal_new(t_data *data, char *old,
 									t_new *new, int *i);
 int								handle_special_c_new(t_data *data, char *old,
@@ -245,9 +267,13 @@ int								heredoc_destroyer(t_data *data);
 void							rl_line(t_all *all);
 char							*find_pwd(t_all *all);
 char							*find_user(t_all *all);
-void							err_line(t_all *all, char *ptr);
-void							err_line_two(t_all *all);
-void							devmod_line(t_all *all, char *line, char *user, char *pwd);
+void							err_line(t_all *all, char *ptr, char *str,
+									char *str2);
+void							err_line_two(t_all *all, char *str, char *str2);
+void							devmod_line(t_all *all, char *line, char *user,
+									char *pwd);
+void							sig_handler(int signal);
+int								event_hook(void);
 
 //------------------------------PARS_ENV-------------------------------
 t_env							*alloc(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_env_bis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpirotti <vpirotti@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:39:17 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/08/05 13:39:17 by vpirotti         ###   ########.fr       */
+/*   Updated: 2025/08/19 22:04:41 by lucasp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_env	*alloc_bis(char *str, t_env *node, int i)
 		if (!node->name)
 			return (free_node(node));
 		ft_strlcpy(node->name, str, i);
+		if (!node->name)
+			return (free_node(node));
 	}
 	else
 	{
@@ -28,6 +30,8 @@ t_env	*alloc_bis(char *str, t_env *node, int i)
 		if (!node->name)
 			return (free_node(node));
 		ft_strlcpy(node->name, str, i + 1);
+		if (!node->name)
+			return (free_node(node));
 	}
 	return (node);
 }
@@ -40,6 +44,8 @@ t_env	*alloc_third(char *str, t_env *node, int i)
 		if (!node->line)
 			return (free_node(node));
 		ft_strlcpy(node->line, &str[i + 1], 1 + ft_strlen(&str[i + 1]));
+		if (!node->line)
+			return (free_node(node));
 	}
 	else
 	{

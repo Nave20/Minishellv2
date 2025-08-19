@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pars_env.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 18:54:11 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 18:54:14 by lucasp           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 #include "../libft/libft.h"
 
@@ -57,7 +69,7 @@ t_env	*replace_line(const char *str, t_env *node, t_all *all)
 	node->line = ft_strdup(&str[i + 1]);
 	if (!node->line)
 	{
-		ft_putstr_fd(RED"malloc failed\n"RESET, 2);
+		ft_putstr_fd(RED "malloc failed\n" RESET, 2);
 		all->data->err_code = 2;
 		free_node(node);
 	}
