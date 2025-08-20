@@ -161,7 +161,7 @@ int								word_count(char *input);
 t_env							*pars_env(char **env, int *err);
 t_env							*free_env(t_env *head);
 int								ft_envsize(t_env *lst);
-int								tokenize_input(t_data *data, char *input);
+int								tokenize_input(t_data *data, char *input, int i, int nbword);
 int								handle_normal(t_data *data, int *nbword,
 									int *i);
 int								handle_special_c(t_data *data, int *nbword,
@@ -245,8 +245,9 @@ int								heredoc_destroyer(t_data *data);
 void							rl_line(t_all *all);
 char							*find_pwd(t_all *all);
 char							*find_user(t_all *all);
-void							err_line(t_all *all, char *ptr);
-void							err_line_two(t_all *all);
+void							print_banner(void);
+void							err_line(t_all *all, char *ptr, char *str, char *str2);
+void							err_line_two(t_all *all, char *str, char *str2);
 void							devmod_line(t_all *all, char *line, char *user, char *pwd);
 
 //------------------------------PARS_ENV-------------------------------
