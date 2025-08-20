@@ -62,10 +62,14 @@ t_env	*replace_line(const char *str, t_env *node, t_all *all)
 	int	i;
 
 	i = 0;
+	if (!str || str[0] == 0)
+		return (NULL);
 	if (node->line)
 		free(node->line);
-	while (str[i] != '=')
+	while (str[i] != '=' && str[i])
 		i++;
+	if (str[i] == 0)
+		i--;
 	node->line = ft_strdup(&str[i + 1]);
 	if (!node->line)
 	{

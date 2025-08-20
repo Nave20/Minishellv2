@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vpirotti <vpirotti@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/20 12:00:16 by vpirotti          #+#    #+#             */
+/*   Updated: 2025/08/20 12:18:50 by vpirotti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 volatile sig_atomic_t	g_sig_state = NO;
@@ -68,7 +80,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	err = 0;
 	print_banner();
 	all = malloc(sizeof(t_all));
 	if (!all)

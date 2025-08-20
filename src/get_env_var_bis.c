@@ -16,8 +16,8 @@ int	rep_env_var_bis(t_data *data, int i, int start, int end)
 {
 	if (data->env_var)
 	{
-		if (update_var(&data->token[i].tab, start - 1, end, data->env_var) ==
-			-1)
+		if (update_var(&data->token[i].tab, start - 1, end,
+				data->env_var) == -1)
 			return (err_return_token(data,
 					"minishell : memory allocation failed\n", 1));
 	}

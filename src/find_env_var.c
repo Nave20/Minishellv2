@@ -76,7 +76,7 @@ static int	other_dol_cases(t_data *data, int i, int *j)
 	else if (data->token[i].tab[*j + 1] == '\0'
 		|| ft_isspace(data->token[i].tab[*j + 1])
 		|| (!(ft_isalnum(data->token[i].tab[*j + 1])) && data->token[i].tab[*j
-			+ 1] != '_' && data->token[i].tab[*j + 1] != '\''
+				+ 1] != '_' && data->token[i].tab[*j + 1] != '\''
 			&& data->token[i].tab[*j + 1] != '"'))
 		(*j)++;
 	else
@@ -100,7 +100,7 @@ static int	search_env_var(t_data *data, int *i, int *j)
 	}
 	else if (data->token[*i].tab[*j] == '$'
 		&& (ft_isalnum(data->token[*i].tab[*j + 1]) || data->token[*i].tab[*j
-			+ 1] == '_' || data->token[*i].tab[*j + 1] == '?'))
+				+ 1] == '_' || data->token[*i].tab[*j + 1] == '?'))
 	{
 		if (get_env_var(data, *i, 0, 0) == -1)
 			return (-1);

@@ -43,7 +43,8 @@ void	print_list_third(int len, int i, t_cmd *cmd)
 		while (i < len)
 		{
 			if (cmd->cmd_tab[i][0] == '\0')
-				printf(RED BOLD "cmd_tab" RESET GREEN " ➜ " CYAN "\"\"\n" RESET);
+				printf(RED BOLD "cmd_tab" RESET GREEN " ➜ "
+					CYAN "\"\"\n" RESET);
 			else
 				printf(RED BOLD "cmd_tab  " RESET GREEN " ➜ " CYAN "%s\n" RESET,
 					cmd->cmd_tab[i]);

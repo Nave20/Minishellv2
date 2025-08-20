@@ -39,7 +39,8 @@ void	malloc_err(t_env *node, t_all *all)
 
 void	concat_line(const char *str, t_env *node, t_all *all)
 {
-	int	i;
+	int		i;
+	char	*ptr;
 
 	i = 0;
 	while (str[i] != '=')
@@ -47,15 +48,17 @@ void	concat_line(const char *str, t_env *node, t_all *all)
 	if (node->line[0] == 0)
 	{
 		free(node->line);
-		node->line = ft_strdup(str);
+		node->line = ft_strdup(&str[i + 1]);
 		if (!node->line)
 			malloc_err(node, all);
 	}
 	else
 	{
+		ptr = node->line;
 		node->line = ft_strjoin(node->line, &str[i + 1]);
 		if (!node->line)
 			malloc_err(node, all);
+		free(ptr);
 	}
 }
 
@@ -65,7 +68,7 @@ t_env	*concat_exp(char *str, t_env *ptr, t_all *all)
 	{
 		if (ft_strncmp(ptr->name, str, until_equal(str) - 1) == 0)
 		{
-			if (ft_strncmp(ptr->name, str, ft_strlen(ptr->name) - 1) == 0)
+			if (ft_strncmp(ptr->name, str, ft_strlen(ptr->name)) == 0)
 			{
 				concat_line(str, ptr, all);
 				return (NULL);
@@ -75,7 +78,7 @@ t_env	*concat_exp(char *str, t_env *ptr, t_all *all)
 	}
 	if (ft_strncmp(ptr->name, str, until_equal(str) - 1) == 0)
 	{
-		if (ft_strncmp(ptr->name, str, ft_strlen(ptr->name) - 1) == 0)
+		if (ft_strncmp(ptr->name, str, ft_strlen(ptr->name)) == 0)
 		{
 			concat_line(str, ptr, all);
 			return (NULL);
