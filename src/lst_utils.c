@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 19:12:50 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 21:29:07 by lucasp           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 t_cmd	*ft_cmdlast(t_cmd *lst)
@@ -60,4 +72,18 @@ int	ft_envsize(t_env *lst)
 		i++;
 	}
 	return (i);
+}
+
+void	cmd_count(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->token[i].tab)
+	{
+		if (data->token[i].type == PIPE)
+			data->cmd_count++;
+		i++;
+	}
+	data->cmd_count++;
 }

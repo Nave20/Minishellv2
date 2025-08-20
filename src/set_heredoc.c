@@ -1,62 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_heredoc.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 19:13:11 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 20:16:38 by lucasp           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
-
-int	event_hook(void)
-{
-	if (g_sig_state == HRDC_INT)
-		rl_done = 1;
-	return (0);
-}
-
-void	hrdc_int_handler(t_data *data, char *input, char *f_name)
-{
-	free(f_name);
-	free(input);
-	free_token(data);
-	free_cmd(data);
-	g_sig_state = NO;
-	rl_done = 0;
-	heredoc_destroyer(data);
-}
-
-int	fill_hrdc(char *input, char *delim, int fd)
-{
-	while (input && ft_strncmp(input, delim, ft_strlen(delim) + 1) != 0
-		&& g_sig_state != HRDC_INT)
-	{
-		ft_putendl_fd(input, fd);
-		free(input);
-		rl_event_hook = event_hook;
-		input = readline("> ");
-		rl_event_hook = NULL;
-	}
-	if (g_sig_state == HRDC_INT)
-	{
-		close(fd);
-		return (-1);
-	}
-	if (!input)
-		printf("warning: here-document delimited by end-of-file (wanted `%s')\n",
-			delim);
-	free(input);
-	return (0);
-}
-
-static int	open_and_fill_hrdc(int fd, char *delim, char *input, char *f_name)
-{
-	fd = open(f_name, O_CREAT | O_WRONLY | O_TRUNC, 0600);
-	if (fd == -1)
-	{
-		free(input);
-		return (0);
-	}
-	if (input)
-		fill_hrdc(input, delim, fd);
-	else
-		printf("warning: here-document delimited by end-of-file (wanted `%s')\n",
-			delim);
-	close(fd);
-	return (0);
-}
 
 int	create_new_hrdc_name(t_data *data, int i_hrdc, char **f_name)
 {

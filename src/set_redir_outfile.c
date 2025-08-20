@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_redir_outfile.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 19:11:55 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 22:25:43 by lucasp           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 static int	set_append_file(t_data *data, t_cmd *cmd, int *i)
@@ -10,6 +22,8 @@ static int	set_append_file(t_data *data, t_cmd *cmd, int *i)
 		if (cmd->err_outf != OUTF_ERR)
 		{
 			cmd->outfile_name = ft_strdup(data->token[*i].tab);
+			if (!cmd->outfile_name)
+				err_return(data, "minishell : memory allocation failed\n", 2);
 			cmd->is_append = 1;
 		}
 		if (fd == -1)
@@ -34,7 +48,11 @@ static int	set_redir_out(t_data *data, t_cmd *cmd, int *i)
 	{
 		fd = open(data->token[++(*i)].tab, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (cmd->err_outf != OUTF_ERR)
+		{
 			cmd->outfile_name = ft_strdup(data->token[*i].tab);
+			if (!cmd->outfile_name)
+				err_return(data, "minishell : memory allocation failed\n", 2);
+		}
 		if (fd == -1)
 		{
 			if (cmd->err_outf != OUTF_ERR)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_and_fill_cmd_tab.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 18:52:15 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 21:33:43 by lucasp           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 static int	fill_cmd_tab(t_data *data, t_cmd *cmd, int i, int j)
@@ -38,6 +50,8 @@ static int	handle_no_str(t_data *data, t_cmd *cmd)
 		cmd->cmd_tab[0] = ft_strdup(cmd->cmd);
 	else if (cmd->cmd_bi)
 		cmd->cmd_tab[0] = ft_strdup(cmd->cmd_bi);
+	if (!cmd->cmd_tab[0])
+		return (err_return(data, "minishell: memory allocation failed\n", 1));
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rl_line_bis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpirotti <vpirotti@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 17:37:53 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/08/07 17:37:53 by vpirotti         ###   ########.fr       */
+/*   Updated: 2025/08/19 21:31:32 by lucasp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	devmod_line_two(t_all *all, char *line, char *ptr, char *ptr2)
 
 void	devmod_line(t_all *all, char *line, char *user, char *pwd)
 {
-	char *ptr;
+	char	*ptr;
 
 	line = ft_strjoin(BOLD_CYAN, user);
 	if (!line)
@@ -111,4 +111,14 @@ char	*find_user(t_all *all)
 		return (user);
 	}
 	return (NULL);
+}
+
+void	err_line_two(t_all *all, char *str, char *str2)
+{
+	if (str)
+		free(str);
+	if (str2)
+		free(str2);
+	perror("malloc failed");
+	all->data->input = readline(BOLD_CYAN "$USER" ARROW "$PWD" RESET_NL);
 }

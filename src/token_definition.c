@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_definition.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 18:54:43 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 18:55:01 by lucasp           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 void	define_operator(t_data *data)
@@ -84,7 +96,6 @@ int	define_token(t_data *data, int k)
 	{
 		if (set_env_var(data) == -1)
 			return (-1);
-		// print_token(data);
 		if (last_split(data) == -1)
 			return (-1);
 		if (remove_quotes(data) == -1)

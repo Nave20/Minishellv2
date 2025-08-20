@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 19:10:19 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 19:44:56 by lucasp           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 int	new_len(t_new *new)
@@ -8,45 +20,6 @@ int	new_len(t_new *new)
 	while (new[i].tab)
 		i++;
 	return (i);
-}
-
-void	free_new(t_new *new)
-{
-	int	i;
-
-	i = 0;
-	if (new)
-	{
-		if (new[i].tab)
-		{
-			while (new[i].tab)
-			{
-				free(new[i].tab);
-				new[i].tab = NULL;
-				i++;
-			}
-		}
-		free(new);
-		new = NULL;
-	}
-}
-
-void	free_double_tab(char **str)
-{
-	int	i;
-
-	i = 0;
-	if (str)
-	{
-		while (str[i])
-		{
-			free(str[i]);
-			str[i] = NULL;
-			i++;
-		}
-		free(str);
-		str = NULL;
-	}
 }
 
 int	handle_qustn_mark(t_data *data, int i, int start, int end)
@@ -90,10 +63,7 @@ char	*srch_env_var(t_data *data, char *var)
 	while (ptr)
 	{
 		if (ft_strncmp(var, ptr->name, ft_strlen(var) + 1) == 0)
-		{
-			// printf("name = %s\n", ptr->name);
 			return (ptr->line);
-		}
 		else
 			ptr = ptr->next;
 	}

@@ -1,31 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env_var_bis.c                                  :+:      :+:    :+:   */
+/*   free_utils_bis.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 14:42:27 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/08/19 19:16:49 by lucasp           ###   ########.fr       */
+/*   Created: 2025/08/19 19:43:46 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 20:18:02 by lucasp           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-int	rep_env_var_bis(t_data *data, int i, int start, int end)
+void	free_double_tab(char **str)
 {
-	if (data->env_var)
+	int	i;
+
+	i = 0;
+	if (str)
 	{
-		if (update_var(&data->token[i].tab, start - 1, end, data->env_var) ==
-			-1)
-			return (err_return_token(data,
-					"minishell : memory allocation failed\n", 1));
+		while (str[i])
+		{
+			free(str[i]);
+			str[i] = NULL;
+			i++;
+		}
+		free(str);
+		str = NULL;
 	}
-	else
+}
+
+void	free_new(t_new *new)
+{
+	int	i;
+
+	i = 0;
+	if (new)
 	{
-		if (update_null_var(data, &data->token[i].tab, start - 1, end) == -1)
-			return (-1);
+		if (new[i].tab)
+		{
+			while (new[i].tab)
+			{
+				free(new[i].tab);
+				new[i].tab = NULL;
+				i++;
+			}
+		}
+		free(new);
+		new = NULL;
 	}
-	data->token[i].is_env_var = 1;
-	return (0);
 }

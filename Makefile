@@ -23,20 +23,27 @@ EXEC_FILES      =	servo.c				\
 
 SRC_FILES       =	main.c \
 										banner.c \
+										init.c \
                     					word_count.c \
                     					tokenization.c \
+										tokenization_bis.c \
                     					token_definition.c \
                     					is_something.c \
                     					lst_create.c \
+										lst_create_bis.c \
                     					set_heredoc.c \
+										set_heredoc_bis.c \
                     					set_redir_infile.c \
+										set_redir_infile_bis.c \
                     					set_redir_outfile.c \
                     					handle_cmd_type.c \
                     					lst_utils.c \
                     					find_env_var.c \
                     					error_check.c \
                     					free_utils.c \
+										free_utils_bis.c \
                     					last_split.c \
+										last_split_bis.c \
                     					utils.c \
                     					new_token_utils.c \
                     					remove_quotes.c \
@@ -51,6 +58,7 @@ SRC_FILES       =	main.c \
 										rl_line.c \
 										rl_line_bis.c \
                     					print_utils.c \
+										signal_handling.c \
 
 BUILTINS_FILES  = 	echo.c				\
 					cd.c				\

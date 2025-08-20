@@ -1,8 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   empty_env.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 19:19:26 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 21:35:43 by lucasp           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 static int	complete_env(t_data *data, t_env *ptr, t_env *head, t_env *next)
 {
 	next = alloc("SHLVL=1");
+	if (!next)
+		err_return_token(data, "minishell : memory allocation failed \n", 2);
 	if (!ptr)
 	{
 		free_node(head);

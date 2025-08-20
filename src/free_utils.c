@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/19 19:17:41 by lucasp            #+#    #+#             */
+/*   Updated: 2025/08/19 19:19:22 by lucasp           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header/minishell.h"
 
 int	heredoc_destroyer(t_data *data)
@@ -95,8 +107,6 @@ void	free_token(t_data *data)
 			i++;
 		}
 	}
-	// free(data->token[i].tab);
-	// data->token[i].tab = NULL;
 	free(data->token);
 	data->token = NULL;
 }
