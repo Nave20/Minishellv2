@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:12:50 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 21:29:07 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/20 17:40:32 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@ t_cmd	*ft_cmdnew(t_data *data)
 {
 	t_cmd	*new;
 
+	(void)data;
 	new = ft_calloc(1, sizeof(t_cmd));
 	if (!new)
-		err_return(data, "minishell : memory allocation failed\n", 1);
+		return (NULL);
 	new->infile = -2;
 	new->outfile = -2;
 	new->next = NULL;

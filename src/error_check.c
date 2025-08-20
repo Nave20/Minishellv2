@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:14:55 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 19:14:57 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/20 17:21:10 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	err_return_token(t_data *data, char *str, int err)
 int	err_return(t_data *data, char *str, int err)
 {
 	ft_putstr_fd(str, 2);
-	free_data(data);
+	// free_data(data);
 	data->err_code = err;
 	return (-1);
 }

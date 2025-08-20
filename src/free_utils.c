@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:17:41 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 19:19:22 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/20 17:34:48 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ int	heredoc_destroyer(t_data *data)
 	{
 		hrdc_nbr = ft_itoa(i);
 		if (!hrdc_nbr)
-			err_return(data, "minishell : memory allocation failed\n, 1", 1);
+			return (err_return(data, "minishell : memory allocation failed\n",
+					1));
 		f_name = ft_strjoin(str, hrdc_nbr);
 		free(hrdc_nbr);
 		hrdc_nbr = NULL;
 		if (!f_name)
-			err_return(data, "minishell : memory allocation failed\n", 1);
+			return (err_return(data, "minishell : memory allocation failed\n",
+					1));
 		if (access(f_name, F_OK) != -1)
 			unlink(f_name);
 		free(f_name);

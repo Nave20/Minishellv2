@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:12:38 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 19:12:45 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/20 17:29:29 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	remove_quotes(t_data *data)
 		{
 			data->token[i].tab = cpy_no_quotes(data->token[i].tab);
 			if (!data->token[i].tab)
-				err_return(data, "minishell : memory allocation failed\n", 1);
+				return (err_return(data,
+						"minishell : memory allocation failed\n", 1));
 		}
 		i++;
 		j = 0;

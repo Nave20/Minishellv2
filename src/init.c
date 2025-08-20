@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 20:54:17 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 20:55:20 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/20 17:55:20 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	init_main_structs(t_all *all)
 		free(all);
 		return (-1);
 	}
+	all->stdin_save = 0;
+	all->stdout_save = 0;
 	all->data->nbhrdc = 0;
 	all->data->cmd = NULL;
 	all->data->token = NULL;

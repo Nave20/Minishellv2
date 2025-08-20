@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   last_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:22:25 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 19:36:17 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/20 17:37:31 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	last_split(t_data *data)
 		nbword += word_count(data->token[i++].tab);
 	data->new = ft_calloc(nbword + 1, sizeof(t_new));
 	if (!data->new)
-		err_return(data, "minishell : memory allocation failed\n", 1);
+		return (err_return(data, "minishell : memory allocation failed\n", 1));
 	put_token_new(NULL, NULL, 0, -5);
 	i = 0;
 	nbword = 0;
