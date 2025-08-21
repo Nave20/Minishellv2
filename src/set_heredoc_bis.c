@@ -6,7 +6,7 @@
 /*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 20:01:58 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 20:17:38 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/21 11:47:31 by vpirotti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	fill_hrdc(char *input, char *delim, int fd)
 	if (g_sig_state == HRDC_INT)
 	{
 		close(fd);
+		free(input);
 		return (-1);
 	}
 	if (!input)

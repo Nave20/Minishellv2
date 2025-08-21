@@ -84,6 +84,8 @@ void	ft_exit(t_all *all)
 	t_cmd	*cmd;
 
 	cmd = all->cmd;
+	if (all->data->cmd_count > 1)
+		return ;
 	printf("exit\n");
 	if (!cmd->cmd_tab[1])
 		goodbye_one(all);

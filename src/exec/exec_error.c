@@ -43,9 +43,9 @@ void	error_three(char **path, char **cmd)
 void	error_exit_one(char **cmd, char *path)
 {
 	cleaner(cmd);
-	free(path);
 	perror(RED"execve"RESET);
 	perror(path);
+	free(path);
 	if (errno == ENOENT)
 		exit(127);
 	if (errno == EACCES)
