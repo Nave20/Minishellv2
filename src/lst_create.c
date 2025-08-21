@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:54:29 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 19:41:19 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/20 17:39:41 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static int	set_cmd_str(t_data *data)
 		else if (infile != 0 && data->token[infile].type == HEREDOC)
 			cmd->str[j] = ft_strdup(cmd->hrdc_path);
 		if (!cmd->str[j])
-			err_return(data, "minishell: memory allocation failed\n", 2);
+			return (err_return(data, "minishell: memory allocation failed\n",
+					2));
 	}
 	return (0);
 }
@@ -106,7 +107,7 @@ int	create_cmd_lst(t_data *data)
 		cmd = ft_cmdnew(data);
 		if (!cmd)
 		{
-			free_data(data);
+			// free_data(data);
 			data->err_code = 1;
 			return (err_return(data, "minishell : memory allocation failed\n",
 					1));

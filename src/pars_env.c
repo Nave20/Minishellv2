@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 18:54:11 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 18:54:14 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/20 17:07:56 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_env	*free_env(t_env *head)
 {
 	t_env	*ptr;
 
+	if (!head || !head->next)
+		return (NULL);
 	while (head->next)
 	{
 		ptr = head->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:13:11 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 20:16:38 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/20 17:31:29 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ int	create_new_hrdc_name(t_data *data, int i_hrdc, char **f_name)
 	str = "/tmp/heredoc";
 	hrdc_nbr = ft_itoa(i_hrdc);
 	if (!hrdc_nbr)
-		err_return(data, "minishell : memory allocation failed\n, 1", 1);
+		return (err_return(data, "minishell : memory allocation failed\n, 1",
+				1));
 	*f_name = ft_strjoin(str, hrdc_nbr);
 	free(hrdc_nbr);
 	hrdc_nbr = NULL;
 	if (!*f_name)
-		err_return(data, "minishell : memory allocation failed\n", 1);
+		return (err_return(data, "minishell : memory allocation failed\n", 1));
 	return (0);
 }
 

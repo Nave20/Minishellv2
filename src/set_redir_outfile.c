@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_redir_outfile.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucasp <lucasp@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:11:55 by lucasp            #+#    #+#             */
-/*   Updated: 2025/08/19 22:25:43 by lucasp           ###   ########.fr       */
+/*   Updated: 2025/08/20 17:32:17 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	set_append_file(t_data *data, t_cmd *cmd, int *i)
 		{
 			cmd->outfile_name = ft_strdup(data->token[*i].tab);
 			if (!cmd->outfile_name)
-				err_return(data, "minishell : memory allocation failed\n", 2);
+				return (err_return(data,
+						"minishell : memory allocation failed\n", 2));
 			cmd->is_append = 1;
 		}
 		if (fd == -1)
@@ -51,7 +52,8 @@ static int	set_redir_out(t_data *data, t_cmd *cmd, int *i)
 		{
 			cmd->outfile_name = ft_strdup(data->token[*i].tab);
 			if (!cmd->outfile_name)
-				err_return(data, "minishell : memory allocation failed\n", 2);
+				return (err_return(data,
+						"minishell : memory allocation failed\n", 2));
 		}
 		if (fd == -1)
 		{

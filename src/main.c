@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpirotti <vpirotti@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: lpaysant <lpaysant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:00:16 by vpirotti          #+#    #+#             */
-/*   Updated: 2025/08/20 12:18:50 by vpirotti         ###   ########.fr       */
+/*   Updated: 2025/08/20 16:45:33 by lpaysant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,17 @@ int	main_hub(t_all *all)
 
 static int	check_rl(t_all *all)
 {
+	char	*line;
+
 	if (isatty(STDIN_FILENO))
 		rl_line(all);
 	else
-		return (1);
+	{
+		line = get_next_line(fileno(stdin));
+		all->data->input = ft_strtrim(line, "\n");
+		free(line);
+	}
+	// return (1);
 	if (all->data->input)
 	{
 		if (main_hub(all) == -1)
@@ -80,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	print_banner();
+	// print_banner();
 	all = malloc(sizeof(t_all));
 	if (!all)
 		return (ft_putstr_fd("minishell: memory allocation failed\n", 1));
