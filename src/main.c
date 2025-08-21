@@ -52,17 +52,10 @@ int	main_hub(t_all *all)
 
 static int	check_rl(t_all *all)
 {
-	char	*line;
-
 	if (isatty(STDIN_FILENO))
 		rl_line(all);
 	else
-	{
-		line = get_next_line(fileno(stdin));
-		all->data->input = ft_strtrim(line, "\n");
-		free(line);
-	}
-	// return (1);
+		return (1);
 	if (all->data->input)
 	{
 		if (main_hub(all) == -1)
@@ -87,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	// print_banner();
+	print_banner();
 	all = malloc(sizeof(t_all));
 	if (!all)
 		return (ft_putstr_fd("minishell: memory allocation failed\n", 1));
