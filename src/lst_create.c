@@ -107,7 +107,6 @@ int	create_cmd_lst(t_data *data)
 		cmd = ft_cmdnew(data);
 		if (!cmd)
 		{
-			// free_data(data);
 			data->err_code = 1;
 			return (err_return(data, "minishell : memory allocation failed\n",
 					1));

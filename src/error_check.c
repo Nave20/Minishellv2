@@ -24,7 +24,6 @@ int	err_return_token(t_data *data, char *str, int err)
 int	err_return(t_data *data, char *str, int err)
 {
 	ft_putstr_fd(str, 2);
-	// free_data(data);
 	data->err_code = err;
 	return (-1);
 }
