@@ -73,19 +73,17 @@ void	exec_two(char **cmd, char **env)
 	char	**paths;
 	char	*r_path;
 
+	if (!env || cmd[0][0] == 0)
+	{
+		ft_putendl_fd(RED"command not found"RESET, 2);
+		exit(127);
+	}
 	if (cmd[0][0] == '/' || cmd[0][0] == '.')
 	{
 		exec_three(cmd, env);
 		return ;
 	}
-	if (cmd[0][0] == 0)
-	{
-		ft_putendl_fd(RED"command not found"RESET, 2);
-		exit(127);
-	}
 	in_same_dir(cmd, env);
-	if (!env)
-		return ;
 	paths = get_path(env, -1, -1);
 	if (!paths)
 		return ;

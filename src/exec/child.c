@@ -32,6 +32,8 @@ void	child_two(t_all *all)
 		exit(127);
 	if (errno == EACCES)
 		exit(126);
+	if (errno == EPIPE)
+		exit(141);
 	exit(1);
 }
 

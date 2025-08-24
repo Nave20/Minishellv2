@@ -51,15 +51,12 @@ int	sub_exec(t_all *all, t_cmd *cmd, int *i)
 		if (err_out(all, cmd) == 1)
 			return (1);
 	}
-	else
+	if (!all->cmd->next && all->cmd->cmd_bi)
 	{
-		if (!all->cmd->next && all->cmd->cmd_bi)
-		{
-			i += parent_one(all, i);
-			return (1);
-		}
-		if (handle_fork(all, &cmd, i) == -1)
-			return (1);
+		i += parent_one(all, i);
+		return (1);
 	}
+	if (handle_fork(all, &cmd, i) == -1)
+		return (1);
 	return (0);
 }

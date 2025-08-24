@@ -286,6 +286,8 @@ int			outfile_or_err(t_all *all);
 int			parent_one(t_all *all, int *i);
 void		pid_waiter(t_all *all, int i, int waited);
 void		clean_exit(t_all *all);
+void		pipeline_two(t_all *all);
+void		pipeline_one(t_all *all);
 void		fork_error(t_all *all, int i);
 void		path_error(void);
 void		error(void);
