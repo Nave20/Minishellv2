@@ -76,6 +76,8 @@ void	exec_one(t_data *data, t_all *all)
 	exec_init(all, data);
 	cmd = all->cmd;
 	i = 0;
+	if (!cmd->cmd && !cmd->cmd_bi)
+		return ;
 	while (cmd)
 	{
 		tmp = sub_exec(all, cmd, &i);
