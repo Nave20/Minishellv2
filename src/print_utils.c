@@ -25,9 +25,9 @@ void	print_list_bis(int len, int i, t_cmd *cmd)
 		while (i < len)
 		{
 			if (cmd->str[i][0] == '\0')
-				printf(RED BOLD "str   " RESET GREEN " ➜ " CYAN "\"\"\n" RESET);
+				printf(RED BOLD "str      " RESET GREEN " ➜ " CYAN "\"\"\n" RESET);
 			else
-				printf(RED BOLD "str   " RESET GREEN " ➜ " CYAN "%s\n" RESET,
+				printf(RED BOLD "str      " RESET GREEN " ➜ " CYAN "%s\n" RESET,
 					cmd->str[i]);
 			i++;
 		}
