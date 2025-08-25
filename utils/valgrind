@@ -1,2 +1,3 @@
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes --suppressions=supp_all ./minishell
 strace -f -e trace=signal bash -c "echo test | echo ok"
+set -o pipefail
