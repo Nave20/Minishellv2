@@ -36,10 +36,8 @@ char	**get_path(char **env, int i, int a)
 	if (!env)
 		return (path_error(), NULL);
 	while (env[++a] != NULL)
-	{
 		if (ft_strnstr(env[a], "PATH=", 5))
 			break ;
-	}
 	if (env[a] == NULL)
 		return (path_error(), NULL);
 	output = ft_split(&env[a][5], ':');
