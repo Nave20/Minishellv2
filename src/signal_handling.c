@@ -14,28 +14,30 @@
 
 void	sig_handler(int signal)
 {
-	if (signal == SIGINT)
-	{
-		if (g_sig_state != IN_HRDC)
-		{
-			ft_putstr_fd("\n", 1);
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-			g_sig_state = INT;
-		}
-		else
-		{
-			rl_replace_line("", 0);
-			rl_redisplay();
-			g_sig_state = HRDC_INT;
-		}
-	}
+	g_sig_state = signal;
 }
 
-int	event_hook(void)
+int	minishell_hook(void)
 {
-	if (g_sig_state == HRDC_INT)
+	if (g_sig_state == SIGINT)
+	{
+		ft_putstr_fd("\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		g_sig_state = NO;
+	}
+	return (0);
+}
+
+int	heredoc_hook(void)
+{
+	if (g_sig_state == SIGINT)
+	{
 		rl_done = 1;
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 	return (0);
 }

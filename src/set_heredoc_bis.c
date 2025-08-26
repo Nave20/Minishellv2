@@ -26,16 +26,17 @@ void	hrdc_int_handler(t_data *data, char *input, char *f_name)
 int	fill_hrdc(char *input, char *delim, int fd)
 {
 	while (input && ft_strncmp(input, delim, ft_strlen(delim) + 1) != 0
-		&& g_sig_state != HRDC_INT)
+		&& g_sig_state != SIGINT)
 	{
 		ft_putendl_fd(input, fd);
 		free(input);
-		rl_event_hook = event_hook;
+		rl_event_hook = heredoc_hook;
 		input = readline("> ");
 		rl_event_hook = NULL;
 	}
-	if (g_sig_state == HRDC_INT)
+	if (g_sig_state == SIGINT)
 	{
+		g_sig_state = NO;
 		close(fd);
 		free(input);
 		return (-1);

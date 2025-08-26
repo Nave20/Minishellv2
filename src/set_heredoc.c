@@ -40,11 +40,11 @@ static int	create_heredoc(t_data *data, t_cmd *cmd, char *delim, int i_hrdc)
 	update_heredoc(cmd);
 	if (create_new_hrdc_name(data, i_hrdc, &f_name) == -1)
 		return (-1);
-	g_sig_state = IN_HRDC;
-	rl_event_hook = event_hook;
+	g_sig_state = NO;
+	rl_event_hook = heredoc_hook;
 	input = readline("> ");
 	rl_event_hook = NULL;
-	if (g_sig_state == HRDC_INT)
+	if (g_sig_state == SIGINT)
 	{
 		hrdc_int_handler(data, input, f_name);
 		return (-1);

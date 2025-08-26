@@ -34,7 +34,7 @@ int	handle_qustn_mark(t_data *data, int i, int start, int end)
 	{
 		free(var);
 		return (err_return_token(data, "minishell : memory allocation failed\n",
-		1));
+				1));
 	}
 	free(var);
 	return (0);

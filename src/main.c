@@ -53,7 +53,11 @@ int	main_hub(t_all *all)
 static int	check_rl(t_all *all)
 {
 	if (isatty(STDIN_FILENO))
+	{
+		rl_event_hook = minishell_hook;
 		rl_line(all);
+		rl_event_hook = NULL;
+	}
 	else
 		return (1);
 	if (all->data->input)
@@ -63,7 +67,7 @@ static int	check_rl(t_all *all)
 	}
 	else
 	{
-		if (g_sig_state == INT)
+		if (g_sig_state == SIGINT)
 		{
 			free_token(all->data);
 			free_cmd(all->data);
