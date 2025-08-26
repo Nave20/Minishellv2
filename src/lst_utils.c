@@ -40,6 +40,7 @@ void	ft_cmdadd_back(t_cmd **lst, t_cmd *new)
 		{
 			ptr = ft_cmdlast(*lst);
 			ptr->next = new;
+			new->prev = ptr;
 		}
 	}
 }
@@ -55,6 +56,7 @@ t_cmd	*ft_cmdnew(t_data *data)
 	new->infile = -2;
 	new->outfile = -2;
 	new->next = NULL;
+	new->prev = NULL;
 	return (new);
 }
 

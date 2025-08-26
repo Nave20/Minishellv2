@@ -24,7 +24,10 @@ void	waiter_two(t_all *all, int status, pid_t wpid)
 		sig = WTERMSIG(status);
 		all->data->err_code = 128 + sig;
 		if (sig == SIGINT)
-			return ;
+		{
+			printf("\n");
+			g_sig_state = NO;
+		}
 		else if (sig == SIGQUIT)
 			printf("Quit (core dumped)\n");
 		else if (sig != SIGPIPE)

@@ -15,6 +15,10 @@
 
 void	exec_builtin(t_all *all, t_cmd *cmd, t_env **env)
 {
+	char	*buff_void;
+
+	if (cmd->prev)
+		read(all->pipe_fd[0], &buff_void, 1);
 	if (!ft_strncmp(cmd->cmd_bi, "echo", ft_strlen("echo")))
 		ft_echo(cmd->cmd_tab + 1, all);
 	else if (!ft_strncmp(cmd->cmd_bi, "cd", ft_strlen("cd")))

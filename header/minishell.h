@@ -130,6 +130,7 @@ struct							s_cmd
 	int							err_inf;
 	int							err_outf;
 	t_cmd						*next;
+	t_cmd						*prev;
 };
 
 typedef struct s_env
